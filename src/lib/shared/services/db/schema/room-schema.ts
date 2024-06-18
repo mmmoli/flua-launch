@@ -24,4 +24,4 @@ export const insertRoomSchema = createInsertSchema(rooms);
 export type InsertRoomModel = Readonly<z.infer<typeof insertRoomSchema>>;
 
 export const roomSchema = createSelectSchema(rooms);
-export type RoomRoom = Readonly<z.infer<typeof roomSchema>>;
+export type RoomModel = Readonly<z.infer<typeof roomSchema>>;

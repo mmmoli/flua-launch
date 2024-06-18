@@ -21,7 +21,7 @@ export const LayoutRoot: FC<LayoutRootProps> = ({ children }) => {
     <html lang='en' suppressHydrationWarning>
       <body
         className={cn(
-          'flex min-h-screen flex-col bg-blue-50 font-sans antialiased',
+          'flex min-h-screen flex-col bg-background font-sans antialiased',
           fonts.variable
         )}
       >

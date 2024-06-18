@@ -1,7 +1,8 @@
 'use client';
 
-import { HomePage, PrivatePage } from '@shared/config/routes';
+import { DashPage } from '@shared/config/routes';
 import { signOut, User } from '@shared/services/auth/client';
+import { buttonVariants } from '@ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,22 +19,16 @@ export interface SignedInUserMenuProps {
 }
 
 export const SignedInUserMenu: FC<SignedInUserMenuProps> = ({ user }) => {
-  const home = HomePage(null);
-  const dash = PrivatePage(null);
+  const dash = DashPage(null);
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='border-none focus:ring-0 focus:ring-transparent focus:ring-offset-0 data-[state=open]:border-none'>
+      <DropdownMenuTrigger className={buttonVariants({ variant: 'outline' })}>
         {user.name}
       </DropdownMenuTrigger>
-      <DropdownMenuContent onCloseAutoFocus={(e) => e.preventDefault()} align='end'>
-        <DropdownMenuLabel className='flex flex-col'>
-          <div>{user.name}</div>
-          <div className='text-[7pt] font-normal text-slate-500'>{user.email}</div>
-        </DropdownMenuLabel>
-        <DropdownMenuItem asChild>
-          <Link href={home.url}>{home.label}</Link>
-        </DropdownMenuItem>
+      <DropdownMenuContent align='end'>
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href={dash.url}>{dash.label}</Link>
         </DropdownMenuItem>

@@ -1,4 +1,4 @@
-import { Dice5, DoorOpen, Gift, Home } from 'lucide-react';
+import { Dice5, DoorOpen, Gift, Home, KanbanSquareDashed } from 'lucide-react';
 import { ComponentType } from 'react';
 
 export type Route<T = null> = (params: T) => {
@@ -13,10 +13,20 @@ export const HomePage: Route = () => ({
   icon: Home,
 });
 
-export const NopePage: Route = () => ({
-  url: '/nope',
-  label: 'Nope',
-  icon: Dice5,
+export const SignInPageRoute: Route<{ next?: string }> = ({ next }) => {
+  const url = '/sign-in';
+  if (next) url.concat('?next=', encodeURIComponent(next));
+  return {
+    label: 'Sign In',
+    url: url.toString(),
+    icon: DoorOpen,
+  };
+};
+
+export const DashPage: Route = () => ({
+  url: '/dash',
+  label: 'Dashboard',
+  icon: KanbanSquareDashed,
 });
 
 export const AboutPage: Route = () => ({
@@ -25,19 +35,25 @@ export const AboutPage: Route = () => ({
   icon: Dice5,
 });
 
-export const PrivatePage: Route = () => ({
-  url: '/private',
-  label: 'Private',
+export const WaitinglistPage: Route = () => ({
+  url: '/join-waiting-list',
+  label: 'Join Waitinglist',
   icon: Gift,
 });
 
 export const RoomPage: Route<{ slug: string }> = ({ slug }) => ({
-  url: `/rooms/${slug}`,
+  url: `/r/${slug}`,
   label: 'Room',
   icon: DoorOpen,
 });
 
-export const routes: Route<any | null>[] = [AboutPage, HomePage, NopePage, PrivatePage, RoomPage];
+export const routes = {
+  AboutPage,
+  DashPage,
+  HomePage,
+  WaitinglistPage,
+  RoomPage,
+};
 
-export const publicRoutes: Route<any | null>[] = [HomePage, AboutPage];
-export const appRoutes: Route<any | null>[] = [PrivatePage, NopePage];
+export const publicRoutes: Route<any | null>[] = [HomePage, AboutPage, WaitinglistPage];
+export const appRoutes: Route<any | null>[] = [DashPage];
