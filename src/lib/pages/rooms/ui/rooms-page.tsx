@@ -1,6 +1,6 @@
 import { assertUser } from '@features/auth/assert-user';
 import { RoomListCard } from '@widgets/rooms/room-list-card';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 
 export const RoomsPage: FC = async () => {
   const session = await assertUser();
@@ -8,5 +8,9 @@ export const RoomsPage: FC = async () => {
 
   if (!userId) return null;
 
-  return <RoomListCard userId={userId} />;
+  return (
+    <Suspense fallback={<p>Loading Rooms…</p>}>
+      <RoomListCard userId={userId} />
+    </Suspense>
+  );
 };
