@@ -1,4 +1,4 @@
-import { Dice5, DoorOpen, Gift, Home, KanbanSquareDashed } from 'lucide-react';
+import { BookCopy, Dice5, DoorOpen, Gift, Home, KanbanSquareDashed } from 'lucide-react';
 import { ComponentType } from 'react';
 
 export type Route<T = null> = (params: T) => {
@@ -35,6 +35,12 @@ export const AboutPage: Route = () => ({
   icon: Dice5,
 });
 
+export const RoomsPage: Route = () => ({
+  url: '/rooms',
+  label: 'Rooms',
+  icon: BookCopy,
+});
+
 export const WaitinglistPage: Route = () => ({
   url: '/join-waiting-list',
   label: 'Join Waitinglist',
@@ -44,7 +50,7 @@ export const WaitinglistPage: Route = () => ({
 export const RoomPage: Route<{ slug: string }> = ({ slug }) => ({
   url: `/r/${slug}`,
   label: 'Room',
-  icon: DoorOpen,
+  icon: Home,
 });
 
 export const routes = {
@@ -53,7 +59,8 @@ export const routes = {
   HomePage,
   WaitinglistPage,
   RoomPage,
+  RoomsPage,
 };
 
 export const publicRoutes: Route<any | null>[] = [HomePage, AboutPage, WaitinglistPage];
-export const appRoutes: Route<any | null>[] = [DashPage];
+export const appRoutes: Route<any | null>[] = [DashPage, RoomsPage];

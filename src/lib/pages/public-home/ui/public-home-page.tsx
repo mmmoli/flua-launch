@@ -1,21 +1,15 @@
 import { Button } from '@ui/button';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import { FC } from 'react';
 
 import { routes } from '@/lib/shared/config/routes';
-
-export const metadata: Metadata = {
-  title: 'Decent Next.js Starter Template',
-  description: 'Quickly start a new Next.js project with common tools and configurations.',
-};
 
 export const PublicHomePage: FC = () => {
   return (
     <div className='relative isolate px-6 pt-8 lg:px-8'>
       <div className='sm:py-18 mx-auto max-w-2xl py-24 lg:py-20'>
         <div className='text-center'>
-          <h1 className='text-7xl font-bold tracking-tight text-gray-900 sm:text-7xl md:text-9xl'>
+          <h1 className='text-7xl font-bold tracking-tight text-gray-900 sm:text-7xl md:text-8xl'>
             Video Calls
             <br /> without the
             <br /> d*ckheads
