@@ -16,7 +16,7 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { openRoomAction } from '../api/open-room';
-import { RoomSchema, roomSchema } from '../lib/schema';
+import { type RoomSchema, roomSchema } from '../lib/schema';
 
 export interface FormProps {
   userId: string;

@@ -53,13 +53,20 @@ export const RoomPage: Route<{ slug: string }> = ({ slug }) => ({
   icon: Home,
 });
 
+export const AccountPage: Route = () => ({
+  url: `/account`,
+  label: 'Account',
+  icon: Home,
+});
+
 export const routes = {
   AboutPage,
+  AccountPage,
   DashPage,
   HomePage,
-  WaitinglistPage,
   RoomPage,
   RoomsPage,
+  WaitinglistPage,
 };
 
 export const publicRoutes: Route<any | null>[] = [HomePage, AboutPage, WaitinglistPage];

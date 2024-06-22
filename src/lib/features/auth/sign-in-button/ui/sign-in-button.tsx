@@ -1,10 +1,9 @@
 'use client';
 
+import { DashPage } from '@shared/config/routes';
 import { signIn } from '@shared/services/auth/client';
 import { Button, ButtonProps } from '@ui/button';
 import { FC, useCallback } from 'react';
-
-import { DashPageRoute } from '@/shared/config/routes';
 
 export interface SignInButtonProps extends ButtonProps {
   network?: 'google';
@@ -14,7 +13,7 @@ export interface SignInButtonProps extends ButtonProps {
 export const SignInButton: FC<SignInButtonProps> = ({
   children = 'Sign In (Google)',
   network = 'google',
-  callbackUrl = DashPageRoute().url,
+  callbackUrl = DashPage(null).url,
   ...props
 }) => {
   const handleClick = useCallback(() => {

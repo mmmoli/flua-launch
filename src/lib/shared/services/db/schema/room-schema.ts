@@ -1,7 +1,5 @@
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { z } from 'zod';
 
 import { users } from './auth-schema';
 
@@ -20,8 +18,5 @@ export const rooms = sqliteTable('room', {
     .notNull(),
 });
 
-export const insertRoomSchema = createInsertSchema(rooms);
-export type InsertRoomModel = Readonly<z.infer<typeof insertRoomSchema>>;
-
-export const roomSchema = createSelectSchema(rooms);
-export type RoomModel = Readonly<z.infer<typeof roomSchema>>;
+export type RoomModel = typeof rooms.$inferSelect;
+export type InsertRoomModel = typeof rooms.$inferInsert;

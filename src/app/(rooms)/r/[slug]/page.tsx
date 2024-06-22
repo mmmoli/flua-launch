@@ -1,9 +1,8 @@
 'use client';
 
+import { LiveCallPage } from '@pages/live-call';
+import { WaitingRoomPage } from '@pages/waiting-room';
 import { useCallback, useState } from 'react';
-
-import { LiveCallPage } from '@/pages/live-call-page';
-import { WaitingRoomPage } from '@/pages/waiting-room-page';
 
 export interface Props {
   params: { slug: string };

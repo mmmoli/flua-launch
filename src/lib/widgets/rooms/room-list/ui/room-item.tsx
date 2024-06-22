@@ -1,4 +1,4 @@
-import { RoomPageRoute } from '@shared/config/routes';
+import { RoomPage } from '@shared/config/routes';
 import { Button } from '@ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/popover';
 import { DoorOpen, Settings2 } from 'lucide-react';
@@ -7,11 +7,11 @@ import { FC } from 'react';
 
 export interface RoomItemProps {
   name: string;
-  id: string;
+  slug: string;
 }
 
-export const RoomItem: FC<RoomItemProps> = ({ name, id }) => {
-  const { url } = RoomPageRoute(id);
+export const RoomItem: FC<RoomItemProps> = ({ name, slug }) => {
+  const { url } = RoomPage({ slug });
   return (
     <Popover>
       <PopoverTrigger asChild>

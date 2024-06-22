@@ -6,6 +6,7 @@ import { OpenRoomUseCaseDto, OpenRoomUseCaseDtoSchema } from '../lib/schemas';
 import { OpenRoomUseCase } from '../model/open-room-use-case';
 
 export const openRoomAction = async (formData: FormData) => {
+  console.log(formData);
   const useCase = new OpenRoomUseCase({
     db,
   });

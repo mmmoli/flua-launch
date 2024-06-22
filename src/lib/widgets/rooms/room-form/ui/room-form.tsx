@@ -1,7 +1,6 @@
+import { assertUser } from '@features/auth/assert-user';
 import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
 import { FC } from 'react';
-
-import { assertUser } from '@/features/auth';
 
 import { Form } from './form';
 

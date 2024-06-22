@@ -1,11 +1,13 @@
 import { assertUser } from '@features/auth/assert-user';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui/card';
-// import { OpenRoomForm } from '@widgets/rooms/open-room-form';
-// import { RoomList } from '@widgets/rooms/room-list';
+import { OpenRoomForm } from '@widgets/rooms/open-room-form';
 import { FC } from 'react';
 
 export const DashboardPage: FC = async () => {
-  await assertUser();
+  const session = await assertUser();
+  const userId = session?.user.id;
+
+  if (!userId) return null;
 
   return (
     <main>
@@ -19,7 +21,9 @@ export const DashboardPage: FC = async () => {
           <CardDescription>Lipsum dolor sit amet, consectetur adipiscing elit</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className='grid gap-6'></div>
+          <div className='grid gap-6'>
+            <OpenRoomForm userId={userId} />
+          </div>
         </CardContent>
       </Card>
     </main>

@@ -15,7 +15,7 @@ import { SubmitButton } from '@ui/submit-button';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { createRoomAction } from '../api/create-room';
+import { openRoomAction } from '../api/open-room';
 import { RoomSchema, roomSchema } from '../lib/schema';
 
 export interface FormProps {
@@ -32,7 +32,7 @@ export const Form: FC<FormProps> = ({ userId }) => {
 
   return (
     <DSForm {...form}>
-      <form action={createRoomAction}>
+      <form action={openRoomAction}>
         <FormField
           control={form.control}
           name='name'

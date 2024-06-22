@@ -1,7 +1,7 @@
 'use client';
 
-import { CreateRoomUseCaseDtoSchema } from '@entities/room';
+import { OpenRoomUseCaseDtoSchema } from '@features/rooms/open-room/lib/schemas';
 import { z } from 'zod';
 
-export const roomSchema = CreateRoomUseCaseDtoSchema;
+export const roomSchema = OpenRoomUseCaseDtoSchema;
 export type RoomSchema = z.infer<typeof roomSchema>;
