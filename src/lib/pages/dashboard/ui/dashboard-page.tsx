@@ -1,4 +1,4 @@
-import { assertUser } from '@features/auth/assert-user';
+import { assertUser } from '@shared/services/auth/api';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui/card';
 import { OpenRoomForm } from '@widgets/rooms/open-room-form';
 import { FC } from 'react';

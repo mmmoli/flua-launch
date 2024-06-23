@@ -1,3 +1,4 @@
+import { CreateCheckoutSessionButton } from '@features/billing/create-checkout-session';
 import { Button } from '@ui/button';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -14,6 +15,7 @@ export const PublicHomePage: FC = () => {
             <br /> without the
             <br /> d*ckheads
           </h1>
+          <CreateCheckoutSessionButton priceId='price_1NxEzFDmsaCawsACwYCuiOBp' />
           <p className='mt-6 text-3xl leading-8 text-gray-600'>
             Everyone gets to speak. No interruptions.
           </p>

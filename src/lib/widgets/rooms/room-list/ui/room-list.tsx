@@ -1,4 +1,4 @@
-import { assertUser } from '@features/auth/assert-user';
+import { assertUser } from '@shared/services/auth/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
 import { FC } from 'react';
 

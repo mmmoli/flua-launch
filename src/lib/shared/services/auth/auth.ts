@@ -1,8 +1,10 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { env } from '@shared/config/env';
-import { db } from '@shared/services/db';
+import { db, schema } from '@shared/services/db';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
+
+import { billingService } from '../billing';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
@@ -21,6 +23,29 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
   },
+  events: {
+    createUser: async ({ user }) => {
+      if (!user.id) {
+        console.error(`Failed to create customer. No user Id`);
+        return;
+      }
+      const customerResult = await billingService.createCustomer({
+        user,
+      });
+      if (!customerResult.isOk()) {
+        console.error(`Failed to create customer: ${customerResult.error()}`);
+        return;
+      }
+      const customer = customerResult.value();
+      await db
+        .insert(schema.customers)
+        .values({
+          id: user.id,
+          stripeCustomerId: customer.customerId,
+        })
+        .onConflictDoNothing();
+    },
+  },
   trustHost: true,
 });
 
@@ -30,14 +55,7 @@ declare module 'next-auth' {
    */
   interface Session {
     user: {
-      /** The user's postal address. */
       id: string;
-      /**
-       * By default, TypeScript merges new interface properties and overwrites existing ones.
-       * In this case, the default session user properties will be overwritten,
-       * with the new ones defined above. To keep the default session user properties,
-       * you need to add them back into the newly declared interface.
-       */
     } & DefaultSession['user'];
   }
 }

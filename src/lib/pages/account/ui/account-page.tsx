@@ -1,5 +1,5 @@
-import { assertUser } from '@features/auth/assert-user';
 import { AccountPage as AccountPageRoute } from '@shared/config/routes';
+import { assertUser } from '@shared/services/auth/api';
 import { Button } from '@ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@ui/card';
 import { Checkbox } from '@ui/checkbox';

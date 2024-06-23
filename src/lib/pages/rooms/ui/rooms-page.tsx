@@ -1,4 +1,4 @@
-import { assertUser } from '@features/auth/assert-user';
+import { assertUser } from '@shared/services/auth/api';
 import { RoomListCard } from '@widgets/rooms/room-list-card';
 import { FC, Suspense } from 'react';
 

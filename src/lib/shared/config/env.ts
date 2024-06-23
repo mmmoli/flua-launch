@@ -1,3 +1,4 @@
+import { vercel } from '@t3-oss/env-core/presets';
 import { createEnv } from '@t3-oss/env-nextjs';
 import { boolean } from 'boolean';
 import { z } from 'zod';
@@ -21,6 +22,8 @@ export const env = createEnv({
     AUTH_DEBUG: zParsedBoolean,
     SENTRY_DSN: z.string().optional(),
     SENTRY_DEBUG: zParsedBoolean,
+    STRIPE_SECRET_KEY: z.string(),
+    STRIPE_WEBHOOK_SECRET: z.string(),
   },
 
   client: {
@@ -30,13 +33,18 @@ export const env = createEnv({
     // duplicate them in the .env files
     NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
     NEXT_PUBLIC_SENTRY_DEBUG: zParsedBoolean,
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string(),
   },
 
   // client side variables for Next.js 14+
   experimental__runtimeEnv: {
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,
     NEXT_PUBLIC_REACT_QUERY_DEVTOOLS: process.env.NEXT_PUBLIC_REACT_QUERY_DEVTOOLS,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
     NEXT_PUBLIC_SENTRY_DEBUG: process.env.NEXT_PUBLIC_SENTRY_DEBUG,
   },
+
+  emptyStringAsUndefined: true,
+  extends: [vercel()],
 });
