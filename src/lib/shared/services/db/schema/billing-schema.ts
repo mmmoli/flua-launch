@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm';
 import { blob, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 import { users } from './auth-schema';
@@ -30,21 +31,14 @@ export const subscriptions = sqliteTable('subscriptions', {
     .references(() => users.id)
     .notNull(),
   status: subscriptionStatus,
+  createdAt: text('created_at')
+    .notNull()
+    .default(sql`(current_timestamp)`),
+  updatedAt: text('updated_at')
+    .notNull()
+    .$onUpdate(() => sql`(current_timestamp)`),
   metadata: blob('metadata'),
 });
 
 export type SubscriptionModel = typeof subscriptions.$inferSelect;
 export type InsertSubscriptionModel = typeof subscriptions.$inferInsert;
-
-// export const usersRelations = relations(users, ({ one }) => ({
-//   subscription: one(subscriptions),
-//   customer: one(customers),
-// }));
-
-// export const customerRelations = relations(customers, ({ one }) => ({
-//   user: one(users),
-// }));
-
-// export const subscriptionsRelations = relations(subscriptions, ({ one }) => ({
-//   user: one(users),
-// }));
