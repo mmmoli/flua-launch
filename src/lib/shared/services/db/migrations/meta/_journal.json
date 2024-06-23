@@ -15,6 +15,13 @@
       "when": 1719104052637,
       "tag": "0001_modern_whistler",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1719176360467,
+      "tag": "0002_lean_mole_man",
+      "breakpoints": true
     }
   ]
 }

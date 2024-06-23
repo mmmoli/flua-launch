@@ -1,7 +1,6 @@
 import { Fail, Ok, Result } from 'rich-domain';
 import Stripe from 'stripe';
 
-import { env } from '../../config/env';
 import {
   BillingServiceTrait,
   CheckoutSession,
@@ -11,8 +10,6 @@ import {
 } from './types';
 
 export class StripeBillingService implements BillingServiceTrait {
-  private BASE_URL = env.VERCEL_URL ?? 'htpp://localhost:3000';
-
   constructor(protected readonly client: Stripe) {}
 
   async createCheckoutSession(data: CreateCheckoutSessionParams): Promise<Result<CheckoutSession>> {
@@ -31,8 +28,10 @@ export class StripeBillingService implements BillingServiceTrait {
             quantity: 1,
           },
         ],
-        success_url: new URL('/dash', 'http://localhost:3000').toString(),
-        cancel_url: new URL('/', 'http://localhost:3000').toString(),
+        // success_url: new URL('/dash', this.BASE_URL).toString(),
+        // cancel_url: new URL('/', this.BASE_URL).toString(),
+        success_url: data.successUrl.toString(),
+        cancel_url: data.cancelUrl?.toString(),
         subscription_data: {
           metadata: {
             payingUserId: String(data.user.id),

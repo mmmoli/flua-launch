@@ -14,10 +14,10 @@ export interface CheckoutSession {
 }
 
 export interface CreateCheckoutSessionParams {
-  cancelUrl?: string;
+  cancelUrl?: URL;
   customerId: string;
   priceId: string;
-  successUrl: string;
+  successUrl: URL;
   user: User;
 }
 

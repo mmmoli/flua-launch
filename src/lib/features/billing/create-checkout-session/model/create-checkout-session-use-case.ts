@@ -1,3 +1,4 @@
+import { env } from '@shared/config/env';
 import { assertUser } from '@shared/services/auth/api';
 import { BillingServiceTrait } from '@shared/services/billing';
 import { Db, eq, schema } from '@shared/services/db';
@@ -47,7 +48,7 @@ export class CreateCheckoutSessionUseCase
       const checkoutSessionResult = await this.deps.billingService.createCheckoutSession({
         user,
         customerId: customer.stripeCustomerId,
-        successUrl: DashPage(null).url,
+        successUrl: new URL(DashPage(null).url, env.VERCEL_URL ?? 'http://localhost:3000'),
         priceId: data.priceId,
       });
 
