@@ -1,9 +1,7 @@
-'use client';
-
 import { DashPage } from '@shared/config/routes';
-import { signIn } from '@shared/services/auth/client';
+import { signIn } from '@shared/services/auth';
 import { Button, ButtonProps } from '@ui/button';
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 
 export interface SignInButtonProps extends ButtonProps {
   network?: 'google';
@@ -16,16 +14,16 @@ export const SignInButton: FC<SignInButtonProps> = ({
   callbackUrl = DashPage(null).url,
   ...props
 }) => {
-  const handleClick = useCallback(() => {
-    signIn(network, {
-      callbackUrl,
-      redirect: true,
-    });
-  }, [network, callbackUrl]);
-
   return (
-    <Button {...props} onClick={handleClick}>
-      {children}
-    </Button>
+    <form
+      action={async () => {
+        'use server';
+        await signIn(network);
+      }}
+    >
+      <Button {...props} type='submit'>
+        {children}
+      </Button>
+    </form>
   );
 };

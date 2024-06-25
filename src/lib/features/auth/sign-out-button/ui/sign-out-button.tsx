@@ -1,26 +1,29 @@
-'use client';
-
-import { signOut, SignOutParams } from '@shared/services/auth/client';
+import { signOut } from '@shared/services/auth';
 import { Button, ButtonProps } from '@ui/button';
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 
 export type SignOutButtonProps = ButtonProps & {
-  signOutParams?: SignOutParams;
+  redirectTo?: string;
 };
 
 export const SignOutButton: FC<SignOutButtonProps> = ({
   children = 'Sign Out',
   variant = 'ghost',
-  signOutParams,
+  redirectTo,
   ...props
 }) => {
-  const handleClick = useCallback(() => {
-    signOut(signOutParams);
-  }, [signOutParams]);
-
   return (
-    <Button variant={variant} {...props} onClick={handleClick}>
-      {children}
-    </Button>
+    <form
+      action={async () => {
+        'use server';
+        await signOut({
+          redirectTo,
+        });
+      }}
+    >
+      <Button variant={variant} {...props} type='submit'>
+        {children}
+      </Button>
+    </form>
   );
 };
