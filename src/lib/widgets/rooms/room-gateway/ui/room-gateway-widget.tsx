@@ -1,9 +1,14 @@
 'use client';
 
 import { RoomModel } from '@entities/room';
-import { LiveCallWidget } from '@widgets/rooms/live-call';
 import { WaitingAreaWidget } from '@widgets/rooms/waiting-area';
-import { FC, useCallback, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { FC, Suspense, useCallback, useState } from 'react';
+
+const LiveCallWidget = dynamic(
+  () => import('@widgets/rooms/live-call').then((mod) => mod.LiveCallWidget),
+  { ssr: false }
+);
 
 export const RoomGatewayWidget: FC<{ room: RoomModel }> = ({ room }) => {
   const [hasEntered, setHasEntered] = useState(false);
@@ -13,7 +18,9 @@ export const RoomGatewayWidget: FC<{ room: RoomModel }> = ({ room }) => {
   }, []);
 
   return hasEntered ? (
-    <LiveCallWidget room={room} />
+    <Suspense>
+      <LiveCallWidget room={room} />
+    </Suspense>
   ) : (
     <WaitingAreaWidget room={room} onEnterCallback={handleEnter} />
   );

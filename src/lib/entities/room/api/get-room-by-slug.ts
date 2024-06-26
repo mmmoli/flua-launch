@@ -2,7 +2,7 @@
 
 import { db } from '@shared/services/db';
 import { cache } from 'react';
-import { Fail, Ok, Result } from 'rich-domain';
+import { Fail, IResult, Ok } from 'rich-domain';
 
 import { RoomModel, RoomModelSlug } from '../lib/types';
 
@@ -11,9 +11,8 @@ export interface GetRoomBySlugParams {
 }
 
 export const getRoomBySlug = cache(
-  async ({ slug }: GetRoomBySlugParams): Promise<Result<RoomModel>> => {
+  async ({ slug }: GetRoomBySlugParams): Promise<IResult<RoomModel>> => {
     try {
-      console.log('getRoomBySlug');
       const room = await db.query.rooms.findFirst({
         where: (room, { eq }) => eq(room.slug, slug),
       });

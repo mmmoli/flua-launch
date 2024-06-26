@@ -1,4 +1,5 @@
 import { assertUser } from '@shared/services/auth/api';
+import { Button } from '@ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -16,7 +17,9 @@ export const DashboardPage: FC = async () => {
           <CardTitle>Rooms</CardTitle>
         </CardHeader>
         <CardContent>
-          <Link href='/r/sdsd-n82z1'>View Room</Link>
+          <Button asChild variant='link' className='px-0'>
+            <Link href='/r/sdsd-n82z1'>Free Room</Link>
+          </Button>
         </CardContent>
       </Card>
     </main>
