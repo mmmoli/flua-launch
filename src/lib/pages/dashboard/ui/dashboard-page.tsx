@@ -1,6 +1,6 @@
 import { assertUser } from '@shared/services/auth/api';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui/card';
-import { OpenRoomForm } from '@widgets/rooms/open-room-form';
+import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
+import Link from 'next/link';
 import { FC } from 'react';
 
 export const DashboardPage: FC = async () => {
@@ -10,20 +10,13 @@ export const DashboardPage: FC = async () => {
   if (!userId) return null;
 
   return (
-    <main>
-      <h1 className='flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0'>
-        Dashboard
-      </h1>
-
-      <Card>
+    <main className='flex h-full items-center justify-center'>
+      <Card className='w-2/5'>
         <CardHeader>
-          <CardTitle>Product Details</CardTitle>
-          <CardDescription>Lipsum dolor sit amet, consectetur adipiscing elit</CardDescription>
+          <CardTitle>Rooms</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className='grid gap-6'>
-            <OpenRoomForm userId={userId} />
-          </div>
+          <Link href='/r/sdsd-n82z1'>View Room</Link>
         </CardContent>
       </Card>
     </main>

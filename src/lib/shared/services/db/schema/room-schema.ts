@@ -1,5 +1,5 @@
 import { createId } from '@paralleldrive/cuid2';
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 import { users } from './auth-schema';
@@ -18,6 +18,13 @@ export const rooms = sqliteTable('room', {
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
 });
+
+export const roomsRelations = relations(rooms, ({ one }) => ({
+  owner: one(users, {
+    fields: [rooms.ownerId],
+    references: [users.id],
+  }),
+}));
 
 export type RoomModel = typeof rooms.$inferSelect;
 export type InsertRoomModel = typeof rooms.$inferInsert;

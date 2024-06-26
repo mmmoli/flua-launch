@@ -22,9 +22,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@shared/*": ["./src/lib/shared/*"],
-      "@widgets/*": ["./src/lib/widgets/*"],
       "@entities/*": ["./src/lib/entities/*"],
       "@features/*": ["./src/lib/features/*"],
+      "@widgets/*": ["./src/lib/widgets/*"],
       "@pages/*": ["./src/lib/pages/*"],
       "@app/*": ["./src/lib/app/*"],
       "@ui/*": ["./src/lib/shared/design-system/components/ui/*"],

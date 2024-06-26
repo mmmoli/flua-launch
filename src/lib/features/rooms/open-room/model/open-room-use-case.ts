@@ -1,3 +1,4 @@
+import { RoomModel } from '@entities/room';
 import { Db, schema } from '@shared/services/db';
 import { Fail, IUseCase, Ok, Result } from 'rich-domain';
 
@@ -8,14 +9,14 @@ export interface OpenRoomUseCaseDeps {
   db: Db;
 }
 
-export class OpenRoomUseCase implements IUseCase<OpenRoomUseCaseDto, Result<void>> {
+export class OpenRoomUseCase implements IUseCase<OpenRoomUseCaseDto, Result<RoomModel>> {
   constructor(protected readonly deps: OpenRoomUseCaseDeps) {}
-  async execute(data: OpenRoomUseCaseDto): Promise<Result<void>> {
+  async execute(data: OpenRoomUseCaseDto): Promise<Result<RoomModel>> {
     'use server';
 
     try {
       const slug = slugify(data.name);
-      await this.deps.db
+      const result = await this.deps.db
         .insert(schema.rooms)
         .values({
           name: data.name,
@@ -23,7 +24,10 @@ export class OpenRoomUseCase implements IUseCase<OpenRoomUseCaseDto, Result<void
           slug,
         })
         .returning();
-      return Ok();
+      const maybeRoom = result.pop();
+      if (!maybeRoom) return Fail('No room created');
+      const room = maybeRoom as RoomModel;
+      return Ok(room);
     } catch (error) {
       console.error(error);
       return Fail('Failed to create room');

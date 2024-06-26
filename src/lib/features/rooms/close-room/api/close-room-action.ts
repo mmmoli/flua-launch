@@ -15,14 +15,10 @@ export const closeRoomAction = async (formData: FormData) => {
   } satisfies CloseRoomUseCaseDto;
 
   const cleaned = CloseRoomUseCaseDtoSchema.safeParse(data);
-  if (!cleaned.success) {
-    throw new Error('Invalid data');
-  }
+  if (!cleaned.success) throw new Error('Invalid data');
 
   const result = await useCase.execute(cleaned.data);
-  if (result.isFail()) {
-    throw new Error('Failed to create room');
-  }
+  if (result.isFail()) throw new Error(result.error());
 
   return true;
 };

@@ -24,7 +24,7 @@ export const SignInPageRoute: Route<{ next?: string }> = ({ next }) => {
 };
 
 export const DashPage: Route = () => ({
-  url: '/dash',
+  url: '/dashboard',
   label: 'Dashboard',
   icon: KanbanSquareDashed,
 });
@@ -33,12 +33,6 @@ export const AboutPage: Route = () => ({
   url: '/about',
   label: 'About',
   icon: Dice5,
-});
-
-export const RoomsPage: Route = () => ({
-  url: '/rooms',
-  label: 'Rooms',
-  icon: BookCopy,
 });
 
 export const WaitinglistPage: Route = () => ({
@@ -65,9 +59,8 @@ export const routes = {
   DashPage,
   HomePage,
   RoomPage,
-  RoomsPage,
   WaitinglistPage,
 };
 
 export const publicRoutes: Route<any | null>[] = [HomePage, AboutPage, WaitinglistPage];
-export const appRoutes: Route<any | null>[] = [DashPage, RoomsPage];
+export const appRoutes: Route<any | null>[] = [DashPage];

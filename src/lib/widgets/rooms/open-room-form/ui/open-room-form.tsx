@@ -27,6 +27,7 @@ export const OpenRoomForm: FC<FormProps> = ({ userId }) => {
     resolver: zodResolver(roomSchema),
     defaultValues: {
       name: '',
+      ownerId: userId,
     },
   });
 
