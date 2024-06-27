@@ -13,4 +13,12 @@ export default withSentryConfig(nextConfig, {
   tunnelRoute: '/monitoring',
   hideSourceMaps: true,
   disableLogger: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
+  },
 });
