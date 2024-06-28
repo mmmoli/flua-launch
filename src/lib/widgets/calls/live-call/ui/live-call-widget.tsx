@@ -1,10 +1,10 @@
 'use client';
 
-import { useSpeakingQueue } from '@entities/call';
 import { RoomModel } from '@entities/room';
-import { JoinSpeakingQueueButton } from '@features/calls/join-speaking-queue-button';
-import { LeaveSpeakingQueueButton } from '@features/calls/leave-speaking-queue-button';
-import { LiveBadge } from '@features/calls/live-badge';
+import { useSpeakingQueue } from '@entities/speaking-queue';
+import { IsSpeakerBadge } from '@features/speaking-queue/is-speaker-badge';
+import { JoinSpeakingQueueButton } from '@features/speaking-queue/join-speaking-queue-button';
+import { LeaveSpeakingQueueButton } from '@features/speaking-queue/leave-speaking-queue-button';
 import { FC, useEffect } from 'react';
 
 export interface LiveCallWidgetProps {
@@ -19,15 +19,6 @@ const user = {
 
 export const LiveCallWidget: FC<LiveCallWidgetProps> = ({ room }) => {
   const queue = useSpeakingQueue();
-  const leave = use;
-
-  useEffect(() => {
-    window &&
-      addEventListener('unload', (event) => {
-        //
-      });
-  }, []);
-
   return (
     <div>
       <h1>Live Call</h1>
@@ -36,7 +27,7 @@ export const LiveCallWidget: FC<LiveCallWidgetProps> = ({ room }) => {
         <JoinSpeakingQueueButton user={user} />
         <LeaveSpeakingQueueButton user={user} />
       </div>
-      <LiveBadge />
+      <IsSpeakerBadge />
       <pre>{JSON.stringify(queue, null, 2)}</pre>
     </div>
   );

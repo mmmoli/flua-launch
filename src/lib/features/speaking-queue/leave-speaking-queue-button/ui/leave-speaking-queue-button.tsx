@@ -1,4 +1,4 @@
-import { useLeaveSpeakingQueue, User, useUserIsInSpeakingQueue } from '@entities/call';
+import { useLeaveSpeakingQueue, User, useUserIsInSpeakingQueue } from '@entities/speaking-queue';
 import { Button, ButtonProps } from '@ui/button';
 import { FC, useCallback } from 'react';
 

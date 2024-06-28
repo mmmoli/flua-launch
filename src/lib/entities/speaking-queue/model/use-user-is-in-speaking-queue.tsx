@@ -1,4 +1,4 @@
-import { User } from './call-model';
+import { User } from './speaking-queue-types';
 import { useSpeakingQueue } from './use-speaking-queue';
 
 export interface UseUserIsInSpeakingQueue {

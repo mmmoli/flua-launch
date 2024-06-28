@@ -1,31 +1,35 @@
 'use client';
 
-import { useJoinCall } from '@entities/call';
+import { useUserHasJoinedCall } from '@entities/call';
 import { RoomModel } from '@entities/room';
-import { Button } from '@ui/button';
-import { FC, useCallback } from 'react';
+import { JoinCallButton } from '@features/calls/join-call-button';
+import dynamic from 'next/dynamic';
+import { FC, Suspense, useCallback } from 'react';
+
+const LiveCallWidget = dynamic(
+  () => import('@widgets/calls/live-call').then((mod) => mod.LiveCallWidget),
+  { ssr: false }
+);
 
 export interface WaitingAreaWidgetProps {
   room: RoomModel;
 }
 
-const user = {
-  id: '1',
-  name: 'John Doe',
-  avatarUrl: 'https://randomuser.me/api/portraits/men/94.jpg',
-};
-
 export const WaitingAreaWidget: FC<WaitingAreaWidgetProps> = ({ room }) => {
-  const join = useJoinCall();
+  const hasJoinedCall = useUserHasJoinedCall();
 
-  const handleClick = useCallback(() => {
-    join(user);
-  }, [join]);
+  if (hasJoinedCall) {
+    return (
+      <Suspense fallback='Joining room…'>
+        <LiveCallWidget room={room} />
+      </Suspense>
+    );
+  }
 
   return (
     <div>
       Waiting Room: {room.name}
-      <Button onClick={handleClick}>Enter</Button>
+      <JoinCallButton roomCode='nzf-pdix-upm' displayName='Michele' />
     </div>
   );
 };

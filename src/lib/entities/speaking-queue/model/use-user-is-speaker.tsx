@@ -1,4 +1,4 @@
-import { useCallStore, User } from './call-model';
+import { User } from './speaking-queue-types';
 import { useSpeaker } from './use-speaker';
 
 export interface UseUserIsSpeakingOpts {
@@ -11,7 +11,7 @@ const USER = {
   avatarUrl: 'https://randomuser.me/api/portraits/men/94.jpg',
 };
 
-export const useUserIsSpeaking = (opts?: UseUserIsSpeakingOpts) => {
+export const useUserIsSpeaker = (opts?: UseUserIsSpeakingOpts) => {
   const user = opts?.user ?? USER;
   const speaker = useSpeaker();
   return speaker ? user.id === speaker.id : false;

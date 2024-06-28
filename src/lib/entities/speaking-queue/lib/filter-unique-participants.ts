@@ -1,4 +1,4 @@
-import { Participant, UserId } from '../model/call-model';
+import { Participant, UserId } from '../model/speaking-queue-types';
 
 export function filterUniqueParticipants(array: Participant[]): Participant[] {
   const seen = new Set<UserId>();

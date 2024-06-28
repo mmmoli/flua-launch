@@ -1,7 +1,6 @@
-import { User } from './call-model';
+import { User } from './speaking-queue-types';
 import { useJoinSpeakingQueue } from './use-join-speaking-queue';
 import { useLeaveSpeakingQueue } from './use-leave-speaking-queue';
-import { useSpeakingQueue } from './use-speaking-queue';
 import { useUserIsInSpeakingQueue } from './use-user-is-in-speaking-queue';
 
 export interface UseToggleJoiningSpeakingQueueOpts {

@@ -1,7 +1,6 @@
+import { CallEntity } from '@entities/call';
 import { RoomEntity, RoomModelSlug } from '@entities/room';
-import { getRoomBySlug } from '@entities/room/api/get-room-by-slug';
-import { RoomGatewayWidget } from '@widgets/rooms/room-gateway';
-import type { Metadata, ResolvingMetadata } from 'next';
+import { WaitingAreaWidget } from '@widgets/rooms/waiting-area';
 import { FC } from 'react';
 
 export interface RoomPageProps {
@@ -9,5 +8,13 @@ export interface RoomPageProps {
 }
 
 export const RoomPage: FC<RoomPageProps> = async ({ params }) => {
-  return <RoomEntity slug={params.slug}>{(room) => <RoomGatewayWidget room={room} />}</RoomEntity>;
+  return (
+    <RoomEntity slug={params.slug}>
+      {(room) => (
+        <CallEntity>
+          <WaitingAreaWidget room={room} />
+        </CallEntity>
+      )}
+    </RoomEntity>
+  );
 };
