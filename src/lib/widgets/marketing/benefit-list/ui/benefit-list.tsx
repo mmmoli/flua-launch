@@ -8,7 +8,7 @@ export interface BenefitListProps {}
 export const BenefitList: FC<BenefitListProps> = () => {
   return (
     <div>
-      <div className='my-8 grid grid-cols-1 gap-4 md:mx-20'>
+      <div className='mx-auto my-8 grid grid-cols-1 gap-8 md:max-w-4xl'>
         {BENEFITS.map((benefit, i) => (
           <BenefitListCard key={benefit.id} benefit={benefit} />
         ))}
