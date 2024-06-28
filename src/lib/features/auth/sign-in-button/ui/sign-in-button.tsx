@@ -9,7 +9,7 @@ export interface SignInButtonProps extends ButtonProps {
 }
 
 export const SignInButton: FC<SignInButtonProps> = ({
-  children = 'Sign In (Google)',
+  children = 'Sign In',
   network = 'google',
   callbackUrl = DashPage(null).url,
   ...props

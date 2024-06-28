@@ -11,11 +11,11 @@ export const HeroSection: FC = () => {
         </h1>
         <p className='mt-6 pr-20 text-2xl leading-8 text-foreground/60'>
           {/* How value is created */}
-          <strong>Speaking Queues</strong> so everyone gets their chance to speak.
+          With <strong>Speaking Queues</strong> so everyone gets their chance to talk.
         </p>
         <div className='mt-8 flex items-center gap-4'>
           {/* What to do next */}
-          <CreateCheckoutSessionButton size='lg' priceId='price_1NxEzFDmsaCawsACwYCuiOBp' />
+          <CreateCheckoutSessionButton size='xl' priceId='price_1NxEzFDmsaCawsACwYCuiOBp' />
           <p className='max-w-80 font-bold text-primary'>People everywhere love this.</p>
         </div>
       </div>

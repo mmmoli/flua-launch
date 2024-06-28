@@ -5,7 +5,7 @@ import { RoomModel } from '@entities/room';
 import { JoinSpeakingQueueButton } from '@features/calls/join-speaking-queue-button';
 import { LeaveSpeakingQueueButton } from '@features/calls/leave-speaking-queue-button';
 import { LiveBadge } from '@features/calls/live-badge';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 export interface LiveCallWidgetProps {
   room: RoomModel;
@@ -19,6 +19,14 @@ const user = {
 
 export const LiveCallWidget: FC<LiveCallWidgetProps> = ({ room }) => {
   const queue = useSpeakingQueue();
+  const leave = use;
+
+  useEffect(() => {
+    window &&
+      addEventListener('unload', (event) => {
+        //
+      });
+  }, []);
 
   return (
     <div>

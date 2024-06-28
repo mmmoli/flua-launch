@@ -21,7 +21,7 @@ export const CreateCheckoutSessionButton: FC<CreateCheckoutSessionButton> = ({
   return (
     <form action={createCheckoutAction}>
       <input type='hidden' name='priceId' value={priceId} />
-      <Button {...props} type='submit' disabled={pending}>
+      <Button {...props} size={size} type='submit' disabled={pending}>
         {children}
       </Button>
     </form>
