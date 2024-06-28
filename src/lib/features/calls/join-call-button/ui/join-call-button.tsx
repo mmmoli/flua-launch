@@ -22,7 +22,13 @@ export const JoinCallButton: FC<JoinCallButtonProps> = ({
     const authToken = await actions.getAuthTokenByRoomCode({
       roomCode,
     });
-    await actions.join({ authToken, userName: displayName });
+    await actions.join({
+      authToken,
+      userName: displayName,
+      rememberDeviceSelection: true,
+      captureNetworkQualityInPreview: false,
+      settings: { isAudioMuted: true },
+    });
     setIsJoining(false);
   }, [actions, roomCode, displayName]);
 

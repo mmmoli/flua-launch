@@ -10,7 +10,7 @@ export interface PeerListProps {}
 export const PeerList: FC<PeerListProps> = () => {
   const peers = usePeers();
   return (
-    <div>
+    <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'>
       {peers.map((peer) => (
         <Peer key={peer.id} peer={peer} />
       ))}
