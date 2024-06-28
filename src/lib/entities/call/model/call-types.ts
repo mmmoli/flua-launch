@@ -1,3 +1,2 @@
-export type Participant = {};
-export * from './use-call-actions';
-export * from './use-call-actions';
+import { HMSPeer } from '@100mslive/react-sdk';
+export type Peer = HMSPeer;

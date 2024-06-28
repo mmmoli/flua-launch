@@ -1,5 +1,6 @@
 'use client';
 
+import { PeerList } from '@entities/call';
 import { RoomModel } from '@entities/room';
 import { useSpeakingQueue } from '@entities/speaking-queue';
 import { IsSpeakerBadge } from '@features/speaking-queue/is-speaker-badge';
@@ -23,6 +24,7 @@ export const LiveCallWidget: FC<LiveCallWidgetProps> = ({ room }) => {
     <div>
       <h1>Live Call</h1>
       <p>Room: {room.name}</p>
+      <PeerList />
       <div className='flex gap-2 border p-2'>
         <JoinSpeakingQueueButton user={user} />
         <LeaveSpeakingQueueButton user={user} />

@@ -3,8 +3,10 @@
 import { useVideo } from '@100mslive/react-sdk';
 import { FC } from 'react';
 
+import { Peer as IPeer } from '../model';
+
 export interface PeerProps {
-  peer: unknown;
+  peer: IPeer;
 }
 
 export const Peer: FC<PeerProps> = ({ peer }) => {
