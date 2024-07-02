@@ -7,10 +7,15 @@ export async function generateMetadata(
   { params }: RoomPageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const roomResult = await getRoomBySlug({ slug: params.slug });
-  if (roomResult.isFail()) throw new Error(roomResult.error());
-  const room = roomResult.value();
-  return {
-    title: room.name,
-  };
+  try {
+    const roomResult = await getRoomBySlug({ slug: params.slug });
+    if (roomResult.isFail()) return {};
+    const room = roomResult.value();
+    return {
+      title: room.name,
+    };
+  } catch (e) {
+    console.error(e);
+    return {};
+  }
 }

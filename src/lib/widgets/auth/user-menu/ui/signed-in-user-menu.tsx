@@ -30,10 +30,14 @@ export const SignedInUserMenu: FC<SignedInUserMenuProps> = ({ user }) => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href={dash.url}>{dash.label}</Link>
+          <Link className='cursor-pointer' href={dash.url}>
+            {dash.label}
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
+        <DropdownMenuItem className='cursor-pointer' onClick={() => signOut()}>
+          Logout
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

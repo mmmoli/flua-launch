@@ -15,7 +15,7 @@ export const RoomEntity: FC<RoomEntityProps> = async ({ slug, children }) => {
     slug,
   });
 
-  if (roomResult.isFail()) throw new Error(roomResult.error());
+  if (roomResult.isFail()) return <div>{JSON.stringify(roomResult.error())}</div>;
   const room = roomResult.value();
 
   return children ? children(room) : null;

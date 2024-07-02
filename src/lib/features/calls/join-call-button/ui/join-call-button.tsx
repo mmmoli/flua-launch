@@ -6,19 +6,22 @@ import { FC, useCallback, useState } from 'react';
 export interface JoinCallButtonProps extends ButtonProps {
   roomCode: string;
   displayName: string;
+  isLoading?: boolean;
 }
 
 export const JoinCallButton: FC<JoinCallButtonProps> = ({
   children = 'Join',
   roomCode,
   displayName,
+  disabled,
+  isLoading = false,
   ...props
 }) => {
   const actions = useCallActions();
-  const [isJoining, setIsJoining] = useState(false);
+  const [isPending, setisPending] = useState(isLoading);
 
   const handleClick = useCallback(async () => {
-    setIsJoining(true);
+    setisPending(true);
     const authToken = await actions.getAuthTokenByRoomCode({
       roomCode,
     });
@@ -29,12 +32,12 @@ export const JoinCallButton: FC<JoinCallButtonProps> = ({
       captureNetworkQualityInPreview: false,
       settings: { isAudioMuted: true },
     });
-    setIsJoining(false);
+    setisPending(false);
   }, [actions, roomCode, displayName]);
 
   return (
-    <Button {...props} disabled={isJoining} onClick={handleClick}>
-      {isJoining ? <Loader2 className='mr-2' /> : null}
+    <Button {...props} disabled={disabled || isPending} onClick={handleClick}>
+      {isPending ? <Loader2 className='mr-2' /> : null}
       {children}
     </Button>
   );

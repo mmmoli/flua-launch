@@ -1,12 +1,14 @@
 'use client';
 
-import { PeerList, useCallActions, useUserHasJoinedCall } from '@entities/call';
+import { useCallActions, useUserHasJoinedCall } from '@entities/call';
 import { RoomModel } from '@entities/room';
-import { JoinCallButton } from '@features/calls/join-call-button';
+import { Banner } from '@ui/banner';
 import dynamic from 'next/dynamic';
-import { FC, Suspense, useCallback, useEffect } from 'react';
-import { Banner } from './banner';
-import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
+import { FC, Suspense, useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+import { WaitingAreaStepOne } from './waiting-area-step-1';
+import { WaitingAreaStepTwo } from './waiting-area-step-2';
 
 const LiveCallWidget = dynamic(
   () => import('@widgets/calls/live-call').then((mod) => mod.LiveCallWidget),
@@ -19,23 +21,11 @@ export interface WaitingAreaWidgetProps {
 
 export const WaitingAreaWidget: FC<WaitingAreaWidgetProps> = ({ room }) => {
   const hasJoinedCall = useUserHasJoinedCall();
-  const actions = useCallActions();
+  const [currentStep, setCurrentStep] = useState(1);
 
-  useEffect(() => {
-    actions
-      .getAuthTokenByRoomCode({
-        roomCode: 'nzf-pdix-upm',
-      })
-      .then((authToken) => {
-        actions.preview({
-          authToken,
-          userName: 'Michele',
-          rememberDeviceSelection: true,
-          captureNetworkQualityInPreview: false,
-          settings: { isAudioMuted: true },
-        });
-      });
-  }, [actions]);
+  const handleNextStep = useCallback(() => {
+    setCurrentStep((s) => s + 1);
+  }, []);
 
   if (hasJoinedCall) {
     return (
@@ -46,31 +36,9 @@ export const WaitingAreaWidget: FC<WaitingAreaWidgetProps> = ({ room }) => {
   }
 
   return (
-    <div>
-      <Banner roomName={room.name} />
-      <div className='flex items-center gap-8'>
-        <Card>
-          <CardHeader>
-            <CardTitle>Join the call</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              You are about to join a call with other participants. Please make sure you are in a
-              quiet environment and have a good internet connection.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Check yourself</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <PeerList />
-            <JoinCallButton roomCode='nzf-pdix-upm' displayName='Michele' />
-          </CardContent>
-        </Card>
-      </div>
+    <div className='flex items-center justify-center'>
+      {currentStep === 1 ? <WaitingAreaStepOne onNext={handleNextStep} /> : null}
+      {currentStep === 2 ? <WaitingAreaStepTwo room={room} /> : null}
     </div>
   );
 };

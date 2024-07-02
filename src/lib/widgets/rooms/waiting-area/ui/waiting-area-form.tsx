@@ -1,6 +1,8 @@
 'use client';
 
+import { useCallActions, useCallContext } from '@entities/call';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@ui/button';
 import {
   Form as DSForm,
   FormControl,
@@ -11,42 +13,91 @@ import {
   FormMessage,
 } from '@ui/form';
 import { Input } from '@ui/input';
-import { SubmitButton } from '@ui/submit-button';
-import { FC } from 'react';
+import { ArrowRight } from 'lucide-react';
+import { FC, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { type WaitingRoomFormSchema, waitingRoomFormSchema } from '../lib/schema';
 
-export interface WaitingRoomFormProps {}
+export interface WaitingRoomFormProps {
+  onSubmit?: (data: WaitingRoomFormSchema) => void;
+  displayName?: string;
+}
 
-export const WaitingRoomForm: FC<WaitingRoomFormProps> = () => {
+export const WaitingRoomForm: FC<WaitingRoomFormProps> = ({ onSubmit, displayName = '' }) => {
+  const [_, setContext] = useCallContext();
+  const actions = useCallActions();
+
   const form = useForm<WaitingRoomFormSchema>({
     resolver: zodResolver(waitingRoomFormSchema),
     defaultValues: {
-      roomCode: '',
+      roomCode: 'nzf-pdix-upm',
+      displayName,
     },
   });
 
+  const handleSubmit = useCallback(
+    async ({ displayName, roomCode }: WaitingRoomFormSchema) => {
+      const authToken = await actions.getAuthTokenByRoomCode({
+        roomCode,
+      });
+
+      actions.preview({
+        authToken,
+        userName: displayName,
+        rememberDeviceSelection: true,
+        captureNetworkQualityInPreview: false,
+        settings: { isAudioMuted: true },
+      });
+
+      setContext({
+        displayName,
+        roomCode,
+      });
+
+      onSubmit?.({ displayName, roomCode });
+    },
+    [actions, setContext, onSubmit]
+  );
+
   return (
-    <DSForm {...form}>
-      <form>
+    <form className='flex flex-col gap-4' onSubmit={form.handleSubmit(handleSubmit)}>
+      <DSForm {...form}>
         <FormField
           control={form.control}
           name='roomCode'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Room Code</FormLabel>
               <FormControl>
-                <Input placeholder='Lit Room' {...field} />
+                <Input {...field} />
               </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
+              <FormDescription>
+                This room needs a code to enter.
+                <br /> Ask the host for the code.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <input type='hidden' name='userId' value={userId} />
-        <SubmitButton size='sm'>Create Room</SubmitButton>
-      </form>
-    </DSForm>
+        <FormField
+          control={form.control}
+          name='displayName'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Your Name</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type='submit' className='flex gap-1' disabled={!form.formState.isValid}>
+          <span>Next</span>
+          <ArrowRight className='size-4' />
+        </Button>
+      </DSForm>
+    </form>
   );
 };

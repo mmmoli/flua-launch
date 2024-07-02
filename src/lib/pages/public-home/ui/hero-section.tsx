@@ -11,7 +11,7 @@ export const HeroSection: FC = () => {
         </h1>
         <p className='mt-6 pr-20 text-2xl leading-8 text-foreground/60'>
           {/* How value is created */}
-          With <strong>Speaking Queues</strong> so everyone gets their chance to talk.
+          With <strong>Speaking Queues</strong> everyone gets their chance to talk.
         </p>
         <div className='mt-8 flex items-center gap-4'>
           {/* What to do next */}

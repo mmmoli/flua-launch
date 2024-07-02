@@ -18,7 +18,7 @@ export const DashboardPage: FC = async () => {
         </CardHeader>
         <CardContent>
           <Button asChild variant='link' className='px-0'>
-            <Link href='/r/sdsd-n82z1'>Free Room</Link>
+            <Link href='/r/awesome-n82z1'>Free Room</Link>
           </Button>
         </CardContent>
       </Card>
