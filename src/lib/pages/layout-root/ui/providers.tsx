@@ -24,7 +24,6 @@ export const Providers: FC<ProvidersProps> = ({ children }) => {
       <SessionProvider>
         <TooltipProvider>
           {children}
-
           {env.NEXT_PUBLIC_REACT_QUERY_DEVTOOLS && <ReactQueryDevtools initialIsOpen={false} />}
         </TooltipProvider>
       </SessionProvider>

@@ -7,16 +7,10 @@ export interface UseToggleJoiningSpeakingQueueOpts {
   user: User;
 }
 
-const USER = {
-  id: '1',
-  name: 'John Doe',
-  avatarUrl: 'https://randomuser.me/api/portraits/men/94.jpg',
-};
-
-export const useToggleJoiningSpeakingQueue = (opts?: UseToggleJoiningSpeakingQueueOpts) => {
-  const user = opts?.user ?? USER;
+export const useToggleJoiningSpeakingQueue = (opts: UseToggleJoiningSpeakingQueueOpts) => {
   const join = useJoinSpeakingQueue();
   const leave = useLeaveSpeakingQueue();
-  const hasJoined = useUserIsInSpeakingQueue();
-  hasJoined ? leave(USER) : join(USER);
+  const hasJoined = useUserIsInSpeakingQueue({ user: opts.user });
+  const fn = hasJoined ? leave : join;
+  fn(opts.user);
 };

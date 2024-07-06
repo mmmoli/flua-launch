@@ -36,10 +36,12 @@ export const env = createEnv({
     NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
     NEXT_PUBLIC_SENTRY_DEBUG: zParsedBoolean,
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string(),
+    NEXT_PUBLIC_LIVEBLOCK_PUBLIC_KEY: z.string(),
   },
 
   // client side variables for Next.js 14+
   experimental__runtimeEnv: {
+    NEXT_PUBLIC_LIVEBLOCK_PUBLIC_KEY: process.env.NEXT_PUBLIC_LIVEBLOCK_PUBLIC_KEY,
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,
     NEXT_PUBLIC_REACT_QUERY_DEVTOOLS: process.env.NEXT_PUBLIC_REACT_QUERY_DEVTOOLS,

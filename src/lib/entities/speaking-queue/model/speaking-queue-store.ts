@@ -1,3 +1,4 @@
+import { client, liveblocks, WithLiveblocks } from '@shared/services/realtime';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -13,28 +14,34 @@ export type Actions = {
   leave: (user: User) => void;
 };
 
-export const useSpeakingQueueStore = create<State & Actions>()(
-  immer((set) => ({
-    queue: [],
+export const useSpeakingQueueStore = create<WithLiveblocks<State & Actions>>()(
+  immer(
+    liveblocks(
+      (set) => ({
+        queue: [],
 
-    join: (user: User) =>
-      set((state) => {
-        const newQueue = filterUniqueParticipants([...state.queue, { ...user, muted: true }]);
-        newQueue[0].muted = false;
-        state.queue = newQueue;
+        join: (user: User) =>
+          set((state) => {
+            const newQueue = filterUniqueParticipants([...state.queue, { ...user, muted: true }]);
+            if (newQueue.length > 0) {
+              newQueue[0].muted = false;
+            }
+            state.queue = [...newQueue];
+          }),
+
+        leave: (user: User) =>
+          set((state) => {
+            const filteredQueue = state.queue.filter((u) => u.id !== user.id);
+            const newQueue = filteredQueue.map((u, index) => ({ ...u, muted: index !== 0 }));
+            state.queue = [...newQueue];
+          }),
       }),
-
-    leave: (user: User) =>
-      set((state) => {
-        const newQueue = state.queue
-          .filter((u) => u.id !== user.id)
-          .map((u) => ({ ...u, muted: true }));
-
-        if (newQueue.length > 0) {
-          newQueue[0].muted = false;
-        }
-
-        state.queue = newQueue;
-      }),
-  }))
+      {
+        client,
+        storageMapping: {
+          queue: true,
+        },
+      }
+    )
+  )
 );

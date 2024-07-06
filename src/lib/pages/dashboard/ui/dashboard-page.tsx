@@ -21,7 +21,7 @@ export const DashboardPage: FC = async () => {
           <OpenRoomButton name='Awesome Room' ownerId={userId} />
 
           <Button asChild variant='link' className='px-0'>
-            <Link href='/r/awesome-n82z1'>Free Room</Link>
+            <Link href='/r/awesome-room-v4mlk'>Free Room</Link>
           </Button>
         </CardContent>
       </Card>

@@ -2,7 +2,7 @@
 
 import { DashPage } from '@shared/config/routes';
 import { db } from '@shared/services/db';
-import { roomService } from '@shared/services/video-conferencing';
+import { roomService } from '@shared/services/video-conferencing/api';
 import { revalidatePath } from 'next/cache';
 
 import { OpenRoomUseCaseDto, OpenRoomUseCaseDtoSchema } from '../lib/schemas';

@@ -5,14 +5,7 @@ export interface UseUserIsInSpeakingQueue {
   user: User;
 }
 
-const USER = {
-  id: '1',
-  name: 'John Doe',
-  avatarUrl: 'https://randomuser.me/api/portraits/men/94.jpg',
-};
-
-export const useUserIsInSpeakingQueue = (opts?: UseUserIsInSpeakingQueue) => {
-  const user = opts?.user ?? USER;
+export const useUserIsInSpeakingQueue = (opts: UseUserIsInSpeakingQueue) => {
   const queue = useSpeakingQueue();
-  return queue.map(({ id }) => id).includes(user.id);
+  return queue.map(({ id }) => id).includes(opts.user.id);
 };

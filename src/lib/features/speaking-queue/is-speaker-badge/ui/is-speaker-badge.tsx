@@ -1,12 +1,13 @@
 import { User, useUserIsSpeaker } from '@entities/speaking-queue';
-import { Button, ButtonProps } from '@ui/button';
+import { Badge, BadgeProps } from '@ui/badge';
 import { FC, useCallback } from 'react';
 
-export interface IsSpeakerBadgeProps extends ButtonProps {
-  user?: User;
+export interface IsSpeakerBadgeProps extends BadgeProps {
+  user: User;
 }
 
-export const IsSpeakerBadge: FC<IsSpeakerBadgeProps> = ({ children = 'Join', user, ...props }) => {
+export const IsSpeakerBadge: FC<IsSpeakerBadgeProps> = ({ children = 'LIVE', user, ...props }) => {
   const isSpeaker = useUserIsSpeaker({ user });
-  return isSpeaker && <div>LIVE</div>;
+  if (!isSpeaker) return null;
+  return <Badge {...props}>{children}</Badge>;
 };

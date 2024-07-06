@@ -12,7 +12,7 @@ export const LeaveSpeakingQueueButton: FC<LeaveSpeakingQueueButtonProps> = ({
   ...props
 }) => {
   const leave = useLeaveSpeakingQueue();
-  const hasJoined = useUserIsInSpeakingQueue();
+  const hasJoined = useUserIsInSpeakingQueue({ user });
 
   const handleClick = useCallback(() => {
     leave(user);

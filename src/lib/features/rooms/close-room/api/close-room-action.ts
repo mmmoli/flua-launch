@@ -1,16 +1,16 @@
 'use server';
 import { db } from '@shared/services/db';
-import { roomService } from '@shared/services/video-conferencing';
+import { roomService } from '@shared/services/video-conferencing/api';
 
 import { CloseRoomUseCaseDto, CloseRoomUseCaseDtoSchema } from '../lib/schemas';
 import { CloseRoomUseCase } from '../model/close-room-use-case';
 
-export const closeRoomAction = async (formData: FormData) => {
-  const useCase = new CloseRoomUseCase({
-    db,
-    roomService,
-  });
+const useCase = new CloseRoomUseCase({
+  db,
+  roomService,
+});
 
+export const closeRoomAction = async (formData: FormData) => {
   const data = {
     roomId: String(formData.get('roomId')),
     userId: String(formData.get('userId')),

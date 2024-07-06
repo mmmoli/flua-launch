@@ -2,17 +2,10 @@ import { User } from './speaking-queue-types';
 import { useSpeaker } from './use-speaker';
 
 export interface UseUserIsSpeakingOpts {
-  user?: User;
+  user: User;
 }
 
-const USER = {
-  id: '1',
-  name: 'John Doe',
-  avatarUrl: 'https://randomuser.me/api/portraits/men/94.jpg',
-};
-
-export const useUserIsSpeaker = (opts?: UseUserIsSpeakingOpts) => {
-  const user = opts?.user ?? USER;
+export const useUserIsSpeaker = (opts: UseUserIsSpeakingOpts) => {
   const speaker = useSpeaker();
-  return speaker ? user.id === speaker.id : false;
+  return speaker ? opts.user.id === speaker.id : false;
 };

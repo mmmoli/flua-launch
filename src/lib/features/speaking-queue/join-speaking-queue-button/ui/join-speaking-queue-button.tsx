@@ -12,7 +12,7 @@ export const JoinSpeakingQueueButton: FC<JoinSpeakingQueueButtonProps> = ({
   ...props
 }) => {
   const join = useJoinSpeakingQueue();
-  const hasJoined = useUserIsInSpeakingQueue();
+  const hasJoined = useUserIsInSpeakingQueue({ user });
 
   const handleClick = useCallback(() => {
     join(user);

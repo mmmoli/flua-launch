@@ -2,13 +2,13 @@
 
 import { useCallActions, useUserHasJoinedCall } from '@entities/call';
 import { RoomModel } from '@entities/room';
-import { Banner } from '@ui/banner';
+import { RealtimeProvider } from '@shared/services/realtime';
 import dynamic from 'next/dynamic';
-import { FC, Suspense, useCallback, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FC, Suspense, useCallback, useState } from 'react';
 
 import { WaitingAreaStepOne } from './waiting-area-step-1';
 import { WaitingAreaStepTwo } from './waiting-area-step-2';
+import { useSession } from '@shared/services/auth/client';
 
 const LiveCallWidget = dynamic(
   () => import('@widgets/calls/live-call').then((mod) => mod.LiveCallWidget),
@@ -20,6 +20,14 @@ export interface WaitingAreaWidgetProps {
 }
 
 export const WaitingAreaWidget: FC<WaitingAreaWidgetProps> = ({ room }) => {
+  const { data: session } = useSession();
+
+  const user = {
+    id: session?.user.id!,
+    name: session?.user.name!,
+    avatarUrl: session?.user.image!,
+  };
+
   const hasJoinedCall = useUserHasJoinedCall();
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -30,7 +38,9 @@ export const WaitingAreaWidget: FC<WaitingAreaWidgetProps> = ({ room }) => {
   if (hasJoinedCall) {
     return (
       <Suspense fallback='Joining room…'>
-        <LiveCallWidget room={room} />
+        <RealtimeProvider>
+          <LiveCallWidget room={room} />
+        </RealtimeProvider>
       </Suspense>
     );
   }
