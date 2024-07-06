@@ -1,5 +1,6 @@
 'use server';
 import { db } from '@shared/services/db';
+import { roomService } from '@shared/services/video-conferencing';
 
 import { CloseRoomUseCaseDto, CloseRoomUseCaseDtoSchema } from '../lib/schemas';
 import { CloseRoomUseCase } from '../model/close-room-use-case';
@@ -7,6 +8,7 @@ import { CloseRoomUseCase } from '../model/close-room-use-case';
 export const closeRoomAction = async (formData: FormData) => {
   const useCase = new CloseRoomUseCase({
     db,
+    roomService,
   });
 
   const data = {

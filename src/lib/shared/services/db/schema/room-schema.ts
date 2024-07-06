@@ -17,6 +17,7 @@ export const rooms = sqliteTable('room', {
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
+  externalId: text('externalId').notNull().unique(),
 });
 
 export const roomsRelations = relations(rooms, ({ one }) => ({

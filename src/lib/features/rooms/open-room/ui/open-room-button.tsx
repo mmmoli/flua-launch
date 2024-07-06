@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, ButtonProps } from '@ui/button';
 import { Loader2 } from 'lucide-react';
 import { FC } from 'react';
@@ -12,7 +14,7 @@ const InnerOpenRoomButton: FC<OpenRoomButtonProps> = ({ children = 'Open Room', 
   const { pending } = useFormStatus();
   return (
     <Button {...props} type='submit' disabled={pending}>
-      {pending ? <Loader2 /> : children}
+      {pending ? <Loader2 className='h-4 w-4 animate-spin' /> : children}
     </Button>
   );
 };

@@ -1,3 +1,4 @@
+import { OpenRoomButton } from '@features/rooms/open-room';
 import { assertUser } from '@shared/services/auth/api';
 import { Button } from '@ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
@@ -17,6 +18,8 @@ export const DashboardPage: FC = async () => {
           <CardTitle>Rooms</CardTitle>
         </CardHeader>
         <CardContent>
+          <OpenRoomButton name='Awesome Room' ownerId={userId} />
+
           <Button asChild variant='link' className='px-0'>
             <Link href='/r/awesome-n82z1'>Free Room</Link>
           </Button>

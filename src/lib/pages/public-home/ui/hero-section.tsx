@@ -1,6 +1,9 @@
 import { CreateCheckoutSessionButton } from '@features/billing/create-checkout-session';
 import { FC, ReactNode } from 'react';
 
+import graphic from '../assets/flua-video-conference-call-graphic.svg';
+import Image from 'next/image';
+
 export const HeroSection: FC = () => {
   return (
     <div className='grid grid-cols-1 items-center justify-center gap-4 p-6 md:grid-cols-2 lg:p-20'>
@@ -11,7 +14,7 @@ export const HeroSection: FC = () => {
         </h1>
         <p className='mt-6 pr-20 text-2xl leading-8 text-foreground/60'>
           {/* How value is created */}
-          With <strong>Speaking Queues</strong> everyone gets their chance to talk.
+          With <strong>Speaking Queues</strong>, everyone gets their chance to talk.
         </p>
         <div className='mt-8 flex items-center gap-4'>
           {/* What to do next */}
@@ -19,7 +22,9 @@ export const HeroSection: FC = () => {
           <p className='max-w-80 font-bold text-primary'>People everywhere love this.</p>
         </div>
       </div>
-      <div className='bg-red-200'>hero Image</div>
+      <div>
+        <Image src={graphic} alt='Flua Video Conference Call Graphic' className='h-auto' />
+      </div>
     </div>
   );
 };

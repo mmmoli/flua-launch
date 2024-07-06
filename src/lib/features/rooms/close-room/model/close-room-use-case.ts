@@ -1,10 +1,12 @@
 import { Db, eq, schema } from '@shared/services/db';
+import { RoomServiceTrait } from '@shared/services/video-conferencing';
 import { Fail, IUseCase, Ok, Result } from 'rich-domain';
 
 import { CloseRoomUseCaseDto } from '../lib/schemas';
 
 export interface CloseRoomDeps {
   db: Db;
+  roomService: RoomServiceTrait;
 }
 
 export class CloseRoomUseCase implements IUseCase<CloseRoomUseCaseDto, Result<void>> {
@@ -13,7 +15,13 @@ export class CloseRoomUseCase implements IUseCase<CloseRoomUseCaseDto, Result<vo
     'use server';
 
     try {
+      const room = await this.deps.db.query.rooms.findFirst({
+        where: (room, { eq }) => eq(room.id, data.roomId),
+      });
+      if (!room) return Fail(`Room not found for id: ${data.roomId}`);
+
       await this.deps.db.delete(schema.rooms).where(eq(schema.rooms.id, data.roomId));
+      await this.deps.roomService.delete(room.externalId);
       return Ok();
     } catch (error) {
       console.error(error);
