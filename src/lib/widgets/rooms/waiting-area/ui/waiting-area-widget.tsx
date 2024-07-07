@@ -2,13 +2,13 @@
 
 import { useCallActions, useUserHasJoinedCall } from '@entities/call';
 import { RoomModel } from '@entities/room';
+import { useSession } from '@shared/services/auth/client';
 import { RealtimeProvider } from '@shared/services/realtime';
 import dynamic from 'next/dynamic';
 import { FC, Suspense, useCallback, useState } from 'react';
 
 import { WaitingAreaStepOne } from './waiting-area-step-1';
 import { WaitingAreaStepTwo } from './waiting-area-step-2';
-import { useSession } from '@shared/services/auth/client';
 
 const LiveCallWidget = dynamic(
   () => import('@widgets/calls/live-call').then((mod) => mod.LiveCallWidget),

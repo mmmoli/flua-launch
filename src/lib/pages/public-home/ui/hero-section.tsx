@@ -1,8 +1,8 @@
 import { CreateCheckoutSessionButton } from '@features/billing/create-checkout-session';
-import { FC, ReactNode } from 'react';
+import Image from 'next/image';
+import { FC } from 'react';
 
 import graphic from '../assets/flua-video-conference-call-graphic.svg';
-import Image from 'next/image';
 
 export const HeroSection: FC = () => {
   return (
