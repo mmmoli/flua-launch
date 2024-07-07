@@ -16,7 +16,7 @@ export const WaitingAreaStepTwo: FC<WaitingAreaProps> = ({ room }) => {
   return (
     <Card className='w-full md:max-w-sm'>
       <CardHeader>
-        <CardTitle>Check yourself</CardTitle>
+        <CardTitle>All Ready?</CardTitle>
       </CardHeader>
       <CardContent>
         <JoinCallButton

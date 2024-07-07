@@ -24,8 +24,10 @@ export const env = createEnv({
     SENTRY_DEBUG: zParsedBoolean,
     STRIPE_SECRET_KEY: z.string(),
     STRIPE_WEBHOOK_SECRET: z.string(),
+    HMS_WEBHOOK_SECRET: z.string(),
     HMS_ACCESS_KEY: z.string(),
     HMS_SECRET: z.string(),
+    LIVEBLOCK_SECRET_KEY: z.string(),
   },
 
   client: {
