@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     }
   } catch (e) {
     console.error(e);
-    return new Response(`Webhook Error: ${e.message}`, { status: 400 });
+    return new Response(`Webhook Error: ${e}`, { status: 400 });
   }
 
   return new Response(JSON.stringify({ received: true }));

@@ -45,6 +45,4 @@ Substitute `pnpm` for your package manager of choice (npm, bun, yarn etc).
 - [Auth.js](https://authjs.dev/): Authentication library ([docs](https://authjs.dev/getting-started/installation?framework=next.js)).
   - via [Drizzle adapter](https://authjs.dev/getting-started/adapters/drizzle)
 - [Google Analytics](https://analytics.google.com/): Via @next/third-parties ([docs](https://nextjs.org/docs/messages/next-script-for-ga)).
-- [TanStack Query](https://tanstack.com/query/): Data fetching library ([docs](https://tanstack.com/query/latest/docs/framework/react/overview)).
-  - configured for build time [pre-fetching and rehydrating](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr#prefetching-and-dehydrating-data)
 - [Sentry](https://sentry.io/): Error tracking and performance monitoring ([docs](https://docs.sentry.io/platforms/javascript/guides/nextjs/))
