@@ -1,6 +1,6 @@
 import { RoomModelId } from '@entities/room';
 import { Button } from '@shared/design-system/components/ui/button';
-import { User } from '@shared/services/auth/client';
+import { UserId } from '@shared/services/auth/client';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +18,7 @@ import { closeRoomAction } from '../api/close-room-action';
 
 export interface CloseRoomDialogProps {
   roomId: RoomModelId;
-  userId: NonNullable<User['id']>;
+  userId: UserId;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onClose?: () => void;

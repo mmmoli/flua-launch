@@ -1,51 +1,46 @@
 'use client';
 
+import { RoomModel } from '@entities/room';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { User } from '@shared/services/auth/client';
+import { UserId } from '@shared/services/auth/client';
 import { Button } from '@ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormDescription,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@ui/form';
 import { Input } from '@ui/input';
 import { toast } from '@ui/sonner';
 import { FC, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { openRoomAction } from '../api/open-room-action';
-import { OpenRoomUseCaseDto, OpenRoomUseCaseDtoSchema } from '../lib/schemas';
+import { renameRoomAction } from '../api/rename-room-action';
+import { RenameRoomUseCaseDto, renameRoomUseCaseDtoSchema } from '../lib/schemas';
 
-export type OpenRoomFormProps = {
-  userId: NonNullable<User['id']>;
-  onSubmit?: (values: OpenRoomUseCaseDto) => void;
+export type RenameRoomFormProps = {
+  userId: UserId;
+  room: RoomModel;
+  onSubmit?: (values: RenameRoomUseCaseDto) => void;
 };
 
-export const OpenRoomForm: FC<OpenRoomFormProps> = ({ onSubmit, userId }) => {
-  const form = useForm<OpenRoomUseCaseDto>({
-    resolver: zodResolver(OpenRoomUseCaseDtoSchema),
+export const RenameRoomForm: FC<RenameRoomFormProps> = ({ onSubmit, userId, room }) => {
+  const form = useForm<RenameRoomUseCaseDto>({
+    resolver: zodResolver(renameRoomUseCaseDtoSchema),
     defaultValues: {
-      tier: 'FREE',
-      ownerId: userId,
+      name: room.name,
+      userId,
+      roomId: room.id,
     },
   });
 
   const handleSubmit = useCallback(
-    async (values: OpenRoomUseCaseDto) => {
-      const tid = toast.loading('Opening room…');
+    async (values: RenameRoomUseCaseDto) => {
+      const tid = toast.loading('Renaming room…');
       try {
         const formData = new FormData();
         formData.append('name', values.name);
-        formData.append('ownerId', values.ownerId);
-        formData.append('tier', values.tier!);
-        await openRoomAction(formData);
+        formData.append('roomId', values.roomId);
+        formData.append('userId', values.userId);
+        await renameRoomAction(formData);
         onSubmit?.(values);
-        toast.success('Room opened!', {
+        toast.success('Room renameed!', {
           id: tid,
         });
       } catch (error) {
@@ -69,7 +64,6 @@ export const OpenRoomForm: FC<OpenRoomFormProps> = ({ onSubmit, userId }) => {
               <FormControl>
                 <Input placeholder={`e.g. "Lit Room"`} {...field} />
               </FormControl>
-              <FormDescription>Choose a unique name for your room.</FormDescription>
               <FormMessage />
             </FormItem>
           )}

@@ -3,6 +3,7 @@ import { RoomListPage } from '@shared/config/routes';
 import { db } from '@shared/services/db';
 import { roomService } from '@shared/services/video-conferencing/api';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 import { CloseRoomUseCaseDto, CloseRoomUseCaseDtoSchema } from '../lib/schemas';
 import { CloseRoomUseCase } from '../model/close-room-use-case';
@@ -25,5 +26,5 @@ export const closeRoomAction = async (formData: FormData) => {
   if (result.isFail()) throw new Error(result.error());
 
   revalidatePath(RoomListPage().url);
-  return true;
+  redirect(RoomListPage().url);
 };
