@@ -4,6 +4,7 @@ import { FC } from 'react';
 
 import { getRoomsForUser } from '../api/get-rooms';
 import { RoomListCardRow } from './room-list-card-row';
+import { RoomListEmpty } from './room-list-empty';
 
 export interface RoomListCardProps {
   userId: string;
@@ -17,6 +18,8 @@ export const RoomListCard: FC<RoomListCardProps> = async ({ userId }) => {
 
   if (roomsResult.isFail()) return <div>Failed to load rooms</div>;
   const rooms = roomsResult.value()!;
+
+  if (rooms.length === 0) return <RoomListEmpty userId={userId} />;
 
   return (
     <Card>

@@ -2,6 +2,7 @@
 
 import { RoomModel } from '@entities/room';
 import { CloseRoomDialog } from '@features/rooms/close-room';
+import { RoomPage, RoomSettingsPage } from '@shared/config/routes';
 import { UserId } from '@shared/services/auth/client';
 import { Button } from '@ui/button';
 import {
@@ -13,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from '@ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
+import Link from 'next/link';
 import { ComponentPropsWithoutRef, FC, useState } from 'react';
 
 export interface RoomListCardRowMenuProps {
@@ -48,10 +50,15 @@ export const RoomListCardRowMenu: FC<
         <DropdownMenuContent side='left'>
           <DropdownMenuLabel>{room.name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
+
+          <DropdownMenuItem className='cursor-pointer' asChild>
+            <Link href={RoomPage({ slug: room.slug }).url}>Join</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className='cursor-pointer' asChild>
+            <Link href={RoomSettingsPage({ slug: room.slug }).url}>Manage</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
               setMenuState((s) => ({ ...s, close: true, menu: false }));
             }}
             className='cursor-pointer'
