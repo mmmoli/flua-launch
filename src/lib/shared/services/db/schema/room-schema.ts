@@ -4,6 +4,8 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 import { users } from './auth-schema';
 
+export const roomTiers = ['FREE', 'PRO'] as const;
+
 export const rooms = sqliteTable('room', {
   id: text('id')
     .primaryKey()
@@ -18,6 +20,8 @@ export const rooms = sqliteTable('room', {
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
   externalId: text('externalId').notNull().unique(),
+  roomCode: text('roomCode'),
+  tier: text('tier', { enum: roomTiers }).notNull().default('FREE'),
 });
 
 export const roomsRelations = relations(rooms, ({ one }) => ({

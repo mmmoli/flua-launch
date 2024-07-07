@@ -1,0 +1,1 @@
+ALTER TABLE `room` ADD `tier` text DEFAULT 'FREE' NOT NULL;

@@ -1,6 +1,8 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
+import { OpenRoomUseCase } from '@features/rooms/open-room/model/open-room-use-case';
 import { env } from '@shared/config/env';
 import { db, schema } from '@shared/services/db';
+import { roomService } from '@shared/services/video-conferencing/api';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
 
@@ -44,6 +46,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           stripeCustomerId: customer.customerId,
         })
         .onConflictDoNothing();
+
+      const useCase = new OpenRoomUseCase({
+        db,
+        roomService,
+      });
+
+      const result = await useCase.execute({ name: 'My Free Room', ownerId: user.id });
+      if (result.isFail()) console.error(`Failed to create free room for user: ${result.error()}`);
     },
   },
   trustHost: true,

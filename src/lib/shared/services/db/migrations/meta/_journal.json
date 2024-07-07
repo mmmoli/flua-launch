@@ -15,6 +15,20 @@
       "when": 1719914146581,
       "tag": "0001_graceful_starfox",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1720304799002,
+      "tag": "0002_graceful_otto_octavius",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1720308914140,
+      "tag": "0003_easy_pretty_boy",
+      "breakpoints": true
     }
   ]
 }

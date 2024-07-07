@@ -1,8 +1,7 @@
 import { Room, SDK } from '@100mslive/server-sdk';
 import { Fail, IResult, Ok } from 'rich-domain';
 
-import { RoomModel, RoomModelSlug } from '../types';
-import { RegisterRoomResponse, RoomServiceTrait } from './room-service-trait';
+import { CreateRoomParams, RegisterRoomResponse, RoomServiceTrait } from './room-service-trait';
 
 export interface HMSRoomServiceDeps {
   client: SDK;
@@ -11,13 +10,19 @@ export interface HMSRoomServiceDeps {
 export class HMSRoomService implements RoomServiceTrait {
   constructor(protected readonly deps: HMSRoomServiceDeps) {}
 
-  async create(slug: RoomModelSlug): Promise<IResult<RegisterRoomResponse>> {
+  async create({ roomSlug }: CreateRoomParams): Promise<IResult<RegisterRoomResponse>> {
     try {
       const hmsRoom = await this.deps.client.rooms.create({
-        name: slug,
+        name: roomSlug,
       });
+      const roomCodes = await this.deps.client.roomCodes.create(hmsRoom.id);
+      const roomCode = roomCodes.pop();
+
+      if (!roomCode) return Fail('Failed to create room code');
+
       return Ok({
         externalId: hmsRoom.id,
+        roomCode: roomCode.code,
       });
     } catch (e) {
       console.error(e);

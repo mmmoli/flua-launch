@@ -19,9 +19,11 @@ export class OpenRoomUseCase implements IUseCase<OpenRoomUseCaseDto, Result<Room
     try {
       const slug = slugify(data.name);
 
-      const serviceResult = await this.deps.roomService.create(slug);
+      const serviceResult = await this.deps.roomService.create({
+        roomSlug: slug,
+      });
       if (serviceResult.isFail()) return Fail(serviceResult.error());
-      const externalId = serviceResult.value().externalId;
+      const { externalId, roomCode } = serviceResult.value();
 
       const result = await this.deps.db
         .insert(schema.rooms)
@@ -29,6 +31,7 @@ export class OpenRoomUseCase implements IUseCase<OpenRoomUseCaseDto, Result<Room
           ...data,
           slug,
           externalId,
+          roomCode,
         })
         .returning();
 

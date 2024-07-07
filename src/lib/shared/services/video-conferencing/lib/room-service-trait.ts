@@ -1,12 +1,18 @@
 import { IResult } from 'rich-domain';
 
-import { RoomModel, RoomModelSlug } from '../types';
+import { RoomModelSlug, RoomTier } from '../types';
+
+export interface CreateRoomParams {
+  roomSlug: RoomModelSlug;
+  tier?: RoomTier;
+}
 
 export interface RegisterRoomResponse {
   externalId: string;
+  roomCode: string;
 }
 
 export interface RoomServiceTrait {
-  create(roomSlug: RoomModelSlug): Promise<IResult<RegisterRoomResponse>>;
+  create(params: CreateRoomParams): Promise<IResult<RegisterRoomResponse>>;
   delete(externalId: string): Promise<IResult<void>>;
 }
