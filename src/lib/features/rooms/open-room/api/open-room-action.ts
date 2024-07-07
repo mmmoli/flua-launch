@@ -1,6 +1,6 @@
 'use server';
 
-import { DashPage } from '@shared/config/routes';
+import { RoomListPage } from '@shared/config/routes';
 import { db } from '@shared/services/db';
 import { roomService } from '@shared/services/video-conferencing/api';
 import { revalidatePath } from 'next/cache';
@@ -25,6 +25,6 @@ export const openRoomAction = async (formData: FormData) => {
   const result = await useCase.execute(cleaned.data);
   if (result.isFail()) throw new Error(result.error());
 
-  revalidatePath(DashPage().url);
+  revalidatePath(RoomListPage().url);
   return result.value();
 };

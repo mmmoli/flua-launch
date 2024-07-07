@@ -1,6 +1,7 @@
 'use client';
 
 import { RoomModel } from '@entities/room';
+import { UserId } from '@shared/services/auth/client';
 import { Badge } from '@ui/badge';
 import { Button } from '@ui/button';
 import {
@@ -11,37 +12,29 @@ import {
   DropdownMenuTrigger,
 } from '@ui/dropdown-menu';
 import { TableCell, TableRow } from '@ui/table';
+import { formatDistanceToNow } from 'date-fns';
 import { MoreHorizontal } from 'lucide-react';
 import { FC } from 'react';
 
+import { RoomListCardRowMenu } from './room-list-card-row-menu';
+
 export interface RoomListCardRowProps {
   room: RoomModel;
+  userId: UserId;
 }
 
-export const RoomListCardRow: FC<RoomListCardRowProps> = ({ room: { name, createdAt } }) => {
+export const RoomListCardRow: FC<RoomListCardRowProps> = ({ room, userId }) => {
+  const since = formatDistanceToNow(new Date(room.createdAt));
   return (
     <TableRow>
-      <TableCell className='font-medium'>{name}</TableCell>
+      <TableCell className='font-medium'>{room.name}</TableCell>
       <TableCell>
-        <Badge variant='outline'>Draft</Badge>
+        <Badge variant='outline'>{room.tier}</Badge>
       </TableCell>
-      <TableCell className='hidden md:table-cell'>$499.99</TableCell>
-      <TableCell className='hidden md:table-cell'>25</TableCell>
-      <TableCell className='hidden md:table-cell'>{createdAt.toString()}</TableCell>
+      <TableCell className='font-mono text-xs'>{room.roomCode}</TableCell>
+      <TableCell className='hidden md:table-cell'>{since}</TableCell>
       <TableCell>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button aria-haspopup='true' size='icon' variant='ghost'>
-              <MoreHorizontal className='h-4 w-4' />
-              <span className='sr-only'>Toggle menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <RoomListCardRowMenu userId={userId} room={room} />
       </TableCell>
     </TableRow>
   );

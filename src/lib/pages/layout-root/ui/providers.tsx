@@ -1,6 +1,7 @@
 'use client';
 
 import { SessionProvider } from '@shared/services/auth/client';
+import { Toaster } from '@ui/sonner';
 import { TooltipProvider } from '@ui/tooltip';
 import { FC, ReactNode, useState } from 'react';
 
@@ -12,6 +13,7 @@ export const Providers: FC<ProvidersProps> = ({ children }) => {
   return (
     <SessionProvider>
       <TooltipProvider>{children}</TooltipProvider>
+      <Toaster />
     </SessionProvider>
   );
 };

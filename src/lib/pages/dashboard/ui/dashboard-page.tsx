@@ -1,4 +1,3 @@
-import { assertUser } from '@shared/services/auth/api';
 import { FreeRoomCard } from '@widgets/rooms/free-room-card';
 import { FC } from 'react';
 

@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@ui/card';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@ui/table';
 import { FC } from 'react';
 
@@ -12,6 +12,7 @@ export interface RoomListCardProps {
 export const RoomListCard: FC<RoomListCardProps> = async ({ userId }) => {
   const roomsResult = await getRoomsForUser({
     ownerId: userId,
+    orderBy: 'name',
   });
 
   if (roomsResult.isFail()) return <div>Failed to load rooms</div>;
@@ -20,17 +21,15 @@ export const RoomListCard: FC<RoomListCardProps> = async ({ userId }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Rooms</CardTitle>
-        <CardDescription>Manage your products and view their sales performance.</CardDescription>
+        <CardTitle>Your Rooms</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className='hidden md:table-cell'>Price</TableHead>
-              <TableHead className='hidden md:table-cell'>Total Sales</TableHead>
+              <TableHead>Tier</TableHead>
+              <TableHead>Entry Code</TableHead>
               <TableHead className='hidden md:table-cell'>Created at</TableHead>
               <TableHead>
                 <span className='sr-only'>Actions</span>
@@ -39,14 +38,14 @@ export const RoomListCard: FC<RoomListCardProps> = async ({ userId }) => {
           </TableHeader>
           <TableBody>
             {rooms.map((room) => (
-              <RoomListCardRow key={room.id} room={room} />
+              <RoomListCardRow userId={userId} key={room.id} room={room} />
             ))}
           </TableBody>
         </Table>
       </CardContent>
       <CardFooter>
         <div className='text-xs text-muted-foreground'>
-          Showing <strong>1-10</strong> of <strong>{rooms.length}</strong> Rooms
+          Showing <strong>1-{rooms.length}</strong> Rooms
         </div>
       </CardFooter>
     </Card>

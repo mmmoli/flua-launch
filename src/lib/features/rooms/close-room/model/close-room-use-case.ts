@@ -20,8 +20,12 @@ export class CloseRoomUseCase implements IUseCase<CloseRoomUseCaseDto, Result<vo
       });
       if (!room) return Fail(`Room not found for id: ${data.roomId}`);
 
-      await this.deps.db.delete(schema.rooms).where(eq(schema.rooms.id, data.roomId));
-      await this.deps.roomService.delete(room.externalId);
+      if (room.ownerId !== data.userId) return Fail('You are not the owner of this room');
+
+      await Promise.all([
+        this.deps.db.delete(schema.rooms).where(eq(schema.rooms.id, data.roomId)),
+        this.deps.roomService.delete(room.externalId),
+      ]);
       return Ok();
     } catch (error) {
       console.error(error);
