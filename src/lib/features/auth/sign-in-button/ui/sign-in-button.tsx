@@ -11,7 +11,7 @@ export interface SignInButtonProps extends ButtonProps {
 export const SignInButton: FC<SignInButtonProps> = ({
   children = 'Sign In',
   network = 'google',
-  callbackUrl = DashPage(null).url,
+  callbackUrl = DashPage().url,
   ...props
 }) => {
   return (

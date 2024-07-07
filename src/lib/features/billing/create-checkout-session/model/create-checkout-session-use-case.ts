@@ -47,7 +47,7 @@ export class CreateCheckoutSessionUseCase
       const checkoutSessionResult = await this.deps.billingService.createCheckoutSession({
         user,
         customerId: customer.stripeCustomerId,
-        successUrl: new URL(DashPage(null).url, env.VERCEL_URL ?? 'http://localhost:3000'),
+        successUrl: new URL(DashPage().url, env.VERCEL_URL ?? 'http://localhost:3000'),
         priceId: data.priceId,
       });
 

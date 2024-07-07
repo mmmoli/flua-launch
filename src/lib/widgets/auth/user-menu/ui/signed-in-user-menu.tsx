@@ -19,7 +19,7 @@ export interface SignedInUserMenuProps {
 }
 
 export const SignedInUserMenu: FC<SignedInUserMenuProps> = ({ user }) => {
-  const dash = DashPage(null);
+  const dash = DashPage();
 
   return (
     <DropdownMenu>

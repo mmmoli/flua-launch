@@ -1,11 +1,15 @@
 import { BookCopy, Dice5, DoorOpen, Gift, Home, KanbanSquareDashed } from 'lucide-react';
 import { ComponentType } from 'react';
 
-export type Route<T = null> = (params: T) => {
+export type RouteDefinition = {
   url: string;
   label: string;
   icon: ComponentType<{ className?: string }>;
 };
+
+export type Route<T = undefined> = T extends undefined
+  ? () => RouteDefinition
+  : (params: T) => RouteDefinition;
 
 export const HomePage: Route = () => ({
   url: '/',
@@ -13,7 +17,8 @@ export const HomePage: Route = () => ({
   icon: Home,
 });
 
-export const SignInPageRoute: Route<{ next?: string }> = ({ next }) => {
+export const SignInPageRoute: Route<{ next?: string }> = (params = {}) => {
+  const { next } = params;
   const url = '/sign-in';
   if (next) url.concat('?next=', encodeURIComponent(next));
   return {

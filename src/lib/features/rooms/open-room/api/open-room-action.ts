@@ -25,6 +25,6 @@ export const openRoomAction = async (formData: FormData) => {
   const result = await useCase.execute(cleaned.data);
   if (result.isFail()) throw new Error(result.error());
 
-  revalidatePath(DashPage(null).url);
+  revalidatePath(DashPage().url);
   return result.value();
 };
