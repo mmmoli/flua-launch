@@ -1,4 +1,4 @@
-import { appRoutes } from '@shared/config/routes';
+import { AccountPage, appRoutes } from '@shared/config/routes';
 import { Button } from '@ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@ui/sheet';
 import { UserMenu } from '@widgets/auth/user-menu';
@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 
 const nav = appRoutes.map((route) => route({}));
+const account = AccountPage();
 
 export const Header: FC = () => (
   <header className='sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6'>
@@ -37,6 +38,14 @@ export const Header: FC = () => (
                 {item.label}
               </Link>
             ))}
+            <Link
+              key={account.label}
+              href={account.url}
+              className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
+            >
+              <account.icon className='h-5 w-5' />
+              {account.label}
+            </Link>
           </nav>
         </SheetContent>
       </Sheet>

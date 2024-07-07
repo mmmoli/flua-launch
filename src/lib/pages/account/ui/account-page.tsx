@@ -2,8 +2,6 @@ import { AccountPage as AccountPageRoute } from '@shared/config/routes';
 import { assertUser } from '@shared/services/auth/api';
 import { Button } from '@ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@ui/card';
-import { Checkbox } from '@ui/checkbox';
-import { Input } from '@ui/input';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -16,65 +14,31 @@ export const metadata: Metadata = {
 export const AccountPage: FC = async () => {
   await assertUser({ next: AccountPageRoute().url });
   return (
-    <div className='flex min-h-screen w-full flex-col'>
-      <main className='flex flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10'>
-        <div className='mx-auto grid w-full max-w-6xl gap-2'>
-          <h1 className='text-3xl font-semibold'>Account</h1>
+    <>
+      <div className='mx-auto grid w-full max-w-6xl gap-2'>
+        <h1 className='text-3xl font-semibold'>Account</h1>
+      </div>
+
+      <div className='mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]'>
+        <nav className='grid gap-4 text-sm text-muted-foreground'>
+          <Link href='#billing'>Billing</Link>
+        </nav>
+        <div className='grid gap-6'>
+          <Card id='billing'>
+            <CardHeader>
+              <CardTitle>Billing</CardTitle>
+              <CardDescription>Used to identify your room when people join.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button asChild>
+                <a href='https://billing.stripe.com/p/login/test_6oE2ce9n0b6Fc5W7ss'>
+                  Visit Billing Portal
+                </a>
+              </Button>
+            </CardContent>
+          </Card>
         </div>
-        <div className='mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]'>
-          <nav className='grid gap-4 text-sm text-muted-foreground' x-chunk='dashboard-04-chunk-0'>
-            <Link href='#' className='font-semibold text-primary'>
-              General
-            </Link>
-            <Link href='#'>Security</Link>
-            <Link href='#'>Integrations</Link>
-            <Link href='#'>Support</Link>
-            <Link href='#'>Organizations</Link>
-            <Link href='#'>Advanced</Link>
-          </nav>
-          <div className='grid gap-6'>
-            <Card x-chunk='dashboard-04-chunk-1'>
-              <CardHeader>
-                <CardTitle>Store Name</CardTitle>
-                <CardDescription>Used to identify your store in the marketplace.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form>
-                  <Input placeholder='Store Name' />
-                </form>
-              </CardContent>
-              <CardFooter className='border-t px-6 py-4'>
-                <Button>Save</Button>
-              </CardFooter>
-            </Card>
-            <Card x-chunk='dashboard-04-chunk-2'>
-              <CardHeader>
-                <CardTitle>Plugins Directory</CardTitle>
-                <CardDescription>
-                  The directory within your project, in which your plugins are located.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form className='flex flex-col gap-4'>
-                  <Input placeholder='Project Name' defaultValue='/content/plugins' />
-                  <div className='flex items-center space-x-2'>
-                    <Checkbox id='include' defaultChecked />
-                    <label
-                      htmlFor='include'
-                      className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                    >
-                      Allow administrators to change the directory.
-                    </label>
-                  </div>
-                </form>
-              </CardContent>
-              <CardFooter className='border-t px-6 py-4'>
-                <Button>Save</Button>
-              </CardFooter>
-            </Card>
-          </div>
-        </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 };

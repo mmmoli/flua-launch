@@ -1,13 +1,14 @@
 'use client';
 
-import { DashPage } from '@shared/config/routes';
+import { AccountPage, DashPage } from '@shared/config/routes';
 import { signOut, User } from '@shared/services/auth/client';
+import { initials } from '@shared/utils';
+import { Avatar, AvatarFallback, AvatarImage } from '@ui/avatar';
 import { buttonVariants } from '@ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@ui/dropdown-menu';
@@ -18,20 +19,28 @@ export interface SignedInUserMenuProps {
   user: User;
 }
 
-export const SignedInUserMenu: FC<SignedInUserMenuProps> = ({ user }) => {
-  const dash = DashPage();
+const dash = DashPage();
+const account = AccountPage();
 
+export const SignedInUserMenu: FC<SignedInUserMenuProps> = ({ user }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className={buttonVariants({ variant: 'outline' })}>
-        {user.name}
+      <DropdownMenuTrigger className='flex items-center gap-2 text-sm'>
+        <Avatar className='h-6 w-6'>
+          {user.image ? <AvatarImage src={user.image} alt={user.name!} /> : null}
+          <AvatarFallback>{initials(user.name!)}</AvatarFallback>
+        </Avatar>
+        <span>{user.name}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link className='cursor-pointer' href={dash.url}>
             {dash.label}
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link className='cursor-pointer' href={account.url}>
+            {account.label}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />

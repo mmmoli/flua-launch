@@ -1,4 +1,13 @@
-import { BookCopy, Cog, Dice5, DoorOpen, Gift, Home, KanbanSquareDashed } from 'lucide-react';
+import {
+  BookCopy,
+  Dice5,
+  DoorOpen,
+  Gift,
+  Home,
+  KanbanSquareDashed,
+  Settings,
+  User,
+} from 'lucide-react';
 import { ComponentType } from 'react';
 
 export type RouteDefinition = {
@@ -61,13 +70,13 @@ export const RoomListPage: Route = () => ({
 export const RoomSettingsPage: Route<{ slug: string }> = ({ slug }) => ({
   url: `/rooms/${slug}`,
   label: 'Room Settings',
-  icon: Cog,
+  icon: Settings,
 });
 
 export const AccountPage: Route = () => ({
   url: `/account`,
   label: 'Account',
-  icon: Home,
+  icon: User,
 });
 
 export const routes = {

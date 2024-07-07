@@ -1,10 +1,11 @@
-import { appRoutes } from '@shared/config/routes';
+import { AccountPage, appRoutes } from '@shared/config/routes';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@ui/tooltip';
 import { Settings } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
 
 const nav = appRoutes.map((route) => route({}));
+const account = AccountPage();
 
 export const SideNav: FC = () => (
   <aside className='fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex'>
@@ -28,14 +29,14 @@ export const SideNav: FC = () => (
       <Tooltip>
         <TooltipTrigger asChild>
           <Link
-            href='#'
+            href={account.url}
             className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
           >
-            <Settings className='h-5 w-5' />
-            <span className='sr-only'>Settings</span>
+            <account.icon className='h-5 w-5' />
+            <span className='sr-only'>{account.label}</span>
           </Link>
         </TooltipTrigger>
-        <TooltipContent side='right'>Settings</TooltipContent>
+        <TooltipContent side='right'>{account.label}</TooltipContent>
       </Tooltip>
     </nav>
   </aside>
