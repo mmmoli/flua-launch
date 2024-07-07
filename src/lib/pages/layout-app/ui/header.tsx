@@ -49,7 +49,6 @@ export const Header: FC = () => (
           </nav>
         </SheetContent>
       </Sheet>
-      <div>something</div>
     </div>
 
     <UserMenu />

@@ -8,7 +8,7 @@ export interface RoomListBannerProps {
 
 export const RoomListBanner: FC<RoomListBannerProps> = async ({ userId }) => {
   return (
-    <div className='flex items-baseline justify-end'>
+    <div className='flex items-baseline'>
       <OpenRoomDialog userId={userId} />
     </div>
   );
