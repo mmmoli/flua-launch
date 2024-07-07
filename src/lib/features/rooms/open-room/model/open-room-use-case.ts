@@ -1,10 +1,10 @@
 import { RoomModel } from '@entities/room';
 import { Db, schema } from '@shared/services/db';
 import { RoomServiceTrait } from '@shared/services/video-conferencing';
+import { slugify } from '@shared/utils';
 import { Fail, IUseCase, Ok, Result } from 'rich-domain';
 
 import { OpenRoomUseCaseDto } from '../lib/schemas';
-import { slugify } from '../lib/slugify';
 
 export interface OpenRoomUseCaseDeps {
   db: Db;

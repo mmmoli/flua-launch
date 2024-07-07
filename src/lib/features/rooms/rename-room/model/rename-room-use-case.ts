@@ -1,9 +1,9 @@
 import { RoomModelSlug } from '@entities/room';
 import { Db, eq, schema } from '@shared/services/db';
+import { slugify } from '@shared/utils';
 import { Fail, IUseCase, Ok, Result } from 'rich-domain';
 
 import { RenameRoomUseCaseDto } from '../lib/schemas';
-import { slugify } from '../lib/slugify';
 
 export interface RenameRoomUseCaseDeps {
   db: Db;
