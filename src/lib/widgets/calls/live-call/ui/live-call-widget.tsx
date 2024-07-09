@@ -1,14 +1,15 @@
 'use client';
 
-import { PeerList } from '@entities/call';
+import { useLocalPeer } from '@entities/call';
 import { RoomModel } from '@entities/room';
-import { useSpeakingQueue, useSpeakingQueueStore } from '@entities/speaking-queue';
+import { Person, useSpeakingQueue, useSpeakingQueueStore } from '@entities/speaking-queue';
 import { IsSpeakerBadge } from '@features/speaking-queue/is-speaker-badge';
 import { JoinSpeakingQueueButton } from '@features/speaking-queue/join-speaking-queue-button';
 import { LeaveSpeakingQueueButton } from '@features/speaking-queue/leave-speaking-queue-button';
 import { SpeakerPositionBadge } from '@features/speaking-queue/speaker-position-badge';
-import { useSession } from '@shared/services/auth/client';
 import { FC, useEffect } from 'react';
+
+import { PeerList } from '../../peer-list';
 
 export interface LiveCallWidgetProps {
   room: RoomModel;
@@ -17,11 +18,8 @@ export interface LiveCallWidgetProps {
 export const LiveCallWidget: FC<LiveCallWidgetProps> = ({ room }) => {
   const {
     liveblocks: { enterRoom, leaveRoom },
-    queue,
   } = useSpeakingQueueStore();
-
-  const { data } = useSession();
-  const user = data?.user!;
+  const videoUser = useLocalPeer();
 
   useEffect(() => {
     enterRoom(room.id);
@@ -30,18 +28,20 @@ export const LiveCallWidget: FC<LiveCallWidgetProps> = ({ room }) => {
     };
   }, [enterRoom, leaveRoom, room.id]);
 
+  if (!videoUser) return null;
+  const person: Person = {
+    id: videoUser.id,
+  };
+
   return (
-    <div>
-      <h1>Live Call</h1>
-      <p>Room: {room.name}</p>
+    <>
+      <IsSpeakerBadge user={videoUser} />
       <PeerList />
       <div className='flex gap-2 border p-2'>
-        <JoinSpeakingQueueButton user={user} />
-        <LeaveSpeakingQueueButton user={user} />
+        <JoinSpeakingQueueButton size='sm' user={person} />
+        <LeaveSpeakingQueueButton size='sm' variant='ghost' user={person} />
       </div>
-      <IsSpeakerBadge user={user} />
-      <SpeakerPositionBadge user={user} />
-      <pre>{JSON.stringify(queue, null, 2)}</pre>
-    </div>
+      <SpeakerPositionBadge user={person} />
+    </>
   );
 };

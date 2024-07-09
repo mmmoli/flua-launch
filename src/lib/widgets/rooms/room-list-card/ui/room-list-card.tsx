@@ -33,7 +33,7 @@ export const RoomListCard: FC<RoomListCardProps> = async ({ userId }) => {
               <TableHead>Name</TableHead>
               <TableHead>Tier</TableHead>
               <TableHead>Entry Code</TableHead>
-              <TableHead className='hidden md:table-cell'>Created at</TableHead>
+              <TableHead className='hidden md:table-cell'>Created</TableHead>
               <TableHead>
                 <span className='sr-only'>Actions</span>
               </TableHead>

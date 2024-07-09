@@ -1,9 +1,9 @@
-import { usePositionInSpeakingQueue, User, useUserIsSpeaker } from '@entities/speaking-queue';
+import { Person, usePositionInSpeakingQueue, useUserIsSpeaker } from '@entities/speaking-queue';
 import { Badge, BadgeProps } from '@ui/badge';
 import { FC, useCallback } from 'react';
 
 export interface SpeakerPositionBadgeProps extends BadgeProps {
-  user: User;
+  user: Person;
 }
 
 export const SpeakerPositionBadge: FC<SpeakerPositionBadgeProps> = ({

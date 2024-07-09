@@ -1,9 +1,9 @@
-import { useJoinSpeakingQueue, User, useUserIsInSpeakingQueue } from '@entities/speaking-queue';
+import { Person, useJoinSpeakingQueue, useUserIsInSpeakingQueue } from '@entities/speaking-queue';
 import { Button, ButtonProps } from '@ui/button';
 import { FC, useCallback } from 'react';
 
 export interface JoinSpeakingQueueButtonProps extends ButtonProps {
-  user: User;
+  user: Person;
 }
 
 export const JoinSpeakingQueueButton: FC<JoinSpeakingQueueButtonProps> = ({

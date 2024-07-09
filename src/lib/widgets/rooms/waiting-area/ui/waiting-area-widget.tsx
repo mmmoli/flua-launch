@@ -2,7 +2,6 @@
 
 import { useCallActions, useUserHasJoinedCall } from '@entities/call';
 import { RoomModel } from '@entities/room';
-import { useSession } from '@shared/services/auth/client';
 import { RealtimeProvider } from '@shared/services/realtime';
 import dynamic from 'next/dynamic';
 import { FC, Suspense, useCallback, useState } from 'react';
@@ -20,14 +19,6 @@ export interface WaitingAreaWidgetProps {
 }
 
 export const WaitingAreaWidget: FC<WaitingAreaWidgetProps> = ({ room }) => {
-  const { data: session } = useSession();
-
-  const user = {
-    id: session?.user.id!,
-    name: session?.user.name!,
-    avatarUrl: session?.user.image!,
-  };
-
   const hasJoinedCall = useUserHasJoinedCall();
   const [currentStep, setCurrentStep] = useState(1);
 

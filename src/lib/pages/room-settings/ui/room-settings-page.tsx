@@ -27,39 +27,37 @@ export const RoomSettingsPage: FC<RoomSettingsPageProps> = async ({ params }) =>
 
           <div className='mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]'>
             <nav className='grid gap-4 text-sm text-muted-foreground'>
-              <Link href='#' className='font-semibold text-primary'>
-                General
-              </Link>
-              <Link href='#'>Details</Link>
-              <Link href='#'>Integrations</Link>
-              <Link href='#'>Support</Link>
-              <Link href='#'>Organizations</Link>
-              <Link href='#'>Advanced</Link>
+              <a href='#general'>General</a>
+              <a href='#danger-zone'>Danger Zone</a>
             </nav>
             <div className='grid gap-6'>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Room Name</CardTitle>
-                  <CardDescription>Used to identify your room when people join.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <RenameRoomForm room={room} userId={userId} />
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Danger Zone</CardTitle>
-                  <CardDescription>Things here cannot be undone.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <CloseRoomButton
-                    size='sm'
-                    variant='destructive'
-                    roomId={room.id}
-                    userId={userId}
-                  />
-                </CardContent>
-              </Card>
+              <section id='general'>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Room Name</CardTitle>
+                    <CardDescription>Used to identify your room when people join.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <RenameRoomForm room={room} userId={userId} />
+                  </CardContent>
+                </Card>
+              </section>
+              <section id='danger-zone'>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Danger Zone</CardTitle>
+                    <CardDescription>Things here cannot be undone.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <CloseRoomButton
+                      size='sm'
+                      variant='destructive'
+                      roomId={room.id}
+                      userId={userId}
+                    />
+                  </CardContent>
+                </Card>
+              </section>
             </div>
           </div>
         </>

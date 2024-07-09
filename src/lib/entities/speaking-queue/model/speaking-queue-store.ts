@@ -3,15 +3,15 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 import { filterUniqueParticipants } from '../lib/filter-unique-participants';
-import { Participant, User } from './speaking-queue-types';
+import { Participant, Person } from './speaking-queue-types';
 
 export type State = {
   queue: Participant[];
 };
 
 export type Actions = {
-  join: (user: User) => void;
-  leave: (user: User) => void;
+  join: (person: Person) => void;
+  leave: (person: Person) => void;
 };
 
 export const useSpeakingQueueStore = create<WithLiveblocks<State & Actions>>()(
@@ -20,19 +20,25 @@ export const useSpeakingQueueStore = create<WithLiveblocks<State & Actions>>()(
       (set) => ({
         queue: [],
 
-        join: (user: User) =>
+        join: (person: Person) =>
           set((state) => {
-            const newQueue = filterUniqueParticipants([...state.queue, { ...user, muted: true }]);
+            const newQueue: Participant[] = filterUniqueParticipants([
+              ...state.queue,
+              { ...person, muted: true },
+            ]);
             if (newQueue.length > 0) {
               newQueue[0].muted = false;
             }
             state.queue = [...newQueue];
           }),
 
-        leave: (user: User) =>
+        leave: (person: Person) =>
           set((state) => {
-            const filteredQueue = state.queue.filter((u) => u.id !== user.id);
-            const newQueue = filteredQueue.map((u, index) => ({ ...u, muted: index !== 0 }));
+            const filteredQueue = state.queue.filter((u) => u.id !== person.id);
+            const newQueue: Participant[] = filteredQueue.map((u, index) => ({
+              ...u,
+              muted: index !== 0,
+            }));
             state.queue = [...newQueue];
           }),
       }),

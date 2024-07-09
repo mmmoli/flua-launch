@@ -1,4 +1,4 @@
-import { useCallActions } from '@entities/call';
+import { useCallActions, useIsLoading } from '@entities/call';
 import { Button, ButtonProps } from '@ui/button';
 import { Loader2 } from 'lucide-react';
 import { FC, useCallback, useState } from 'react';
@@ -6,7 +6,7 @@ import { FC, useCallback, useState } from 'react';
 export interface JoinCallButtonProps extends ButtonProps {
   roomCode: string;
   displayName: string;
-  isLoading?: boolean;
+  userId?: string;
 }
 
 export const JoinCallButton: FC<JoinCallButtonProps> = ({
@@ -14,16 +14,16 @@ export const JoinCallButton: FC<JoinCallButtonProps> = ({
   roomCode,
   displayName,
   disabled,
-  isLoading = false,
+  userId,
   ...props
 }) => {
   const actions = useCallActions();
-  const [isPending, setisPending] = useState(isLoading);
+  const isLoading = useIsLoading();
 
   const handleClick = useCallback(async () => {
-    setisPending(true);
     const authToken = await actions.getAuthTokenByRoomCode({
       roomCode,
+      userId,
     });
     await actions.join({
       authToken,
@@ -32,12 +32,11 @@ export const JoinCallButton: FC<JoinCallButtonProps> = ({
       captureNetworkQualityInPreview: false,
       settings: { isAudioMuted: true },
     });
-    setisPending(false);
-  }, [actions, roomCode, displayName]);
+  }, [actions, roomCode, userId, displayName]);
 
   return (
-    <Button {...props} disabled={disabled || isPending} onClick={handleClick}>
-      {isPending ? <Loader2 className='mr-2' /> : null}
+    <Button {...props} disabled={disabled || isLoading} onClick={handleClick}>
+      {isLoading ? <Loader2 className='mr-2' /> : null}
       {children}
     </Button>
   );

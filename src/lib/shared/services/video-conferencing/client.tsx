@@ -1,6 +1,11 @@
 'use client';
 
-import { HMSRoomProvider, useHMSActions } from '@100mslive/react-sdk';
+import {
+  HMSRoomProvider,
+  selectIsConnectedToRoom,
+  useHMSActions,
+  useHMSStore,
+} from '@100mslive/react-sdk';
 import { FC, ReactNode, useEffect } from 'react';
 
 export type VideoRoomProviderProps = {
@@ -18,12 +23,13 @@ export const VideoRoomProvider: FC<VideoRoomProviderProps> = ({ children }) => {
 
 export const VideoRoomUnsubscribe: FC<{ children: ReactNode }> = ({ children }) => {
   const hmsActions = useHMSActions();
+  const isConnected = useHMSStore(selectIsConnectedToRoom);
 
   useEffect(() => {
     return () => {
-      hmsActions.leave();
+      isConnected && hmsActions.leave();
     };
-  }, [hmsActions]);
+  }, [hmsActions, isConnected]);
 
   return children;
 };

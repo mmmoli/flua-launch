@@ -13,13 +13,14 @@ export interface WaitingAreaStepOneProps {
 
 export const WaitingAreaStepOne: FC<WaitingAreaStepOneProps> = ({ onNext }) => {
   const { data } = useSession();
+  const defaultDisplayName = data?.user.name || undefined;
   return (
     <Card className='w-full md:max-w-sm'>
       <CardHeader>
         <CardTitle>Join the call</CardTitle>
       </CardHeader>
       <CardContent>
-        <WaitingRoomForm onSubmit={onNext} displayName={data?.user.name || undefined} />
+        <WaitingRoomForm onSubmit={onNext} displayName={defaultDisplayName} />
       </CardContent>
     </Card>
   );

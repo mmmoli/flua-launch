@@ -52,7 +52,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         roomService,
       });
 
-      const result = await useCase.execute({ name: 'My Free Room', ownerId: user.id });
+      const result = await useCase.execute({
+        name: 'My Free Room',
+        ownerId: user.id,
+        tier: 'FREE',
+      });
       if (result.isFail()) console.error(`Failed to create free room for user: ${result.error()}`);
     },
   },

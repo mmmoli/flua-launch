@@ -1,8 +1,8 @@
-import { User } from './speaking-queue-types';
+import { Person } from './speaking-queue-types';
 import { useSpeakingQueue } from './use-speaking-queue';
 
 export interface UseUserIsInSpeakingQueue {
-  user: User;
+  user: Person;
 }
 
 export const useUserIsInSpeakingQueue = (opts: UseUserIsInSpeakingQueue) => {

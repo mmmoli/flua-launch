@@ -1,7 +1,7 @@
-import { User } from '@shared/services/auth/client';
-
-export interface Participant extends User {
-  muted: boolean;
+export interface Person {
+  id: string;
 }
 
-export type { User };
+export interface Participant extends Person {
+  muted: boolean;
+}

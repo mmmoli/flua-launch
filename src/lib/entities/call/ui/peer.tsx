@@ -1,21 +1,21 @@
 'use client';
 
 import { useVideo } from '@100mslive/react-sdk';
-import { FC } from 'react';
+import { ComponentPropsWithoutRef, FC } from 'react';
 
-import { Peer as IPeer } from '../model';
+import { PeerModel } from '../model';
 
-export interface PeerProps {
-  peer: IPeer;
+export interface PeerProps extends ComponentPropsWithoutRef<'div'> {
+  peer: PeerModel;
 }
 
-export const Peer: FC<PeerProps> = ({ peer }) => {
+export const Peer: FC<PeerProps> = ({ peer, ...props }) => {
   const { videoRef } = useVideo({
     trackId: peer.videoTrack,
   });
 
   return (
-    <div>
+    <div {...props}>
       <video
         ref={videoRef}
         className={`peer-video ${peer.isLocal ? 'local' : ''}`}
