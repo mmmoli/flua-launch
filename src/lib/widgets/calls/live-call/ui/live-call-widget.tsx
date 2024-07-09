@@ -7,6 +7,7 @@ import { IsSpeakerBadge } from '@features/speaking-queue/is-speaker-badge';
 import { JoinSpeakingQueueButton } from '@features/speaking-queue/join-speaking-queue-button';
 import { LeaveSpeakingQueueButton } from '@features/speaking-queue/leave-speaking-queue-button';
 import { SpeakerPositionBadge } from '@features/speaking-queue/speaker-position-badge';
+import { ToggleAV } from '@features/speaking-queue/toggle-av/ui/toggle-av';
 import { FC, useEffect } from 'react';
 
 import { PeerList } from '../../peer-list';
@@ -35,6 +36,7 @@ export const LiveCallWidget: FC<LiveCallWidgetProps> = ({ room }) => {
 
   return (
     <>
+      <ToggleAV user={person} />
       <IsSpeakerBadge user={videoUser} />
       <PeerList />
       <div className='flex gap-2 border p-2'>

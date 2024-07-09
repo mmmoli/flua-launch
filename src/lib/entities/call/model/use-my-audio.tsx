@@ -3,7 +3,7 @@
 import { useAVToggle } from '@100mslive/react-sdk';
 import { useCallback } from 'react';
 
-export const useAudio = () => {
+export const useMyAudio = () => {
   const { isLocalAudioEnabled, toggleAudio: toggle } = useAVToggle();
   const isOnMute = !isLocalAudioEnabled;
 
@@ -19,8 +19,17 @@ export const useAudio = () => {
     toggle?.();
   }, [toggle]);
 
+  const shouldMute = useCallback(
+    (value: boolean) => {
+      const method = value ? mute : unmute;
+      method();
+    },
+    [mute, unmute]
+  );
+
   return {
     isOnMute,
+    shouldMute,
     mute,
     toggleAudio,
     unmute,
