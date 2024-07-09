@@ -9,9 +9,10 @@ import { WaitingRoomForm } from './waiting-area-form';
 
 export interface WaitingAreaStepOneProps {
   onNext: () => void;
+  roomCode?: string;
 }
 
-export const WaitingAreaStepOne: FC<WaitingAreaStepOneProps> = ({ onNext }) => {
+export const WaitingAreaStepOne: FC<WaitingAreaStepOneProps> = ({ onNext, roomCode }) => {
   const { data } = useSession();
   const defaultDisplayName = data?.user.name || undefined;
   return (
@@ -20,7 +21,7 @@ export const WaitingAreaStepOne: FC<WaitingAreaStepOneProps> = ({ onNext }) => {
         <CardTitle>Join the call</CardTitle>
       </CardHeader>
       <CardContent>
-        <WaitingRoomForm onSubmit={onNext} displayName={defaultDisplayName} />
+        <WaitingRoomForm roomCode={roomCode} onSubmit={onNext} displayName={defaultDisplayName} />
       </CardContent>
     </Card>
   );

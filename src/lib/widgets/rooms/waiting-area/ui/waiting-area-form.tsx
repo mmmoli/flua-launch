@@ -21,17 +21,24 @@ import { type WaitingRoomFormSchema, waitingRoomFormSchema } from '../lib/schema
 
 export interface WaitingRoomFormProps {
   onSubmit?: (data: WaitingRoomFormSchema) => void;
+  roomCode?: string;
   displayName?: string;
+  userId?: string;
 }
 
-export const WaitingRoomForm: FC<WaitingRoomFormProps> = ({ onSubmit, displayName = '' }) => {
+export const WaitingRoomForm: FC<WaitingRoomFormProps> = ({
+  onSubmit,
+  roomCode,
+  userId,
+  displayName = '',
+}) => {
   const [_, setContext] = useCallContext();
   const actions = useCallActions();
 
   const form = useForm<WaitingRoomFormSchema>({
     resolver: zodResolver(waitingRoomFormSchema),
     defaultValues: {
-      roomCode: 'nzf-pdix-upm',
+      roomCode,
       displayName,
     },
   });
@@ -40,6 +47,7 @@ export const WaitingRoomForm: FC<WaitingRoomFormProps> = ({ onSubmit, displayNam
     async ({ displayName, roomCode }: WaitingRoomFormSchema) => {
       const authToken = await actions.getAuthTokenByRoomCode({
         roomCode,
+        userId,
       });
 
       actions.preview({
@@ -57,7 +65,7 @@ export const WaitingRoomForm: FC<WaitingRoomFormProps> = ({ onSubmit, displayNam
 
       onSubmit?.({ displayName, roomCode });
     },
-    [actions, setContext, onSubmit]
+    [actions, userId, setContext, onSubmit]
   );
 
   return (
