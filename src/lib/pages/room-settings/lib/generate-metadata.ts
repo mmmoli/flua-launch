@@ -1,4 +1,5 @@
 import { getRoomBySlug } from '@entities/room/api/get-room-by-slug';
+import { logger } from '@shared/services/logger';
 import { Metadata, ResolvingMetadata } from 'next';
 
 import { RoomSettingsPageProps } from '../ui/room-settings-page';
@@ -15,7 +16,7 @@ export async function generateMetadata(
       title: `${room.name} Settings`,
     };
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     return {};
   }
 }

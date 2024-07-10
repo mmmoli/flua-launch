@@ -2,6 +2,7 @@ import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { OpenRoomUseCase } from '@features/rooms/open-room/model/open-room-use-case';
 import { env } from '@shared/config/env';
 import { db, schema } from '@shared/services/db';
+import { logger } from '@shared/services/logger';
 import { roomService } from '@shared/services/video-conferencing/api';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
@@ -28,14 +29,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   events: {
     createUser: async ({ user }) => {
       if (!user.id) {
-        console.error(`Failed to create customer. No user Id`);
+        logger.error(`Failed to create customer. No user Id`);
         return;
       }
       const customerResult = await billingService.createCustomer({
         user,
       });
       if (!customerResult.isOk()) {
-        console.error(`Failed to create customer: ${customerResult.error()}`);
+        logger.error(`Failed to create customer: ${customerResult.error()}`);
         return;
       }
       const customer = customerResult.value();
@@ -57,7 +58,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         ownerId: user.id,
         tier: 'FREE',
       });
-      if (result.isFail()) console.error(`Failed to create free room for user: ${result.error()}`);
+      if (result.isFail()) logger.error(`Failed to create free room for user: ${result.error()}`);
     },
   },
   trustHost: true,

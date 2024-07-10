@@ -1,6 +1,7 @@
 import { getRoomByExternalId } from '@entities/room/api/get-room-by-external-id';
 import { resetCall } from '@features/calls/reset-call';
 import { env } from '@shared/config/env';
+import { logger } from '@shared/services/logger';
 
 import { eventSchema, HMSWebhookEvent } from '../lib/hms-events';
 
@@ -16,8 +17,7 @@ export async function POST(req: Request) {
     event = eventSchema.parse(JSON.parse(body));
     console.log(`🔔  Webhook received: ${event.type}`);
   } catch (err: any) {
-    console.error(JSON.stringify(body, null, 2));
-    console.error(`❌ Error message: ${err.message}`);
+    logger.error(err);
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
 
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       }
     }
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     return new Response(`Webhook Error: ${e}`, { status: 400 });
   }
 

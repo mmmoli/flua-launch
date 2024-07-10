@@ -1,3 +1,4 @@
+import { logger } from '@shared/services/logger';
 import { Fail, Ok, Result } from 'rich-domain';
 import Stripe from 'stripe';
 
@@ -47,7 +48,7 @@ export class StripeBillingService implements BillingServiceTrait {
       };
       return Ok(response);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       return Fail(`Failed to create checkout session`);
     }
   }
@@ -73,7 +74,7 @@ export class StripeBillingService implements BillingServiceTrait {
 
       return Ok(customer);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       return Fail('Failed to Create Customer');
     }
   }

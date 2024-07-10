@@ -1,5 +1,6 @@
 import { RoomModelSlug } from '@entities/room';
 import { Db, eq, schema } from '@shared/services/db';
+import { logger } from '@shared/services/logger';
 import { slugify } from '@shared/utils';
 import { Fail, IUseCase, Ok, Result } from 'rich-domain';
 
@@ -35,7 +36,7 @@ export class RenameRoomUseCase implements IUseCase<RenameRoomUseCaseDto, Result<
 
       return Ok(slug);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       return Fail('Failed to rename room');
     }
   }

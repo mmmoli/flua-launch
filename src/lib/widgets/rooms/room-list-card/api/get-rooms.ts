@@ -1,6 +1,7 @@
 import assert from 'node:assert';
 
 import { db } from '@shared/services/db';
+import { logger } from '@shared/services/logger';
 import { cache } from 'react';
 import { Fail, Ok, Result } from 'rich-domain';
 
@@ -35,7 +36,7 @@ export const getRoomsForUser = cache(
 
       return Ok(rooms);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       return Fail('Failed to get Rooms for user');
     }
   }

@@ -1,5 +1,6 @@
 import { RoomModel } from '@entities/room';
 import { Db, schema } from '@shared/services/db';
+import { logger } from '@shared/services/logger';
 import { RoomServiceTrait } from '@shared/services/video-conferencing';
 import { slugify } from '@shared/utils';
 import { Fail, IUseCase, Ok, Result } from 'rich-domain';
@@ -39,7 +40,7 @@ export class OpenRoomUseCase implements IUseCase<OpenRoomUseCaseDto, Result<Room
       if (!maybeRoom) return Fail('No room created');
       return Ok(maybeRoom);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       return Fail('Failed to create room');
     }
   }

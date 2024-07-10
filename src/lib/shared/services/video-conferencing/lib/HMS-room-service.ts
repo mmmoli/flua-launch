@@ -1,4 +1,5 @@
 import { Room, SDK } from '@100mslive/server-sdk';
+import { logger } from '@shared/services/logger';
 import { Fail, IResult, Ok } from 'rich-domain';
 
 import { CreateRoomParams, RegisterRoomResponse, RoomServiceTrait } from './room-service-trait';
@@ -25,7 +26,7 @@ export class HMSRoomService implements RoomServiceTrait {
         roomCode: roomCode.code,
       });
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       return Fail('Failed to create room');
     }
   }
@@ -35,7 +36,7 @@ export class HMSRoomService implements RoomServiceTrait {
       await this.deps.client.rooms.enableOrDisable(externalId, false);
       return Ok();
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       return Fail('Failed to delete room');
     }
   }

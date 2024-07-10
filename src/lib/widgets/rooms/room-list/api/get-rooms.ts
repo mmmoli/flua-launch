@@ -1,6 +1,7 @@
 import assert from 'node:assert';
 
 import { db } from '@shared/services/db';
+import { logger } from '@shared/services/logger';
 import { cache } from 'react';
 
 export interface GetRoomsParams {
@@ -16,7 +17,7 @@ export const getRoomsForUser = cache(async ({ ownerId }: GetRoomsParams) => {
 
     return rooms;
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     throw new Error('Failed to get Rooms for user');
   }
 });

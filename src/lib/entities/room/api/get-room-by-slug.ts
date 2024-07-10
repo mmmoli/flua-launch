@@ -1,6 +1,7 @@
 'use server';
 
 import { db } from '@shared/services/db';
+import { logger } from '@shared/services/logger';
 import { cache } from 'react';
 import { Fail, IResult, Ok } from 'rich-domain';
 
@@ -19,7 +20,7 @@ export const getRoomBySlug = cache(
       if (!room) return Fail(`Room not found for slug: ${slug}`);
       return Ok(room as RoomModel);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       return Fail(`Failed to get room for slug: ${slug}`);
     }
   }

@@ -1,6 +1,7 @@
 'use server';
 
 import { env } from '@shared/config/env';
+import { logger } from '@shared/services/logger';
 import assert from 'assert';
 import { Fail, Ok, Result } from 'rich-domain';
 
@@ -22,7 +23,7 @@ export const resetCall = async (data: ResetCallParams): Promise<Result<void>> =>
     if (!fetchResult.ok) throw new Error(fetchResult.statusText);
     return Ok();
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     return Fail('Reset Call Failed');
   }
 };

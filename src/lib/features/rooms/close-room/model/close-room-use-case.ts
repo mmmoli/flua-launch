@@ -1,4 +1,5 @@
 import { Db, eq, schema } from '@shared/services/db';
+import { logger } from '@shared/services/logger';
 import { RoomServiceTrait } from '@shared/services/video-conferencing';
 import { Fail, IUseCase, Ok, Result } from 'rich-domain';
 
@@ -28,7 +29,7 @@ export class CloseRoomUseCase implements IUseCase<CloseRoomUseCaseDto, Result<vo
       ]);
       return Ok();
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       return Fail('Failed to close room');
     }
   }

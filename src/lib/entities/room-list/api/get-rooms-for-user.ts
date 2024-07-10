@@ -1,11 +1,12 @@
 'use server';
 
-import { User } from '@shared/services/auth';
+import { UserId } from '@shared/services/auth/client';
 import { db, eq, schema } from '@shared/services/db';
+import { logger } from '@shared/services/logger';
 import { cache } from 'react';
 
 export interface GetRoomsForUserParams {
-  userId: NonNullable<User['id']>;
+  userId: UserId;
 }
 
 export const getRoomsForUser = cache(async ({ userId }: GetRoomsForUserParams) => {
@@ -15,7 +16,7 @@ export const getRoomsForUser = cache(async ({ userId }: GetRoomsForUserParams) =
     });
     return room;
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     throw new Error(`Failed to get room for user: ${userId}`);
   }
 });

@@ -1,5 +1,6 @@
 import { env } from '@shared/config/env';
 import { stripe } from '@shared/services/billing/stripe/config';
+import { logger } from '@shared/services/logger';
 import Stripe from 'stripe';
 
 import { createSubscription } from '../model/create-subscription';
@@ -20,9 +21,9 @@ export async function POST(req: Request) {
   try {
     if (!sig || !webhookSecret) return new Response('Webhook secret not found.', { status: 400 });
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
-    console.error(`🔔  Webhook received: ${event.type}`);
+    logger.log(`🔔  Webhook received: ${event.type}`);
   } catch (err: any) {
-    console.error(`❌ Error message: ${err.message}`);
+    logger.error(err);
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
 
@@ -40,7 +41,7 @@ export async function POST(req: Request) {
 
           if (result.isFail()) {
             const msg = `Webhook handler failed. ${result.error()}`;
-            console.error(msg);
+            logger.error(msg);
             return new Response(msg, {
               status: 400,
             });
@@ -61,7 +62,7 @@ export async function POST(req: Request) {
 
           if (result.isFail()) {
             const msg = `Webhook handler failed. ${result.error()}`;
-            console.error(msg);
+            logger.error(msg);
             return new Response(msg, {
               status: 400,
             });
@@ -72,7 +73,7 @@ export async function POST(req: Request) {
 
         default: {
           const msg = 'Webhook handler failed. Unhandled event.';
-          console.error(msg);
+          logger.error(msg);
           return new Response(msg, {
             status: 400,
           });
@@ -86,7 +87,7 @@ export async function POST(req: Request) {
     }
   } else {
     const msg = `Unsupported event type: ${event.type}`;
-    console.error(msg);
+    logger.error(msg);
     return new Response(msg, {
       status: 400,
     });

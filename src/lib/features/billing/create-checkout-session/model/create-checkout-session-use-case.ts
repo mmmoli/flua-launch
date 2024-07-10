@@ -3,6 +3,7 @@ import { DashPage } from '@shared/config/routes';
 import { assertUser } from '@shared/services/auth/api';
 import { BillingServiceTrait } from '@shared/services/billing';
 import { Db, eq, schema } from '@shared/services/db';
+import { logger } from '@shared/services/logger';
 import { Fail, IUseCase, Ok, Result } from 'rich-domain';
 
 import {
@@ -60,7 +61,7 @@ export class CreateCheckoutSessionUseCase
 
       return Ok(response);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       return Fail('Failed to create checkout session');
     }
   }

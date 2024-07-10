@@ -4,6 +4,7 @@ import { RoomModel } from '@entities/room';
 import { User } from '@shared/services/auth/client';
 import { db } from '@shared/services/db';
 import { roomTiers } from '@shared/services/db/schema';
+import { logger } from '@shared/services/logger';
 import { cache } from 'react';
 import { Fail, IResult, Ok } from 'rich-domain';
 
@@ -20,7 +21,7 @@ export const getFreeRoomForUser = cache(
       if (!room) return Fail(`Free Room not found for userId: ${userId}`);
       return Ok(room as RoomModel);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       return Fail(`Failed to get Free Room for userId: ${userId}`);
     }
   }

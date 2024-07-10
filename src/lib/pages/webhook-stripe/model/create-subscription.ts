@@ -1,4 +1,5 @@
 import { db, eq, schema } from '@shared/services/db';
+import { logger } from '@shared/services/logger';
 import { Fail, Ok, Result } from 'rich-domain';
 
 export interface CreateSubscriptionParams {
@@ -23,7 +24,7 @@ export const createSubscription = async (data: CreateSubscriptionParams): Promis
 
     return Ok();
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     return Fail('Create Subscription Failed');
   }
 };
