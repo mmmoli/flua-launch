@@ -15,7 +15,12 @@ export const BENEFITS: Benefit[] = [
       </p>
     ),
     image: (
-      <Image src='https://via.placeholder.com/500' width={500} alt='Enhanced Meeting Efficiency' />
+      <Image
+        src='https://via.placeholder.com/500'
+        width={500}
+        height={500}
+        alt='Enhanced Meeting Efficiency'
+      />
     ),
   },
   {
@@ -29,7 +34,14 @@ export const BENEFITS: Benefit[] = [
         democratic and inclusive meeting culture.
       </p>
     ),
-    image: <Image src='https://via.placeholder.com/500' width={500} alt='Equal Participation' />,
+    image: (
+      <Image
+        src='https://via.placeholder.com/500'
+        width={500}
+        height={500}
+        alt='Equal Participation'
+      />
+    ),
   },
   {
     id: '3',
@@ -46,6 +58,7 @@ export const BENEFITS: Benefit[] = [
       <Image
         src='https://via.placeholder.com/500'
         width={500}
+        height={500}
         alt='Improved Communication Quality'
       />
     ),

@@ -3,6 +3,16 @@ import { withSentryConfig } from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        port: '',
+        pathname: '/500',
+      },
+    ],
+  },
   webpack: (config, { webpack }) => {
     config.plugins.push(
       new webpack.DefinePlugin({
@@ -34,13 +44,5 @@ export default withSentryConfig(
     tunnelRoute: '/monitoring',
     hideSourceMaps: true,
     disableLogger: true,
-    images: {
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'images.unsplash.com',
-        },
-      ],
-    },
   })
 );

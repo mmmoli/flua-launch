@@ -1,10 +1,10 @@
-import { Participant } from './speaking-queue-types';
+import { Person } from './speaking-queue-types';
 import { useJoinSpeakingQueue } from './use-join-speaking-queue';
 import { useLeaveSpeakingQueue } from './use-leave-speaking-queue';
 import { useUserIsInSpeakingQueue } from './use-user-is-in-speaking-queue';
 
 export interface UseToggleJoiningSpeakingQueueOpts {
-  user: Participant;
+  user: Person;
 }
 
 export const useToggleJoiningSpeakingQueue = (opts: UseToggleJoiningSpeakingQueueOpts) => {
@@ -12,5 +12,5 @@ export const useToggleJoiningSpeakingQueue = (opts: UseToggleJoiningSpeakingQueu
   const leave = useLeaveSpeakingQueue();
   const hasJoined = useUserIsInSpeakingQueue({ user: opts.user });
   const fn = hasJoined ? leave : join;
-  fn(opts.user);
+  return () => fn(opts.user);
 };

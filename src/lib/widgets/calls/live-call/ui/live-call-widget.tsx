@@ -4,10 +4,9 @@ import { useLocalPeer } from '@entities/call';
 import { RoomModel } from '@entities/room';
 import { Person, useSpeakingQueue, useSpeakingQueueStore } from '@entities/speaking-queue';
 import { IsSpeakerBadge } from '@features/speaking-queue/is-speaker-badge';
-import { JoinSpeakingQueueButton } from '@features/speaking-queue/join-speaking-queue-button';
-import { LeaveSpeakingQueueButton } from '@features/speaking-queue/leave-speaking-queue-button';
 import { SpeakerPositionBadge } from '@features/speaking-queue/speaker-position-badge';
 import { ToggleAV } from '@features/speaking-queue/toggle-av/ui/toggle-av';
+import { ToggleJoinSpeakingQueueButton } from '@features/speaking-queue/toggle-join-speaking-queue-button';
 import { FC, useEffect } from 'react';
 
 import { PeerList } from '../../peer-list';
@@ -36,14 +35,17 @@ export const LiveCallWidget: FC<LiveCallWidgetProps> = ({ room }) => {
 
   return (
     <>
-      <ToggleAV user={person} />
-      <IsSpeakerBadge user={videoUser} />
+      <SpeakerPositionBadge
+        user={person}
+        className='mb-px block rounded-none py-4 text-center text-lg font-bold'
+      />
+      <IsSpeakerBadge
+        user={videoUser}
+        className='mb-px block rounded-none py-4 text-center text-lg font-bold'
+      />
       <PeerList />
-      <div className='flex gap-2 border p-2'>
-        <JoinSpeakingQueueButton size='sm' user={person} />
-        <LeaveSpeakingQueueButton size='sm' variant='ghost' user={person} />
-      </div>
-      <SpeakerPositionBadge user={person} />
+      <ToggleJoinSpeakingQueueButton size='sm' user={person} />
+      <ToggleAV user={person} />
     </>
   );
 };

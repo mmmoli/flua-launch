@@ -2,7 +2,7 @@
 
 import { useVideo } from '@100mslive/react-sdk';
 import { Badge } from '@ui/badge';
-import { Volume, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 import { ComponentPropsWithoutRef, FC } from 'react';
 
 import { PeerModel, useRemoteAudio } from '../model';
@@ -30,15 +30,10 @@ export const Peer: FC<PeerProps> = ({ peer, ...props }) => {
       <div className='peer-name'>
         {peer.name} {peer.isLocal ? '(You)' : ''}
       </div>
-      {audioOn ? (
-        <Badge variant='outline'>
-          <VolumeX className='h-4 w-4' />
-        </Badge>
-      ) : (
-        <Badge>
-          <Volume className='h-4 w-4' />
-        </Badge>
-      )}
+
+      <Badge variant={audioOn ? 'default' : 'outline'}>
+        {audioOn ? <Volume2 className='h-4 w-4' /> : <VolumeX className='h-4 w-4' />}
+      </Badge>
     </div>
   );
 };

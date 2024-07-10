@@ -11,7 +11,7 @@ export const ToggleAV: FC<ToggleAVProps> = ({ user }) => {
   const { shouldMute } = useMyAudio();
 
   useEffect(() => {
-    shouldMute(isSpeaker);
+    shouldMute(!isSpeaker);
   }, [isSpeaker, shouldMute]);
 
   return null;
