@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { Benefit } from './benefit-type';
 
 export const BENEFITS: Benefit[] = [
@@ -8,12 +10,12 @@ export const BENEFITS: Benefit[] = [
       <p>
         I built this system to eliminate interruptions – everyone gets their turn to speak without
         being cut off, ensuring orderly and respectful communication. By reducing chaos and
-        cross-talk, discussions stay on topic and more productive, making better use of everyone's
-        time.
+        cross-talk, discussions stay on topic and more productive, making better use of
+        everyone&apos;s time.
       </p>
     ),
     image: (
-      <img src='https://via.placeholder.com/500' width={500} alt='Enhanced Meeting Efficiency' />
+      <Image src='https://via.placeholder.com/500' width={500} alt='Enhanced Meeting Efficiency' />
     ),
   },
   {
@@ -27,7 +29,7 @@ export const BENEFITS: Benefit[] = [
         democratic and inclusive meeting culture.
       </p>
     ),
-    image: <img src='https://via.placeholder.com/500' width={500} alt='Equal Participation' />,
+    image: <Image src='https://via.placeholder.com/500' width={500} alt='Equal Participation' />,
   },
   {
     id: '3',
@@ -35,12 +37,17 @@ export const BENEFITS: Benefit[] = [
     body: (
       <p>
         By encouraging participants to think before they speak, I built this system to lead to more
-        thoughtful and meaningful contributions. With a structured queue, there's less chance of
-        overlapping speech, making it easier for everyone to understand and follow the conversation.
+        thoughtful and meaningful contributions. With a structured queue, there&apos;s less chance
+        of overlapping speech, making it easier for everyone to understand and follow the
+        conversation.
       </p>
     ),
     image: (
-      <img src='https://via.placeholder.com/500' width={500} alt='Improved Communication Quality' />
+      <Image
+        src='https://via.placeholder.com/500'
+        width={500}
+        alt='Improved Communication Quality'
+      />
     ),
   },
 ];

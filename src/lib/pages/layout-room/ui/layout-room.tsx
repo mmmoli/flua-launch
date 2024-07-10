@@ -1,5 +1,6 @@
-import { assertUser } from '@/lib/shared/services/auth/api';
 import { FC, ReactNode } from 'react';
+
+import { assertUser } from '@/lib/shared/services/auth/api';
 
 export interface LayoutRoomProps {
   children: ReactNode;

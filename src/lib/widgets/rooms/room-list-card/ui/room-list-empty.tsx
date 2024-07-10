@@ -10,7 +10,7 @@ export const RoomListEmpty: FC<RoomListBannerProps> = async ({ userId }) => {
   return (
     <div className='flex items-center justify-center rounded-lg bg-accent/40 py-8'>
       <div className='text-center'>
-        <h1>Flua ain't much fun with Rooms.</h1>
+        <h1>Flua ain&apos;t much fun with Rooms.</h1>
         <OpenRoomDialog userId={userId} variant='link' className='text-md px-0'>
           Open a Room
         </OpenRoomDialog>

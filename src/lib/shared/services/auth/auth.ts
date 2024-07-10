@@ -8,6 +8,7 @@ import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
 
 import { billingService } from '../billing';
+import { SentryLogger } from '../logger/logger';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
@@ -27,6 +28,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   events: {
+    signOut: async () => {
+      logger.unidentify();
+    },
+    signIn: async ({ user }) => {
+      logger.identify({ id: user.id, email: user.email || undefined });
+    },
     createUser: async ({ user }) => {
       if (!user.id) {
         logger.error(`Failed to create customer. No user Id`);
