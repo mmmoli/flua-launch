@@ -1,9 +1,9 @@
-import { User, useUserIsSpeaker } from '@entities/speaking-queue';
+import { Person, useUserIsSpeaker } from '@entities/speaking-queue';
 import { Badge, BadgeProps } from '@ui/badge';
 import { FC, useCallback } from 'react';
 
 export interface IsSpeakerBadgeProps extends BadgeProps {
-  user: User;
+  user: Person;
 }
 
 export const IsSpeakerBadge: FC<IsSpeakerBadgeProps> = ({ children = 'LIVE', user, ...props }) => {

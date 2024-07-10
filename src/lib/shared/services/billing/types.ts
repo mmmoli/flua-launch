@@ -1,4 +1,4 @@
-import { User } from '@shared/services/auth';
+import { User } from '@shared/services/auth/client';
 import { Result } from 'rich-domain';
 
 export interface Customer {
