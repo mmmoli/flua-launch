@@ -49,12 +49,6 @@ export const AboutPage: Route = () => ({
   icon: Dice5,
 });
 
-export const WaitinglistPage: Route = () => ({
-  url: '/join-waiting-list',
-  label: 'Join Waitinglist',
-  icon: Gift,
-});
-
 export const RoomPage: Route<{ slug: string }> = ({ slug }) => ({
   url: `/r/${slug}`,
   label: 'Room',
@@ -87,8 +81,7 @@ export const routes = {
   RoomListPage,
   RoomPage,
   RoomSettingsPage,
-  WaitinglistPage,
 };
 
-export const publicRoutes: Route<any | null>[] = [HomePage, AboutPage, WaitinglistPage];
+export const publicRoutes: Route<any | null>[] = [HomePage, AboutPage];
 export const appRoutes: Route<any | null>[] = [DashPage, RoomListPage];
