@@ -26,6 +26,12 @@ export const HomePage: Route = () => ({
   icon: Home,
 });
 
+export const PricingPage: Route = () => ({
+  url: '/pricing',
+  label: 'Pricing',
+  icon: Home,
+});
+
 export const SignInPageRoute: Route<{ next?: string }> = (params = {}) => {
   const { next } = params;
   const url = '/sign-in';
@@ -83,5 +89,5 @@ export const routes = {
   RoomSettingsPage,
 };
 
-export const publicRoutes: Route<any | null>[] = [HomePage, AboutPage];
+export const publicRoutes: Route<any | null>[] = [HomePage, AboutPage, PricingPage];
 export const appRoutes: Route<any | null>[] = [DashPage, RoomListPage];
