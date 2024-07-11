@@ -14,7 +14,7 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     DATABASE_AUTH_TOKEN: z.string().optional(),
     DATABASE_DEBUG: zParsedBoolean,
-    SITE_DOMAIN: z.string().optional().default(''),
+    SITE_DOMAIN: z.string().optional(),
     WARM: z.number().optional().default(0),
     AUTH_SECRET: z.string().optional().default(''),
     AUTH_GOOGLE_ID: z.string(),
@@ -28,6 +28,7 @@ export const env = createEnv({
     HMS_ACCESS_KEY: z.string(),
     HMS_SECRET: z.string(),
     LIVEBLOCK_SECRET_KEY: z.string(),
+    ANALYTICS_ENABLED: zParsedBoolean,
   },
 
   client: {
