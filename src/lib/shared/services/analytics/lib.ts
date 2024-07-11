@@ -1,5 +1,9 @@
 import { env } from '@shared/config/env';
 
-export const domain = env.SITE_DOMAIN ?? env.VERCEL_URL!;
-export const enabled = env.ANALYTICS_ENABLED;
-export const trackLocalhost = enabled;
+import { AnalyicsProviderProps } from './nextjs';
+
+export const config: AnalyicsProviderProps = {
+  domain: env.VERCEL_URL ?? 'http://localhost:3000',
+  enabled: env.NEXT_PUBLIC_ANALYTICS_ENABLED,
+  trackLocalhost: false,
+};

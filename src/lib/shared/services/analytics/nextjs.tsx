@@ -1,8 +1,14 @@
 import PlausibleProvider from 'next-plausible';
 import { FC, ReactNode } from 'react';
 
-import * as props from './lib';
+import { config } from './lib';
 
-export const AnalyticsProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  return <PlausibleProvider {...props}>{children}</PlausibleProvider>;
+export type AnalyicsProviderProps = Parameters<typeof PlausibleProvider>[0];
+
+export const AnalyticsProvider: FC<Partial<AnalyicsProviderProps>> = ({ children, ...props }) => {
+  return (
+    <PlausibleProvider {...config} {...props}>
+      {children}
+    </PlausibleProvider>
+  );
 };
