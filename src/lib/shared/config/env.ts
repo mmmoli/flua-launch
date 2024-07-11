@@ -39,10 +39,13 @@ export const env = createEnv({
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string(),
     NEXT_PUBLIC_LIVEBLOCK_PUBLIC_KEY: z.string(),
     NEXT_PUBLIC_ANALYTICS_ENABLED: zParsedBoolean,
+    NEXT_PUBLIC_SITE_DOMAIN: z.string().url(),
   },
 
   // client side variables for Next.js 14+
   experimental__runtimeEnv: {
+    NEXT_PUBLIC_SITE_DOMAIN:
+      process.env.NEXT_PUBLIC_SITE_DOMAIN ?? process.env.VERCEL_URL ?? 'http://localhost:3000',
     NEXT_PUBLIC_ANALYTICS_ENABLED: process.env.NEXT_PUBLIC_ANALYTICS_ENABLED,
     NEXT_PUBLIC_LIVEBLOCK_PUBLIC_KEY: process.env.NEXT_PUBLIC_LIVEBLOCK_PUBLIC_KEY,
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,

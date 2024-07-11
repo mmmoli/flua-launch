@@ -1,7 +1,9 @@
 import '@shared/design-system/globals.css';
 
+import { AnalyticsProvider } from '@shared/services/analytics';
 import { cn } from '@ui/utils';
 import type { Metadata } from 'next';
+import Head from 'next/head';
 import { FC, ReactNode } from 'react';
 
 import { fonts } from '../lib/fonts';

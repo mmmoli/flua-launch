@@ -14,7 +14,7 @@ export const LastCtaSection: FC<LastCtaSectionProps> = () => {
             <br /> big mouths on calls
           </h1>
           <div className='my-5'>
-            <SignInButton size='lg' />
+            <SignInButton size='lg'>Try now FREE</SignInButton>
           </div>
         </div>
       </div>

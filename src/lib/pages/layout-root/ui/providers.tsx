@@ -1,6 +1,5 @@
 'use client';
 
-import { AnalyticsProvider } from '@shared/services/analytics';
 import { SessionProvider } from '@shared/services/auth/client';
 import { Toaster } from '@ui/sonner';
 import { TooltipProvider } from '@ui/tooltip';
@@ -12,11 +11,9 @@ export interface ProvidersProps {
 
 export const Providers: FC<ProvidersProps> = ({ children }) => {
   return (
-    <AnalyticsProvider>
-      <SessionProvider>
-        <TooltipProvider>{children}</TooltipProvider>
-        <Toaster />
-      </SessionProvider>
-    </AnalyticsProvider>
+    <SessionProvider>
+      <TooltipProvider>{children}</TooltipProvider>
+      <Toaster />
+    </SessionProvider>
   );
 };
