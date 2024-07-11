@@ -45,7 +45,7 @@ export const SignedInUserMenu: FC<SignedInUserMenuProps> = ({ user }) => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className='cursor-pointer' onClick={() => signOut()}>
-          Logout
+          Log Out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -13,11 +13,16 @@ export const RoomPage: FC<RoomPageProps> = async ({ params }) => {
   return (
     <RoomEntity slug={params.slug}>
       {(room) => (
-        <Suspense>
-          <CallEntity>
-            <WaitingAreaWidget room={room} />
-          </CallEntity>
-        </Suspense>
+        <>
+          <header className='absolute left-8 top-4'>
+            <h1 className='text-md font-bold'>{room.name}</h1>
+          </header>
+          <Suspense>
+            <CallEntity>
+              <WaitingAreaWidget room={room} />
+            </CallEntity>
+          </Suspense>
+        </>
       )}
     </RoomEntity>
   );
