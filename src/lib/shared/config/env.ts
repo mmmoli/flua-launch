@@ -31,7 +31,6 @@ export const env = createEnv({
   },
 
   client: {
-    NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: z.string().optional().default(''),
     // sst.config.ts will set these based on SENTRY_* variables, so no need to
     // duplicate them in the .env files
     NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
@@ -49,7 +48,6 @@ export const env = createEnv({
     NEXT_PUBLIC_ANALYTICS_ENABLED: process.env.NEXT_PUBLIC_ANALYTICS_ENABLED,
     NEXT_PUBLIC_LIVEBLOCK_PUBLIC_KEY: process.env.NEXT_PUBLIC_LIVEBLOCK_PUBLIC_KEY,
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-    NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
     NEXT_PUBLIC_SENTRY_DEBUG: process.env.NEXT_PUBLIC_SENTRY_DEBUG,
   },

@@ -27,6 +27,7 @@ export class CloseRoomUseCase implements IUseCase<CloseRoomUseCaseDto, Result<vo
         this.deps.db.delete(schema.rooms).where(eq(schema.rooms.id, data.roomId)),
         this.deps.roomService.delete(room.externalId),
       ]);
+
       return Ok();
     } catch (error) {
       logger.error(error);

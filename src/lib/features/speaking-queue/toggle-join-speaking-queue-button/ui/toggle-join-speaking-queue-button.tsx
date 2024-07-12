@@ -4,6 +4,7 @@ import {
   useToggleJoiningSpeakingQueue,
   useUserIsInSpeakingQueue,
 } from '@entities/speaking-queue';
+import { useAnalytics } from '@shared/services/analytics/nextjs';
 import { Button, ButtonProps } from '@ui/button';
 import { FC, useCallback } from 'react';
 
@@ -19,10 +20,12 @@ export const ToggleJoinSpeakingQueueButton: FC<ToggleJoinSpeakingQueueButtonProp
 }) => {
   const toggle = useToggleJoiningSpeakingQueue({ user });
   const hasJoined = useUserIsInSpeakingQueue({ user });
+  const events = useAnalytics();
 
   const handleClick = useCallback(() => {
     toggle();
-  }, [toggle]);
+    events(hasJoined ? `speaking-queue:joined` : `speaking-queue:left`);
+  }, [events, hasJoined, toggle]);
 
   return (
     <Button

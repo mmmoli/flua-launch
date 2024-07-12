@@ -1,4 +1,5 @@
 import { Person, useLeaveSpeakingQueue, useUserIsInSpeakingQueue } from '@entities/speaking-queue';
+import { useAnalytics } from '@shared/services/analytics/nextjs';
 import { Button, ButtonProps } from '@ui/button';
 import { FC, useCallback } from 'react';
 
@@ -13,10 +14,12 @@ export const LeaveSpeakingQueueButton: FC<LeaveSpeakingQueueButtonProps> = ({
 }) => {
   const leave = useLeaveSpeakingQueue();
   const hasJoined = useUserIsInSpeakingQueue({ user });
+  const events = useAnalytics();
 
   const handleClick = useCallback(() => {
     leave(user);
-  }, [leave, user]);
+    events(`speaking-queue:left`);
+  }, [events, leave, user]);
 
   return (
     <Button {...props} disabled={!hasJoined} onClick={handleClick}>

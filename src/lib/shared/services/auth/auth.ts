@@ -1,6 +1,7 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { OpenRoomUseCase } from '@features/rooms/open-room/model/open-room-use-case';
 import { env } from '@shared/config/env';
+import { trackEvent } from '@shared/services/analytics/node';
 import { db, schema } from '@shared/services/db';
 import { logger } from '@shared/services/logger';
 import { roomService } from '@shared/services/video-conferencing/api';
@@ -34,6 +35,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       logger.identify({ id: user.id, email: user.email || undefined });
     },
     createUser: async ({ user }) => {
+      await trackEvent('user:created');
+
       if (!user.id) {
         logger.error(`Failed to create customer. No user Id`);
         return;

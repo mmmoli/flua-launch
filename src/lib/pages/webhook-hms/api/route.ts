@@ -1,6 +1,7 @@
 import { getRoomByExternalId } from '@entities/room/api/get-room-by-external-id';
 import { resetCall } from '@features/calls/reset-call';
 import { env } from '@shared/config/env';
+import { trackEvent } from '@shared/services/analytics/node';
 import { logger } from '@shared/services/logger';
 
 import { eventSchema, HMSWebhookEvent } from '../lib/hms-events';
@@ -29,7 +30,13 @@ export async function POST(req: Request) {
       }
 
       case 'session.open.success': {
-        console.log('Session Opened');
+        const roomResult = await getRoomByExternalId({ externalId: event.data.room_id });
+        if (roomResult.isFail()) throw new Error(roomResult.error());
+        const { id } = roomResult.value();
+
+        await trackEvent('room-session:started', {
+          props: { id },
+        });
         break;
       }
 
@@ -41,6 +48,9 @@ export async function POST(req: Request) {
           roomId: room.id,
         });
         if (result.isFail()) throw new Error(result.error());
+        await trackEvent('room-session:ended', {
+          props: { id: room.id },
+        });
       }
 
       default: {

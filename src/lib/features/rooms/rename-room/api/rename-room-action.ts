@@ -1,6 +1,7 @@
 'use server';
 
 import { RoomListPage, RoomSettingsPage } from '@shared/config/routes';
+import { trackEvent } from '@shared/services/analytics/node';
 import { db } from '@shared/services/db';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -25,6 +26,10 @@ export const renameRoomAction = async (formData: FormData) => {
   const result = await useCase.execute(cleaned.data);
   if (result.isFail()) throw new Error(result.error());
   const slug = result.value();
+
+  await trackEvent('room:renamed', {
+    props: data,
+  });
 
   revalidatePath(RoomListPage().url);
   redirect(RoomSettingsPage({ slug }).url);

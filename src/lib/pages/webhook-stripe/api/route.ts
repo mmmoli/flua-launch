@@ -1,4 +1,5 @@
 import { env } from '@shared/config/env';
+import { trackEvent } from '@shared/services/analytics/node';
 import { stripe } from '@shared/services/billing/stripe/config';
 import { logger } from '@shared/services/logger';
 import Stripe from 'stripe';
@@ -11,6 +12,15 @@ const relevantEvents = new Set([
   'customer.subscription.updated',
   'customer.subscription.deleted',
 ]);
+
+const trackBillingEvent = (opts: {
+  eventName: string;
+  customerId: string;
+  subscriptionId: string;
+}) =>
+  trackEvent(`customer:${opts.eventName}`, {
+    props: { customerId: opts.customerId, subscriptionId: opts.subscriptionId },
+  });
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -47,6 +57,12 @@ export async function POST(req: Request) {
             });
           }
 
+          await trackBillingEvent({
+            customerId: customer as string,
+            eventName: 'subscribed',
+            subscriptionId: id,
+          });
+
           break;
         }
 
@@ -68,6 +84,12 @@ export async function POST(req: Request) {
             });
           }
 
+          await trackBillingEvent({
+            customerId: customer as string,
+            eventName: status === 'active' ? 'subscribed' : status,
+            subscriptionId: id,
+          });
+
           break;
         }
 
@@ -80,7 +102,7 @@ export async function POST(req: Request) {
         }
       }
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       return new Response('Webhook handler failed. View your Next.js function logs.', {
         status: 400,
       });

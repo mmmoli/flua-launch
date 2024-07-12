@@ -38,6 +38,7 @@ export class OpenRoomUseCase implements IUseCase<OpenRoomUseCaseDto, Result<Room
 
       const maybeRoom = result.pop();
       if (!maybeRoom) return Fail('No room created');
+
       return Ok(maybeRoom);
     } catch (error) {
       logger.error(error);

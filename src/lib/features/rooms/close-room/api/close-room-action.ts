@@ -1,5 +1,7 @@
 'use server';
+
 import { RoomListPage } from '@shared/config/routes';
+import { trackEvent } from '@shared/services/analytics/node';
 import { db } from '@shared/services/db';
 import { roomService } from '@shared/services/video-conferencing/api';
 import { revalidatePath } from 'next/cache';
@@ -24,6 +26,10 @@ export const closeRoomAction = async (formData: FormData) => {
 
   const result = await useCase.execute(cleaned.data);
   if (result.isFail()) throw new Error(result.error());
+
+  await trackEvent('room:closed', {
+    props: data,
+  });
 
   revalidatePath(RoomListPage().url);
   redirect(RoomListPage().url);
