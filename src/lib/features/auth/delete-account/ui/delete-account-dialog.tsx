@@ -1,7 +1,6 @@
 'use client';
 
-import { RoomModelId } from '@entities/room';
-import { Button } from '@shared/design-system/components/ui/button';
+import { Button, ButtonProps } from '@shared/design-system/components/ui/button';
 import { UserId } from '@shared/services/auth/client';
 import {
   AlertDialog,
@@ -12,36 +11,32 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from '@ui/alert-dialog';
 import { toast } from '@ui/sonner';
 import { FC, MouseEventHandler, useCallback } from 'react';
 
-import { closeRoomAction } from '../api/close-room-action';
+import { deleteAccountAction } from '../api/delete-account-action';
 
-export interface CloseRoomDialogProps {
-  roomId: RoomModelId;
+export interface DeleteAccountDialogProps extends ButtonProps {
   userId: UserId;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   onClose?: () => void;
 }
 
-export const CloseRoomDialog: FC<CloseRoomDialogProps> = ({
-  roomId,
+export const DeleteAccountDialog: FC<DeleteAccountDialogProps> = ({
   userId,
   onClose,
-  onOpenChange,
-  open,
+  children = 'Delete Account',
+  variant = 'destructive',
   ...props
 }) => {
   const handleAction = useCallback(async () => {
-    const tid = toast.loading('Closing room…');
+    const tid = toast.loading('Deleting account…');
     try {
       const formData = new FormData();
-      formData.append('roomId', roomId);
       formData.append('userId', userId);
-      await closeRoomAction(formData);
-      toast.success('Room closed 💨', {
+      await deleteAccountAction(formData);
+      toast.success('Account Deleted 💨', {
         id: tid,
       });
       onClose?.();
@@ -50,7 +45,7 @@ export const CloseRoomDialog: FC<CloseRoomDialogProps> = ({
         id: tid,
       });
     }
-  }, [onClose, roomId, userId]);
+  }, [onClose, userId]);
 
   const handleCancel: MouseEventHandler = useCallback(
     (e) => {
@@ -60,12 +55,17 @@ export const CloseRoomDialog: FC<CloseRoomDialogProps> = ({
   );
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button {...props} variant={variant}>
+          {children}
+        </Button>
+      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your Room.
+            This action cannot be undone. This will permanently delete your Account.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -76,7 +76,7 @@ export const CloseRoomDialog: FC<CloseRoomDialogProps> = ({
           </AlertDialogCancel>
           <AlertDialogAction asChild>
             <Button variant='destructive' size='sm' onClick={handleAction}>
-              Close
+              Delete Account
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>

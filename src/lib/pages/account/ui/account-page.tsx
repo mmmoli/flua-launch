@@ -1,3 +1,4 @@
+import { DeleteAccountDialog } from '@features/auth/delete-account';
 import { AccountPage as AccountPageRoute } from '@shared/config/routes';
 import { assertUser } from '@shared/services/auth/api';
 import { Button } from '@ui/button';
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 };
 
 export const AccountPage: FC = async () => {
-  await assertUser({ next: AccountPageRoute().url });
+  const session = await assertUser({ next: AccountPageRoute().url });
+  if (!session) return null;
   return (
     <>
       <div className='mx-auto grid w-full max-w-6xl gap-2'>
@@ -22,6 +24,7 @@ export const AccountPage: FC = async () => {
       <div className='mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]'>
         <nav className='grid gap-4 text-sm text-muted-foreground'>
           <Link href='#billing'>Billing</Link>
+          <Link href='#danger'>Danger Zone</Link>
         </nav>
         <div className='grid gap-6'>
           <Card id='billing'>
@@ -35,6 +38,14 @@ export const AccountPage: FC = async () => {
                   Visit Billing Portal
                 </a>
               </Button>
+            </CardContent>
+          </Card>
+          <Card id='danger' className='dark'>
+            <CardHeader>
+              <CardTitle>Danger zone</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DeleteAccountDialog userId={session.user.id} />
             </CardContent>
           </Card>
         </div>

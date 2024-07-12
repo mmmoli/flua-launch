@@ -8,7 +8,6 @@ import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
 
 import { billingService } from '../billing';
-import { SentryLogger } from '../logger/logger';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
