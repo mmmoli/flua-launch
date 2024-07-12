@@ -14,6 +14,22 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/terms',
+        destination: '/public-terms-conditions.html',
+      },
+      {
+        source: '/privacy-policy',
+        destination: '/public-privacy-policy.html',
+      },
+      {
+        source: '/cookies',
+        destination: '/public-cookies.html',
+      },
+    ];
+  },
   webpack: (config, { webpack }) => {
     config.plugins.push(
       new webpack.DefinePlugin({

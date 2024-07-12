@@ -1,4 +1,5 @@
 import {
+  Book,
   BookCopy,
   Dice5,
   DoorOpen,
@@ -73,9 +74,30 @@ export const AccountPage: Route = () => ({
   icon: User,
 });
 
+export const PrivacyPolicyPage: Route = () => ({
+  url: `/privacy-policy`,
+  label: 'Privacy Policy',
+  icon: Book,
+});
+
+export const TermsPage: Route = () => ({
+  url: `/terms`,
+  label: 'Terms & Conditions',
+  icon: Book,
+});
+
+export const CookiesPage: Route = () => ({
+  url: `/cookies`,
+  label: 'Cookies',
+  icon: Book,
+});
+
 export const routes = {
   AboutPage,
   AccountPage,
+  PrivacyPolicyPage,
+  CookiesPage,
+  TermsPage,
   DashPage,
   HomePage,
   RoomListPage,
