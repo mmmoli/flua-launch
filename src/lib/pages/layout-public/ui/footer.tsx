@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 const year = new Date().getFullYear();
 
-import { PrivacyPolicyPage, TermsPage } from '@shared/config/routes';
+import { AboutPage, CookiesPage, PrivacyPolicyPage, TermsPage } from '@shared/config/routes';
 import Link from 'next/link';
 
 const navigation = {
@@ -12,8 +12,9 @@ const navigation = {
     { name: 'Performance Reviews', href: '#' },
     { name: 'Team Meetings', href: '#' },
   ],
-  company: [{ name: 'About', href: '#' }],
+  company: [{ name: AboutPage().label, href: AboutPage().url }],
   legal: [
+    { name: CookiesPage().label, href: CookiesPage().url },
     { name: PrivacyPolicyPage().label, href: PrivacyPolicyPage().url },
     { name: TermsPage().label, href: TermsPage().url },
   ],
@@ -50,12 +51,12 @@ export const Footer: FC = () => {
                 <ul role='list' className='mt-6 space-y-4'>
                   {navigation.company.map((item) => (
                     <li key={item.name}>
-                      <a
+                      <Link
                         href={item.href}
                         className='text-sm leading-6 text-gray-600 hover:text-gray-900'
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -81,6 +82,7 @@ export const Footer: FC = () => {
           </div>
         </div>
       </div>
+      <div>&copy; Flua. All rights reserved.</div>
     </footer>
   );
 };

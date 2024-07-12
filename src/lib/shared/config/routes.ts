@@ -86,10 +86,17 @@ export const TermsPage: Route = () => ({
   icon: Book,
 });
 
+export const CookiesPage: Route = () => ({
+  url: `/cookies`,
+  label: 'Cookies',
+  icon: Book,
+});
+
 export const routes = {
   AboutPage,
   AccountPage,
   PrivacyPolicyPage,
+  CookiesPage,
   TermsPage,
   DashPage,
   HomePage,
