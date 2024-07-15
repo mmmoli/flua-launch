@@ -1,50 +1,48 @@
-import Plausible from 'plausible-tracker';
-
+import packageJson from '../../../../../package.json';
 import { config } from './lib';
 
-const plausible = Plausible({
-  domain: config.domain,
-  trackLocalhost: config.trackLocalhost,
-});
+type PlausibleEventName = String;
 
-type PlausibleTrackEvent = ReturnType<typeof Plausible>['trackEvent'];
-type PlausibleEventName = Parameters<PlausibleTrackEvent>[0];
-type PlausibleEventOptions = Parameters<PlausibleTrackEvent>[1];
-type PlausibleOptions = Parameters<PlausibleTrackEvent>[2];
-
-export interface TrackEvent {
-  (
-    eventName: PlausibleEventName,
-    options?: PlausibleEventOptions,
-    eventData?: PlausibleOptions
-  ): Promise<void>;
+interface PlausibleRevenueEvent {
+  currency: 'GBP';
+  amount: number;
 }
 
-export const DEFAULT_EVENT_OPTIONS: NonNullable<PlausibleOptions> = {
-  deviceWidth: -1,
-  domain: config.domain,
-  referrer: 'api',
-  url: 'api',
-};
+interface PlausibleEventOptions {
+  url?: string;
+  domain?: string;
+  referrer?: string;
+  props?: Record<string, unknown>;
+  revenue?: PlausibleRevenueEvent;
+}
 
-export const trackEvent: TrackEvent = (
-  eventName: PlausibleEventName,
-  options?: PlausibleEventOptions,
-  eventData?: PlausibleOptions
+export interface TrackEvent {
+  (eventName: PlausibleEventName, options?: PlausibleEventOptions): Promise<void>;
+}
+
+export const trackEvent: TrackEvent = async (
+  eventName,
+  options = {
+    url: 'api:///',
+    domain: config.domain,
+    referrer: 'api',
+    props: {},
+  }
 ) => {
-  return new Promise((resolve) => {
-    plausible.trackEvent(
-      eventName,
-      {
-        callback: () => {
-          options?.callback?.();
-          resolve(undefined);
-        },
-      },
-      {
-        ...DEFAULT_EVENT_OPTIONS,
-        ...eventData,
+  const url = new URL('/api/event', config.customDomain ?? 'https://plausible.io');
+  const revenue = options.revenue
+    ? {
+        currency: options.revenue.currency,
+        amount: options.revenue.amount.toString(),
       }
-    );
+    : {};
+  const body = JSON.stringify({ name: eventName, ...options, ...revenue });
+  const resp = await fetch(url, {
+    method: 'POST',
+    body,
+    headers: {
+      'Content-Type': 'application/json',
+      'User-Agent': `API-${packageJson.version}`,
+    },
   });
 };

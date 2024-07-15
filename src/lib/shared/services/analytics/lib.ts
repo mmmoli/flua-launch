@@ -9,4 +9,5 @@ export const config: AnalyicsProviderProps = {
   trackOutboundLinks: true,
   trackFileDownloads: true,
   revenue: true,
+  customDomain: 'https://plausible.io',
 };
