@@ -11,16 +11,8 @@ const relevantEvents = new Set([
   'customer.subscription.created',
   'customer.subscription.updated',
   'customer.subscription.deleted',
+  'charge.succeeded',
 ]);
-
-const trackBillingEvent = (opts: {
-  eventName: string;
-  customerId: string;
-  subscriptionId: string;
-}) =>
-  trackEvent(`customer:${opts.eventName}`, {
-    props: { customerId: opts.customerId, subscriptionId: opts.subscriptionId },
-  });
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -40,6 +32,17 @@ export async function POST(req: Request) {
   if (relevantEvents.has(event.type)) {
     try {
       switch (event.type) {
+        case 'charge.succeeded': {
+          await trackEvent('billing:charge_succeeded', {
+            revenue: {
+              currency: 'GBP',
+              amount: event.data.object.amount,
+            },
+          });
+
+          break;
+        }
+
         case 'customer.subscription.created': {
           const { id, customer, status } = event.data.object as Stripe.Subscription;
 
@@ -56,12 +59,6 @@ export async function POST(req: Request) {
               status: 400,
             });
           }
-
-          await trackBillingEvent({
-            customerId: customer as string,
-            eventName: 'subscribed',
-            subscriptionId: id,
-          });
 
           break;
         }
@@ -83,12 +80,6 @@ export async function POST(req: Request) {
               status: 400,
             });
           }
-
-          await trackBillingEvent({
-            customerId: customer as string,
-            eventName: status === 'active' ? 'subscribed' : status,
-            subscriptionId: id,
-          });
 
           break;
         }
