@@ -20,6 +20,13 @@ export interface TrackEvent {
   ): Promise<void>;
 }
 
+export const DEFAULT_EVENT_OPTIONS: NonNullable<PlausibleOptions> = {
+  deviceWidth: -1,
+  domain: config.domain,
+  referrer: 'api',
+  url: 'api',
+};
+
 export const trackEvent: TrackEvent = (
   eventName: PlausibleEventName,
   options?: PlausibleEventOptions,
@@ -34,7 +41,10 @@ export const trackEvent: TrackEvent = (
           resolve(undefined);
         },
       },
-      eventData
+      {
+        ...DEFAULT_EVENT_OPTIONS,
+        ...eventData,
+      }
     );
   });
 };
