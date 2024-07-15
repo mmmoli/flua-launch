@@ -30,28 +30,30 @@ export async function POST(req: Request) {
       }
 
       case 'session.open.success': {
-        console.log(JSON.stringify(event.data, null, 2));
-        const roomResult = await getRoomByExternalId({ externalId: event.data.room_id });
-        if (roomResult.isFail()) throw new Error(roomResult.error());
-        const { id } = roomResult.value();
+        logger.log(JSON.stringify(event.data, null, 2));
+        // const roomResult = await getRoomByExternalId({ externalId: event.data.room_id });
+        // if (roomResult.isFail()) throw new Error(roomResult.error());
+        // const { id } = roomResult.value();
 
-        await trackEvent('room-session:started', {
-          props: { id },
-        });
+        // await trackEvent('room-session:started', {
+        //   props: { id },
+        // });
         break;
       }
 
       case 'session.close.success': {
-        const roomResult = await getRoomByExternalId({ externalId: event.data.room_id });
-        if (roomResult.isFail()) throw new Error(roomResult.error());
-        const room = roomResult.value();
-        const result = await resetCall({
-          roomId: room.id,
-        });
-        if (result.isFail()) throw new Error(result.error());
-        await trackEvent('room-session:ended', {
-          props: { id: room.id },
-        });
+        logger.log(JSON.stringify(event.data, null, 2));
+        // const roomResult = await getRoomByExternalId({ externalId: event.data.room_id });
+        // if (roomResult.isFail()) throw new Error(roomResult.error());
+        // const room = roomResult.value();
+        // const result = await resetCall({
+        //   roomId: room.id,
+        // });
+        // if (result.isFail()) throw new Error(result.error());
+        // await trackEvent('room-session:ended', {
+        //   props: { id: room.id },
+        // });
+        break;
       }
 
       default: {
