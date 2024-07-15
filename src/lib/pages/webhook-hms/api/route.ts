@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     if (!sig || !webhookSecret) return new Response('Webhook secret not found.', { status: 400 });
     if (sig !== webhookSecret) throw new Error('Invalid webhook secret.');
     event = eventSchema.parse(JSON.parse(body));
-    console.log(`🔔  Webhook received: ${event.type}`);
+    logger.log(`🔔  Webhook received: ${event.type}`);
   } catch (err: any) {
     logger.error(err);
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
@@ -30,6 +30,7 @@ export async function POST(req: Request) {
       }
 
       case 'session.open.success': {
+        console.log(JSON.stringify(event.data, null, 2));
         const roomResult = await getRoomByExternalId({ externalId: event.data.room_id });
         if (roomResult.isFail()) throw new Error(roomResult.error());
         const { id } = roomResult.value();
