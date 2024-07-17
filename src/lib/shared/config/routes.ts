@@ -3,7 +3,6 @@ import {
   BookCopy,
   Dice5,
   DoorOpen,
-  Gift,
   Home,
   KanbanSquareDashed,
   Settings,

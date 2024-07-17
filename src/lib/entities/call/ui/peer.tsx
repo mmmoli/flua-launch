@@ -19,7 +19,7 @@ export const Peer: FC<PeerProps> = ({ peer, ...props }) => {
   });
 
   return (
-    <div {...props}>
+    <div {...props} className='bg-muted p-4'>
       <video
         ref={videoRef}
         className={`peer-video ${peer.isLocal ? 'local' : ''}`}

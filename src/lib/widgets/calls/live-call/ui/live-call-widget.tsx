@@ -44,7 +44,9 @@ export const LiveCallWidget: FC<LiveCallWidgetProps> = ({ room }) => {
         className='mb-px block rounded-none py-4 text-center text-lg font-bold'
       />
       <PeerList />
-      <ToggleJoinSpeakingQueueButton size='sm' user={person} />
+      <div className='bottom absolute bottom-10 left-1/2 z-10 -translate-x-1/2 transform text-center'>
+        <ToggleJoinSpeakingQueueButton size='xl' user={person} className='shadow-md' />
+      </div>
       <ToggleAV user={person} />
     </>
   );
