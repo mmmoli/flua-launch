@@ -14,7 +14,7 @@ export const IsSpeakerFrame: FC<IsSpeakerFrameProps> = ({ user }) => {
     <Frame
       label={
         <span className='text-sm'>
-          <span className='font-bold'>In Speaking Queue</span>. Position: #{position}
+          <span className='font-bold'>Queued to Speak</span>. Position: #{position}
         </span>
       }
     />

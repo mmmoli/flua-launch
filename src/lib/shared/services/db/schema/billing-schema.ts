@@ -14,16 +14,22 @@ export const customers = sqliteTable('customer', {
 export type CustomerModel = typeof customers.$inferSelect;
 export type InsertCustomerModel = typeof customers.$inferInsert;
 
-export const subscriptionStatus = text('subscription_status', [
-  'trialing',
-  'active',
-  'canceled',
-  'incomplete',
-  'incomplete_expired',
-  'past_due',
-  'unpaid',
-  'paused',
-]);
+const activeStatuses = ['trialing', 'active'];
+
+export const subscriptionStatus = text(
+  'subscription_status',
+  activeStatuses.concat([
+    'trialing',
+    'canceled',
+    'incomplete',
+    'incomplete_expired',
+    'past_due',
+    'unpaid',
+    'paused',
+  ])
+);
+
+export const isSubscriptionActive = (statusQuery: string) => activeStatuses.includes(statusQuery);
 
 export const subscriptions = sqliteTable('subscriptions', {
   id: text('id').primaryKey(),

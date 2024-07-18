@@ -2,13 +2,14 @@ import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { OpenRoomUseCase } from '@features/rooms/open-room/model/open-room-use-case';
 import { env } from '@shared/config/env';
 import { trackEvent } from '@shared/services/analytics/node';
-import { db, schema } from '@shared/services/db';
+import { db, preparedSubscriptionStatus, schema } from '@shared/services/db';
 import { logger } from '@shared/services/logger';
 import { roomService } from '@shared/services/video-conferencing/api';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
 
 import { billingService } from '../billing';
+import { isSubscriptionActive } from '../db/schema';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
@@ -22,8 +23,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return token;
     },
-    session({ session, token }) {
+    async session({ session, token }) {
       session.user.id = token.id as string;
+
+      // Check if the user has an active subscription
+      const query = await preparedSubscriptionStatus.execute({ userId: session.user.id });
+      const found = query.pop();
+      session.user.activeSubscription = isSubscriptionActive(found?.status ?? 'not-a-status');
       return session;
     },
   },
@@ -80,6 +86,7 @@ declare module 'next-auth' {
   interface Session {
     user: {
       id: string;
+      activeSubscription: boolean;
     } & DefaultSession['user'];
   }
 }
