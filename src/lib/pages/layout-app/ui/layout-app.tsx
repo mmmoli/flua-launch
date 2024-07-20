@@ -1,3 +1,4 @@
+import { assertBilling } from '@shared/services/billing/api';
 import type { Metadata } from 'next';
 import { FC, ReactNode } from 'react';
 
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
   title: 'Flua',
 };
 
-export const LayoutApp: FC<LayoutAppProps> = ({ children }) => {
+export const LayoutApp: FC<LayoutAppProps> = async ({ children }) => {
+  await assertBilling();
   return (
     <div className='flex min-h-screen w-full flex-col bg-muted/40'>
       <SideNav />
