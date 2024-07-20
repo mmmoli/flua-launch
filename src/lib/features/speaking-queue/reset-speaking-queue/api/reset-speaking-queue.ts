@@ -5,11 +5,11 @@ import { logger } from '@shared/services/logger';
 import assert from 'assert';
 import { Fail, Ok, Result } from 'rich-domain';
 
-export interface ResetCallParams {
+export interface ResetSpeakingQueueParams {
   roomId: string;
 }
 
-export const resetCall = async (data: ResetCallParams): Promise<Result<void>> => {
+export const resetSpeakingQueue = async (data: ResetSpeakingQueueParams): Promise<Result<void>> => {
   try {
     assert(data.roomId, 'Room ID is required');
     const url = `https://api.liveblocks.io/v2/rooms/${data.roomId}/storage`;
