@@ -1,6 +1,7 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { OpenRoomUseCase } from '@features/rooms/open-room/model/open-room-use-case';
 import { env } from '@shared/config/env';
+import { DashPage, SetupPage, SignInPageRoute } from '@shared/config/routes';
 import { trackEvent } from '@shared/services/analytics/node';
 import { db, preparedSubscriptionStatus, schema } from '@shared/services/db';
 import { logger } from '@shared/services/logger';
@@ -16,6 +17,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: env.AUTH_DEBUG,
   adapter: DrizzleAdapter(db),
   session: { strategy: 'jwt' },
+  pages: {
+    newUser: SetupPage().url,
+    signIn: SignInPageRoute({ next: DashPage().url }).url,
+  },
   callbacks: {
     jwt({ token, user }) {
       if (user) {
