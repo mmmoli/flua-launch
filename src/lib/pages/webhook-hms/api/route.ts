@@ -1,5 +1,5 @@
 import { getRoomByExternalId } from '@entities/room/api/get-room-by-external-id';
-import { resetCall } from '@features/calls/reset-call';
+import { resetSpeakingQueue } from '@features/speaking-queue/reset-speaking-queue';
 import { env } from '@shared/config/env';
 import { trackEvent } from '@shared/services/analytics/node';
 import { logger } from '@shared/services/logger';
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
         const roomResult = await getRoomByExternalId({ externalId: event.data.room_id });
         if (roomResult.isFail()) throw new Error(roomResult.error());
         const room = roomResult.value();
-        const result = await resetCall({
+        const result = await resetSpeakingQueue({
           roomId: room.id,
         });
         if (result.isFail()) throw new Error(result.error());
