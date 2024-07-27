@@ -14,6 +14,10 @@ export const createSubscription = async (data: CreateSubscriptionParams): Promis
       where: eq(schema.customers.stripeCustomerId, data.customerId),
     });
 
+    console.log({
+      data,
+    });
+
     if (!user) return Fail('Create Subscription Failed. No user found.');
 
     await db.insert(schema.subscriptions).values({

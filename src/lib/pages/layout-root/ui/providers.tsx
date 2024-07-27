@@ -15,9 +15,9 @@ export const Providers: FC<ProvidersProps> = ({ children }) => {
     <>
       <SessionProvider>
         <TooltipProvider>{children}</TooltipProvider>
-        <Toaster />
       </SessionProvider>
       <AnalyticsProvider />
+      <Toaster position='top-right' />
     </>
   );
 };

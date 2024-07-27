@@ -1,6 +1,7 @@
 import {
   Person,
   useJoinSpeakingQueue,
+  usePositionInSpeakingQueue,
   useToggleJoiningSpeakingQueue,
   useUserIsInSpeakingQueue,
 } from '@entities/speaking-queue';

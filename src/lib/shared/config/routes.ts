@@ -3,7 +3,6 @@ import {
   BookCopy,
   Dice5,
   DoorOpen,
-  Gift,
   Home,
   KanbanSquareDashed,
   Settings,
@@ -92,17 +91,24 @@ export const CookiesPage: Route = () => ({
   icon: Book,
 });
 
+export const SetupPage: Route = () => ({
+  url: `/setup`,
+  label: 'Setup',
+  icon: Book,
+});
+
 export const routes = {
   AboutPage,
   AccountPage,
-  PrivacyPolicyPage,
   CookiesPage,
-  TermsPage,
   DashPage,
   HomePage,
+  SetupPage,
+  PrivacyPolicyPage,
   RoomListPage,
   RoomPage,
   RoomSettingsPage,
+  TermsPage,
 };
 
 export const publicRoutes: Route<any | null>[] = [HomePage, AboutPage];

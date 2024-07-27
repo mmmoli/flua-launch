@@ -3,6 +3,7 @@ export * from './use-call-actions';
 export * from './use-is-loading';
 export * from './use-local-peer';
 export * from './use-my-audio';
+export * from './use-peer';
 export * from './use-peers';
 export * from './use-remote-audio';
 export * from './use-remote-peers';

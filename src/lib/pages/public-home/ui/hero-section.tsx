@@ -1,4 +1,4 @@
-import { CreateCheckoutSessionButton } from '@features/billing/create-checkout-session';
+import { SignInButton } from '@features/auth/sign-in-button';
 import Image from 'next/image';
 import { FC } from 'react';
 
@@ -14,11 +14,11 @@ export const HeroSection: FC = () => {
         </h1>
         <p className='mt-6 pr-20 text-2xl leading-8 text-foreground/60'>
           {/* How value is created */}
-          Flua&apos;s <strong>Speaking Queues</strong> give everyone gets their chance to talk.
+          Flua&apos;s <strong>Speaking Queues</strong> give everyone their chance to be heard.
         </p>
         <div className='mt-8 flex items-center gap-4'>
           {/* What to do next */}
-          <CreateCheckoutSessionButton size='xl' priceId='price_1NxEzFDmsaCawsACwYCuiOBp' />
+          <SignInButton size='xl'>Start FREE Trial</SignInButton>
           <p className='max-w-80 font-bold text-primary'>People everywhere love this.</p>
         </div>
       </div>
