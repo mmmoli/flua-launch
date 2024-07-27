@@ -38,7 +38,7 @@ export const WaitingAreaWidget: FC<WaitingAreaWidgetProps> = ({ room }) => {
 
   return (
     <div className='flex min-h-screen items-center justify-center'>
-      {currentStep === 1 ? <WaitingAreaStepOne onNext={handleNextStep} /> : null}
+      {currentStep === 1 ? <WaitingAreaStepOne onNext={handleNextStep} room={room} /> : null}
       {currentStep === 2 ? <WaitingAreaStepTwo room={room} /> : null}
     </div>
   );
