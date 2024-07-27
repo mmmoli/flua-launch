@@ -2,16 +2,20 @@ import { Button, Heading } from '@react-email/components';
 
 import { LayoutTransaction } from '../layout-transaction';
 
-// import { LayoutTransaction } from '../layout-transaction';
-
 export interface WelcomeUserProps {
-  name: string;
+  user: {
+    name: string;
+    avatarUrl: string;
+  };
 }
 
-export const WelcomeUser = ({ name }: WelcomeUserProps) => {
+export const WelcomeUser = ({ user }: WelcomeUserProps) => {
+  const preview = `Hi ${user.name}!`;
   return (
-    <LayoutTransaction>
-      <Heading>Hi {name}!</Heading>
+    <LayoutTransaction preview={preview}>
+      <Heading className='mx-0 my-[30px] p-0 text-center text-[24px] font-normal text-black'>
+        Hi {user.name}!
+      </Heading>
       <Button
         href='https://example.com'
         style={{ background: '#000', color: '#fff', padding: '12px 20px' }}
@@ -25,5 +29,5 @@ export const WelcomeUser = ({ name }: WelcomeUserProps) => {
 export default WelcomeUser;
 
 WelcomeUser.PreviewProps = {
-  name: 'Michele',
+  user: { name: 'Michele', avatarUrl: 'https://picsum.photos/id/237/80/80' },
 } satisfies WelcomeUserProps;
