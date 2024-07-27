@@ -21,7 +21,7 @@ export const SignInPage: FC<SignInPageProps> = ({ searchParams }) => {
         <h1 className='text-3xl font-bold'>Sign In</h1>
       </div>
       <div className='grid gap-4'>
-        <SignInButton className='w-full' callbackUrl={next}>
+        <SignInButton className='w-full' redirectTo={next}>
           Login with Google
         </SignInButton>
       </div>
