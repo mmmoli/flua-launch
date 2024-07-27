@@ -6,11 +6,11 @@ import { trackEvent } from '@shared/services/analytics/node';
 import { db, preparedSubscriptionStatus, schema } from '@shared/services/db';
 import { logger } from '@shared/services/logger';
 import { roomService } from '@shared/services/video-conferencing/api';
+import assert from 'assert';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
 
-import { billingService } from '../billing';
-import { isSubscriptionActive } from '../db/schema';
+import { isSubscriptionActive, isTrialing } from '../db/schema';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
@@ -33,8 +33,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       // Check if the user has an active subscription
       const query = await preparedSubscriptionStatus.execute({ userId: session.user.id });
-      const found = query.pop();
-      session.user.activeSubscription = isSubscriptionActive(found?.status ?? 'not-a-status');
+      const { status } = query.pop() || {};
+      const searchStatus = status ?? 'NOT_A_STATUS';
+      session.user.hasActiveSubscription = isSubscriptionActive(searchStatus);
+      session.user.isTrialing = isTrialing(searchStatus);
       return session;
     },
   },
@@ -52,21 +54,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         logger.error(`Failed to create customer. No user Id`);
         return;
       }
-      const customerResult = await billingService.createCustomer({
-        user,
-      });
-      if (!customerResult.isOk()) {
-        logger.error(`Failed to create customer: ${customerResult.error()}`);
-        return;
-      }
-      const customer = customerResult.value();
-      await db
-        .insert(schema.customers)
-        .values({
-          id: user.id,
-          stripeCustomerId: customer.customerId,
-        })
-        .onConflictDoNothing();
 
       const useCase = new OpenRoomUseCase({
         db,
@@ -91,7 +78,8 @@ declare module 'next-auth' {
   interface Session {
     user: {
       id: string;
-      activeSubscription: boolean;
+      hasActiveSubscription: boolean;
+      isTrialing: boolean;
     } & DefaultSession['user'];
   }
 }

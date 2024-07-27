@@ -1,3 +1,3 @@
-import { SentryLogger } from './logger';
+import { ConsoleLogger } from './console-logger';
 
-export const logger = new SentryLogger();
+export const logger = new ConsoleLogger();

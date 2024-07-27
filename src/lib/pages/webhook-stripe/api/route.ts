@@ -2,12 +2,15 @@ import { env } from '@shared/config/env';
 import { trackEvent } from '@shared/services/analytics/node';
 import { stripe } from '@shared/services/billing/stripe/config';
 import { logger } from '@shared/services/logger';
+import assert from 'assert';
 import Stripe from 'stripe';
 
+import { createCustomer } from '../model/create-customer';
 import { createSubscription } from '../model/create-subscription';
 import { updateSubscription } from '../model/update-subscription';
 
 const relevantEvents = new Set([
+  'customer.created',
   'customer.subscription.created',
   'customer.subscription.updated',
   'customer.subscription.deleted',
@@ -32,6 +35,26 @@ export async function POST(req: Request) {
   if (relevantEvents.has(event.type)) {
     try {
       switch (event.type) {
+        case 'customer.created': {
+          const { id, email } = event.data.object as Stripe.Customer;
+          assert(email, 'No email recieved.');
+
+          const result = await createCustomer({
+            customerId: id,
+            email,
+          });
+
+          if (result.isFail()) {
+            const msg = `Webhook handler failed. ${result.error()}`;
+            logger.error(msg);
+            return new Response(msg, {
+              status: 400,
+            });
+          }
+
+          break;
+        }
+
         case 'charge.succeeded': {
           await trackEvent('billing:charge_succeeded', {
             revenue: {

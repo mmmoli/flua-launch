@@ -9,6 +9,6 @@ export interface AssertBillingOpts {}
 
 export const assertBilling = cache(async (opts?: AssertBillingOpts) => {
   const session = await assertUser();
-  const activeSubscription = session?.user.activeSubscription;
-  if (!activeSubscription) redirect(SetupPage().url);
+  const isActive = session?.user.hasActiveSubscription ?? false;
+  if (!isActive) redirect(SetupPage().url);
 });

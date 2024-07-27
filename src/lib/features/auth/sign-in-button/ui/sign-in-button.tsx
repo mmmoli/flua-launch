@@ -5,20 +5,22 @@ import { FC } from 'react';
 
 export interface SignInButtonProps extends ButtonProps {
   network?: 'google';
-  callbackUrl?: string;
+  redirectTo?: string;
 }
 
 export const SignInButton: FC<SignInButtonProps> = ({
   children = 'Sign In',
   network = 'google',
-  callbackUrl = DashPage().url,
+  redirectTo = DashPage().url,
   ...props
 }) => {
   return (
     <form
       action={async () => {
         'use server';
-        await signIn(network);
+        await signIn(network, {
+          redirectTo,
+        });
       }}
     >
       <Button {...props} type='submit'>

@@ -2,13 +2,7 @@ import { logger } from '@shared/services/logger';
 import { Fail, Ok, Result } from 'rich-domain';
 import Stripe from 'stripe';
 
-import {
-  BillingServiceTrait,
-  CheckoutSession,
-  CreateCheckoutSessionParams,
-  CreateCustomerParams,
-  Customer,
-} from './types';
+import { BillingServiceTrait, CheckoutSession, CreateCheckoutSessionParams } from './types';
 
 export class StripeBillingService implements BillingServiceTrait {
   constructor(protected readonly client: Stripe) {}
@@ -50,32 +44,6 @@ export class StripeBillingService implements BillingServiceTrait {
     } catch (e) {
       logger.error(e);
       return Fail(`Failed to create checkout session`);
-    }
-  }
-
-  async createCustomer(data: CreateCustomerParams): Promise<Result<Customer>> {
-    const {
-      user: { email, id, name },
-    } = data;
-
-    if (!email) return Fail('Failed to Create Customer: No email');
-    try {
-      const stripeCustomer = await this.client.customers.create({
-        name: name || undefined,
-        email: email || undefined,
-        metadata: {
-          userId: String(id),
-        },
-      });
-
-      const customer: Customer = {
-        customerId: stripeCustomer.id,
-      };
-
-      return Ok(customer);
-    } catch (e) {
-      logger.error(e);
-      return Fail('Failed to Create Customer');
     }
   }
 }
