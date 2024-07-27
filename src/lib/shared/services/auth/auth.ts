@@ -1,5 +1,4 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import { send } from '@emails/welcome-user';
 import { OpenRoomUseCase } from '@features/rooms/open-room/model/open-room-use-case';
 import { env } from '@shared/config/env';
 import { DashPage, SetupPage, SignInPageRoute } from '@shared/config/routes';
@@ -56,6 +55,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return;
       }
 
+      const send = await import('@emails/welcome-user').then((mod) => mod.send);
       const emailResult = await send({
         to: user.email!,
         user: {
