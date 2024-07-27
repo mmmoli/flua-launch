@@ -1,5 +1,4 @@
 import { Person, usePositionInSpeakingQueue } from '@entities/speaking-queue';
-import { cn } from '@shared/design-system/utils';
 import { Frame } from '@ui/frame';
 import { FC, useCallback } from 'react';
 
@@ -9,9 +8,11 @@ export interface IsSpeakerFrameProps {
 
 export const IsSpeakerFrame: FC<IsSpeakerFrameProps> = ({ user }) => {
   const position = usePositionInSpeakingQueue({ user });
-  if (!position) return null;
+
   return (
     <Frame
+      variant={position === 1 ? 'primary' : 'default'}
+      visibility={position ? 'visible' : 'hidden'}
       label={
         <span className='text-sm'>
           <span className='font-bold'>Queued to Speak</span>. Position: #{position}
