@@ -33,3 +33,11 @@ export const PlanCard: FC<PlanCardProps> = ({
     />
   );
 };
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'stripe-buy-button': any;
+    }
+  }
+}
