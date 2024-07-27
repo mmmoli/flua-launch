@@ -1,4 +1,5 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
+import { send } from '@emails/welcome-user';
 import { OpenRoomUseCase } from '@features/rooms/open-room/model/open-room-use-case';
 import { env } from '@shared/config/env';
 import { DashPage, SetupPage, SignInPageRoute } from '@shared/config/routes';
@@ -54,6 +55,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         logger.error(`Failed to create customer. No user Id`);
         return;
       }
+
+      const emailResult = await send(user.email!);
+      if (emailResult.isFail()) logger.error(emailResult.error());
 
       const useCase = new OpenRoomUseCase({
         db,

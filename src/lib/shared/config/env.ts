@@ -28,6 +28,9 @@ export const env = createEnv({
     HMS_ACCESS_KEY: z.string(),
     HMS_SECRET: z.string(),
     LIVEBLOCK_SECRET_KEY: z.string(),
+    RESEND_KEY: z.string(),
+    EMAIL_PROVIDER: z.enum(['resend', 'dummy']).optional().default('dummy'),
+    EMAIL_FROM: z.string().email().optional().default('no-reply@withflua.com'),
   },
 
   client: {

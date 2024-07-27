@@ -12,10 +12,8 @@ export class DeleteAccountUseCase implements IUseCase<DeleteAccountUseCaseDto, R
   constructor(protected readonly deps: DeleteAccountDeps) {}
   async execute(data: DeleteAccountUseCaseDto): Promise<Result<void>> {
     'use server';
-
     try {
-      console.log('deleting account…');
-      return Ok();
+      throw new Error('Not implemented');
     } catch (error) {
       logger.error(error);
       return Fail('Failed to delete account');
