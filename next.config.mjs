@@ -54,7 +54,7 @@ export default withBundleAnalyzer(
   withSentryConfig(nextConfig, {
     org: process.env.SENTRY_ORG,
     project: process.env.SENTRY_PROJECT,
-
+    telemetry: false,
     silent: !process.env.CI,
     widenClientFileUpload: true,
     tunnelRoute: '/monitoring',
