@@ -1,10 +1,10 @@
-import { SendEmailProps } from '../lib/transactional-types';
+import { Send } from '../lib/transactional-types';
 import { transactionalEmailService } from '../model';
 import { RoomCreated, RoomCreatedProps } from '../ui/emails/room-created';
 
-export const send = ({ to, ...props }: Pick<SendEmailProps, 'to'> & RoomCreatedProps) =>
+export const send: Send<RoomCreatedProps> = ({ to, ...props }) =>
   transactionalEmailService.send({
     to,
     react: <RoomCreated {...props} />,
-    subject: 'Test',
+    subject: 'Flua: Your room is ready',
   });

@@ -56,7 +56,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return;
       }
 
-      const emailResult = await send(user.email!);
+      const emailResult = await send({
+        to: user.email!,
+        user: {
+          avatarUrl: user.image!,
+          name: user.name!,
+        },
+      });
       if (emailResult.isFail()) logger.error(emailResult.error());
 
       const useCase = new OpenRoomUseCase({

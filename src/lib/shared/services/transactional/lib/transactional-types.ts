@@ -10,3 +10,7 @@ export interface SendEmailProps {
 export interface TransactionalEmailServiceTrait {
   send(input: SendEmailProps): Promise<IResult<void>>;
 }
+
+export type Send<T = Record<string, unknown>> = (
+  props: Pick<SendEmailProps, 'to'> & T
+) => Promise<IResult<void>>;
