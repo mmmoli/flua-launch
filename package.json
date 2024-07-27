@@ -15,7 +15,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "ui:add": "bunx --bun shadcn-ui@latest add",
-    "dev:email": "email dev --dir src/lib/shared/services/transactional/lib/emails --port 4321"
+    "dev:email": "email dev --dir src/lib/shared/services/transactional/ui/emails --port 4321"
   },
   "dependencies": {
     "@100mslive/react-sdk": "^0.10.14",
