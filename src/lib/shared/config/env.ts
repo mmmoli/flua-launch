@@ -41,10 +41,12 @@ export const env = createEnv({
     NEXT_PUBLIC_SITE_DOMAIN: z.string().url(),
     NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID: z.string(),
     NEXT_PUBLIC_STRIPE_ANNUAL_PRICE_ID: z.string(),
+    NEXT_PUBLIC_LOGGER_IMPLEMENTATION: z.enum(['sentry', 'console']).optional().default('console'),
   },
 
   // client side variables for Next.js 14+
   experimental__runtimeEnv: {
+    NEXT_PUBLIC_LOGGER_IMPLEMENTATION: process.env.NEXT_PUBLIC_LOGGER_IMPLEMENTATION,
     NEXT_PUBLIC_STRIPE_ANNUAL_PRICE_ID: process.env.NEXT_PUBLIC_STRIPE_ANNUAL_PRICE_ID,
     NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID,
     NEXT_PUBLIC_SITE_DOMAIN:

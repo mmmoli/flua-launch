@@ -1,3 +1,7 @@
-import { ConsoleLogger } from './console-logger';
+import { env } from '@shared/config/env';
 
-export const logger = new ConsoleLogger();
+import { ConsoleLogger } from './console-logger';
+import { SentryLogger } from './sentry-logger';
+
+export const logger =
+  env.NEXT_PUBLIC_LOGGER_IMPLEMENTATION === 'sentry' ? new SentryLogger() : new ConsoleLogger();
