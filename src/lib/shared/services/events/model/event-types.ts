@@ -1,6 +1,6 @@
 export type Events = {
   'USER-CREATED': {
-    id: string;
+    user: { id: string; email: string; avatarUrl: string };
   };
 };
 

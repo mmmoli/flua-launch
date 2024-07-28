@@ -32,6 +32,9 @@ export const env = createEnv({
     NOTIFICATION_EMAIL_FROM: z.string().email().optional().default('no-reply@withflua.com'),
     NOVU_SECRET_KEY: z.string(),
     NOVU_API_ID: z.string(),
+    UPSTASH_QSTASH_TOKEN: z.string(),
+    QSTASH_CURRENT_SIGNING_KEY: z.string(),
+    QSTASH_NEXT_SIGNING_KEY: z.string(),
   },
 
   client: {

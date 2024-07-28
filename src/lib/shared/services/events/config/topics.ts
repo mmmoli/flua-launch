@@ -12,8 +12,16 @@ export const topicConfig: TopicList = [
     name: 'USER-CREATED',
     endpoints: [
       {
-        name: 'welcome-email',
-        url: new URL('/api/webhooks/emails/user-welcome', BASE_URL),
+        name: 'on-user-created:analytics',
+        url: new URL('/api/events/on-user-created/analytics', BASE_URL),
+      },
+      {
+        name: 'on-user-created:notifications',
+        url: new URL('/api/events/on-user-created/notifications', BASE_URL),
+      },
+      {
+        name: 'on-user-created:default-room',
+        url: new URL('/api/events/on-user-created/room', BASE_URL),
       },
     ],
   },
