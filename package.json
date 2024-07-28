@@ -52,6 +52,7 @@
     "@stripe/stripe-js": "^4.0.0",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tabler/icons-react": "^3.7.0",
+    "@upstash/qstash": "^2.6.2",
     "boolean": "^3.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
