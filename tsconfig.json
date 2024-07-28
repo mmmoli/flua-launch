@@ -28,7 +28,8 @@
       "@pages/*": ["./src/lib/pages/*"],
       "@app/*": ["./src/lib/app/*"],
       "@ui/*": ["./src/lib/shared/design-system/components/ui/*"],
-      "@ui/utils": ["./src/lib/shared/design-system/utils"]
+      "@ui/utils": ["./src/lib/shared/design-system/utils"],
+      "@workflows/*": ["./src/lib/shared/services/transactional/api/workflows/*"]
     }
   },
   "include": [

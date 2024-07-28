@@ -1,5 +1,4 @@
 import { OpenRoomDialog } from '@features/rooms/open-room';
-import { assertUser } from '@shared/services/auth/api';
 import { FC } from 'react';
 
 export interface RoomListBannerProps {

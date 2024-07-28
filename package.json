@@ -14,7 +14,9 @@
     "start": "next start",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "ui:add": "bunx --bun shadcn-ui@latest add"
+    "ui:add": "bunx --bun shadcn-ui@latest add",
+    "dev:notifications": "bunx novu@latest dev --port 3000 --route /api/webhooks/novu",
+    "events:migrate": "bun run src/lib/shared/services/events/api/migrate.ts"
   },
   "dependencies": {
     "@100mslive/react-sdk": "^0.10.14",
@@ -28,6 +30,8 @@
     "@liveblocks/zustand": "^2.2.1",
     "@next/bundle-analyzer": "^14.2.5",
     "@next/third-parties": "^14.2.4",
+    "@novu/framework": "^2.0.0-canary.4",
+    "@novu/node": "^2.0.0-canary.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
@@ -43,10 +47,12 @@
     "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.1",
+    "@react-email/components": "^0.0.22",
     "@sentry/nextjs": "^8.12.0",
     "@stripe/stripe-js": "^4.0.0",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tabler/icons-react": "^3.7.0",
+    "@upstash/qstash": "^2.6.2",
     "boolean": "^3.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -63,6 +69,7 @@
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-email": "^2.1.6",
     "react-hook-form": "^7.52.0",
     "react-spinners": "^0.13.8",
     "rich-domain": "^1.23.2",
@@ -74,6 +81,7 @@
     "usehooks-ts": "^3.1.0",
     "uuid": "^10.0.0",
     "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.1",
     "zod-validation-error": "^3.3.0",
     "zustand": "^4.5.4"
   },

@@ -28,6 +28,13 @@ export const env = createEnv({
     HMS_ACCESS_KEY: z.string(),
     HMS_SECRET: z.string(),
     LIVEBLOCK_SECRET_KEY: z.string(),
+    NOTIFICATION_PROVIDER: z.enum(['novu', 'dummy']).optional().default('dummy'),
+    NOTIFICATION_EMAIL_FROM: z.string().email().optional().default('no-reply@withflua.com'),
+    NOVU_SECRET_KEY: z.string(),
+    NOVU_API_ID: z.string(),
+    UPSTASH_QSTASH_TOKEN: z.string(),
+    QSTASH_CURRENT_SIGNING_KEY: z.string(),
+    QSTASH_NEXT_SIGNING_KEY: z.string(),
   },
 
   client: {

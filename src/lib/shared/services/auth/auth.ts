@@ -1,12 +1,9 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import { OpenRoomUseCase } from '@features/rooms/open-room/model/open-room-use-case';
 import { env } from '@shared/config/env';
 import { DashPage, SetupPage, SignInPageRoute } from '@shared/config/routes';
-import { trackEvent } from '@shared/services/analytics/node';
 import { db, preparedSubscriptionStatus, schema } from '@shared/services/db';
+import { publish } from '@shared/services/events';
 import { logger } from '@shared/services/logger';
-import { roomService } from '@shared/services/video-conferencing/api';
-import assert from 'assert';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
 
@@ -48,24 +45,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       logger.identify({ id: user.id, email: user.email || undefined });
     },
     createUser: async ({ user }) => {
-      await trackEvent('user:created');
-
-      if (!user.id) {
-        logger.error(`Failed to create customer. No user Id`);
-        return;
-      }
-
-      const useCase = new OpenRoomUseCase({
-        db,
-        roomService,
+      await publish('USER-CREATED', {
+        user: {
+          id: user.id!,
+          email: user.email!,
+          avatarUrl: user.image!,
+        },
       });
-
-      const result = await useCase.execute({
-        name: 'My Free Room',
-        ownerId: user.id,
-        tier: 'FREE',
-      });
-      if (result.isFail()) logger.error(`Failed to create free room for user: ${result.error()}`);
     },
   },
   trustHost: true,
