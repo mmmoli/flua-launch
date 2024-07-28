@@ -14,7 +14,8 @@
     "start": "next start",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "ui:add": "bunx --bun shadcn-ui@latest add"
+    "ui:add": "bunx --bun shadcn-ui@latest add",
+    "events:migrate": "bun run src/lib/shared/services/events/api/migrate.ts"
   },
   "dependencies": {
     "@100mslive/react-sdk": "^0.10.14",
