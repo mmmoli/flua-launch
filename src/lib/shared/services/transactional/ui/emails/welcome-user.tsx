@@ -1,15 +1,18 @@
-import { Button, Heading } from '@react-email/components';
+import { Button, Heading, renderAsync } from '@react-email/components';
+import { FC } from 'react';
+import { z } from 'zod';
 
 import { LayoutTransaction } from '../layout-transaction';
 
-export interface WelcomeUserProps {
-  user: {
-    name: string;
-    avatarUrl: string;
-  };
-}
+export const WelcomeUserSchema = z.object({
+  user: z.object({
+    name: z.string().default('Room Name'),
+  }),
+});
 
-export const WelcomeUser = ({ user }: WelcomeUserProps) => {
+export type WelcomeUserProps = z.infer<typeof WelcomeUserSchema>;
+
+export const WelcomeUser: FC<WelcomeUserProps> = ({ user }) => {
   const preview = `Hi ${user.name}!`;
   return (
     <LayoutTransaction preview={preview}>
@@ -26,8 +29,6 @@ export const WelcomeUser = ({ user }: WelcomeUserProps) => {
   );
 };
 
-export default WelcomeUser;
-
-WelcomeUser.PreviewProps = {
-  user: { name: 'Michele', avatarUrl: 'https://picsum.photos/id/237/80/80' },
-} satisfies WelcomeUserProps;
+export async function render(props: WelcomeUserProps) {
+  return renderAsync(<WelcomeUser {...props} />);
+}

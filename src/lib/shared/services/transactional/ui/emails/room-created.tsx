@@ -1,19 +1,17 @@
-import { Button, Heading } from '@react-email/components';
+import { Heading, renderAsync } from '@react-email/components';
+import { z } from 'zod';
 
 import { LayoutTransaction } from '../layout-transaction';
 
-export interface RoomCreatedProps {
-  room: {
-    name: string;
-    url: string;
-    code: string;
-  };
-  user: {
-    name: string;
-  };
-}
+export const RoomCreatedSchema = z.object({
+  room: z.object({
+    name: z.string().default('Room Name'),
+  }),
+});
 
-export const RoomCreated = ({ user, room }: RoomCreatedProps) => {
+export type RoomCreatedProps = z.infer<typeof RoomCreatedSchema>;
+
+export const RoomCreated = ({ room }: RoomCreatedProps) => {
   const preview = `Your Room is ready`;
   return (
     <LayoutTransaction preview={preview}>
@@ -24,9 +22,6 @@ export const RoomCreated = ({ user, room }: RoomCreatedProps) => {
   );
 };
 
-export default RoomCreated;
-
-RoomCreated.PreviewProps = {
-  user: { name: 'Michele' },
-  room: { name: 'My New Room', url: 'https://example.com', code: 'abd-234-kho' },
-} satisfies RoomCreatedProps;
+export async function render(props: RoomCreatedProps) {
+  return renderAsync(<RoomCreated {...props} />);
+}

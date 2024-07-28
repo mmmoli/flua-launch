@@ -29,7 +29,7 @@
       "@app/*": ["./src/lib/app/*"],
       "@ui/*": ["./src/lib/shared/design-system/components/ui/*"],
       "@ui/utils": ["./src/lib/shared/design-system/utils"],
-      "@emails/*": ["./src/lib/shared/services/transactional/api/*"]
+      "@workflows/*": ["./src/lib/shared/services/transactional/api/workflows/*"]
     }
   },
   "include": [

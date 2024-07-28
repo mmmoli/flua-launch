@@ -5,8 +5,8 @@ import { DashPage, SetupPage, SignInPageRoute } from '@shared/config/routes';
 import { trackEvent } from '@shared/services/analytics/node';
 import { db, preparedSubscriptionStatus, schema } from '@shared/services/db';
 import { logger } from '@shared/services/logger';
+import { notificationService } from '@shared/services/transactional';
 import { roomService } from '@shared/services/video-conferencing/api';
-import assert from 'assert';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import Google from 'next-auth/providers/google';
 
@@ -55,15 +55,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return;
       }
 
-      const send = await import('@emails/welcome-user').then((mod) => mod.send);
-      const emailResult = await send({
-        to: user.email!,
-        user: {
-          avatarUrl: user.image!,
-          name: user.name!,
+      const notificationResult = await notificationService.trigger('on-user-created', {
+        to: user,
+        payload: {
+          user: {
+            avatarUrl: user.image!,
+            name: user.name!,
+          },
         },
       });
-      if (emailResult.isFail()) logger.error(emailResult.error());
+      if (notificationResult.isFail()) logger.error(notificationResult.error());
 
       const useCase = new OpenRoomUseCase({
         db,
