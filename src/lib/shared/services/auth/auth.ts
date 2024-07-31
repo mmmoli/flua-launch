@@ -1,4 +1,5 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
+import { BASE_URL } from '@shared/config/constants';
 import { env } from '@shared/config/env';
 import { DashPage, SetupPage, SignInPageRoute } from '@shared/config/routes';
 import { db, preparedSubscriptionStatus, schema } from '@shared/services/db';
@@ -45,11 +46,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       logger.identify({ id: user.id, email: user.email || undefined });
     },
     createUser: async ({ user }) => {
-      await publish('USER-CREATED', {
-        user: {
-          id: user.id!,
-          email: user.email!,
-          avatarUrl: user.image!,
+      await publish({
+        url: new URL('/api/events/on-user-created', BASE_URL),
+        body: {
+          user: {
+            id: user.id!,
+            email: user.email!,
+            avatarUrl: user.image!,
+          },
         },
       });
     },
